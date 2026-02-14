@@ -1,8 +1,10 @@
 import React from "react";
-import { Space, Dropdown, Avatar, Typography, Button, Flex, Layout } from "antd";
-import { UserOutlined, LogoutOutlined, SettingOutlined, PlusOutlined } from "@ant-design/icons";
+import { Dropdown, Avatar, Typography, Button, Flex, Layout } from "antd";
+import { LogoutOutlined, PlusOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { useLocation } from "react-router";
+import { PAGE_TITLES } from "./constants";
+import { blue } from "@ant-design/colors";
 
 const { Title } = Typography;
 
@@ -11,46 +13,19 @@ export const Header: React.FC = () => {
 
   const getPageTitle = () => {
     const path = location.pathname;
-    if (path === "/") return "Dashboard";
-    // Add more route mappings as needed
-    const segments = path.split("/").filter(Boolean);
-    return segments[0]?.charAt(0).toUpperCase() + segments[0]?.slice(1) || "Dashboard";
+    return PAGE_TITLES[path] || "";
   };
 
   const userMenuItems: MenuProps["items"] = [
     {
-      key: "profile",
-      icon: <UserOutlined />,
-      label: "Profile",
-    },
-    {
-      key: "settings",
-      icon: <SettingOutlined />,
-      label: "Settings",
-    },
-    {
-      type: "divider",
-    },
-    {
       key: "logout",
       icon: <LogoutOutlined />,
       label: "Logout",
-      danger: true,
+      onClick: () => {
+        console.log("logout");
+      },
     },
   ];
-
-  const handleMenuClick: MenuProps["onClick"] = ({ key }) => {
-    if (key === "logout") {
-      console.log("Logout clicked");
-      // Add logout logic here
-    } else if (key === "profile") {
-      console.log("Profile clicked");
-      // Navigate to profile
-    } else if (key === "settings") {
-      console.log("Settings clicked");
-      // Navigate to settings
-    }
-  };
 
   return (
     <Layout.Header
@@ -59,30 +34,27 @@ export const Header: React.FC = () => {
         padding: "16px 12px",
         display: "flex",
         alignItems: "center",
+        justifyContent: "space-between",
         height: 64,
       }}
     >
-      <Flex justify="space-between" align="center" style={{ width: "100%" }}>
-        <Title level={4} style={{ margin: 0 }}>
-          {getPageTitle()}
-        </Title>
+      <Title level={1} style={{ margin: 0, fontSize: 22 }}>
+        {getPageTitle()}
+      </Title>
 
-        <Space size="middle">
-          <Button type="primary" icon={<PlusOutlined />}>
-            New Order
-          </Button>
-          <Dropdown
-            menu={{ items: userMenuItems, onClick: handleMenuClick }}
-            placement="bottomRight"
-            arrow
-          >
-            <Avatar
-              icon={<UserOutlined />}
-              style={{ backgroundColor: "#1890ff", cursor: "pointer" }}
-              size="default"
-            />
-          </Dropdown>
-        </Space>
+      <Flex align="center" gap="middle">
+        <Button type="primary" icon={<PlusOutlined />}>
+          New Order
+        </Button>
+
+        <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" arrow>
+          <Flex align="center" gap="small">
+            <Avatar size="small" style={{ backgroundColor: blue[6] }}>
+              J
+            </Avatar>
+            <Typography.Text>John Doe</Typography.Text>
+          </Flex>
+        </Dropdown>
       </Flex>
     </Layout.Header>
   );

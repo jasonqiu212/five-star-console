@@ -14,7 +14,6 @@ export const AppRouter: React.FC = () => {
       <Route element={<ProtectedRoute />}>
         <Route element={<DashboardLayout />}>
           <Route index element={<PurchaseOrders />} />
-          <Route path="purchase-orders" element={<PurchaseOrders />} />
           <Route path="five-star-auto-leather-invoices" element={<Invoices />} />
           <Route path="leather-and-stitch-invoices" element={<Invoices />} />
         </Route>

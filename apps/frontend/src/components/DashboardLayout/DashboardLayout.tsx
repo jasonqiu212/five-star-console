@@ -16,7 +16,7 @@ export const DashboardLayout: React.FC = () => {
         <Content
           style={{
             backgroundColor: "#fafafa",
-            padding: "24px",
+            paddingInline: 12,
             overflow: "auto",
           }}
         >

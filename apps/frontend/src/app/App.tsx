@@ -7,7 +7,7 @@ import { AppRouter } from "./AppRouter";
 export const App: React.FC = () => {
   const themeConfig: ThemeConfig = {
     token: {
-      colorPrimary: "#576cf0",
+      colorPrimary: "#596bed",
     },
     components: {
       Menu: {

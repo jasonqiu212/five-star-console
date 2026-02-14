@@ -18,7 +18,7 @@ export const Sidebar: React.FC = () => {
 
   const menuItems = [
     {
-      key: "/purchase-orders",
+      key: "/",
       icon: <DashboardOutlined />,
       label: "Purchase Orders",
     },
