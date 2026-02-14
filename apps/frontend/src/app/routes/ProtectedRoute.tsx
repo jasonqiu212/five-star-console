@@ -1,14 +1,23 @@
+import { Spin } from "antd";
 import React from "react";
 import { Navigate, Outlet } from "react-router";
-
-// import { useAuth } from "../../features/auth/hooks/use-auth";
+import { useAuth } from "../../features/auth/hooks/useAuth";
 
 export const ProtectedRoute: React.FC = () => {
-  // const { token } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
 
-  // if (!token) {
-  if (false) {
-    return <Navigate to="/login" />;
+  if (isLoading) {
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}
+      >
+        <Spin size="large" />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
   }
 
   return <Outlet />;

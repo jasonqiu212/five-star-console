@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter } from "react-router";
 
 import { AppRouter } from "./AppRouter";
+import { AuthProvider } from "../features/auth/context/AuthContext";
 
 export const App: React.FC = () => {
   const themeConfig: ThemeConfig = {
@@ -18,10 +19,12 @@ export const App: React.FC = () => {
   };
 
   return (
-    <ConfigProvider theme={themeConfig}>
-      <BrowserRouter>
-        <AppRouter />
-      </BrowserRouter>
-    </ConfigProvider>
+    <AuthProvider>
+      <ConfigProvider theme={themeConfig}>
+        <BrowserRouter>
+          <AppRouter />
+        </BrowserRouter>
+      </ConfigProvider>
+    </AuthProvider>
   );
 };
