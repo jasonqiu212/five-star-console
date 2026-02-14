@@ -79,7 +79,7 @@ function App() {
           }}
         >
           <Space direction="vertical" size="large" style={{ width: "100%" }}>
-            <Title level={2}>Welcome to Admin Hub</Title>
+            <Title level={2}>Welcome</Title>
             <Card title="Getting Started" bordered={false}>
               <Paragraph>
                 This is a monorepo setup with React, TypeScript, Ant Design, and Vite for the
