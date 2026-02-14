@@ -1,11 +1,22 @@
 import React from "react";
-import { Space, Dropdown, Avatar, Typography } from "antd";
-import { UserOutlined, LogoutOutlined, SettingOutlined, BellOutlined } from "@ant-design/icons";
+import { Space, Dropdown, Avatar, Typography, Button, Flex, Layout } from "antd";
+import { UserOutlined, LogoutOutlined, SettingOutlined, PlusOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
+import { useLocation } from "react-router";
 
-const { Text } = Typography;
+const { Title } = Typography;
 
 export const Header: React.FC = () => {
+  const location = useLocation();
+
+  const getPageTitle = () => {
+    const path = location.pathname;
+    if (path === "/") return "Dashboard";
+    // Add more route mappings as needed
+    const segments = path.split("/").filter(Boolean);
+    return segments[0]?.charAt(0).toUpperCase() + segments[0]?.slice(1) || "Dashboard";
+  };
+
   const userMenuItems: MenuProps["items"] = [
     {
       key: "profile",
@@ -42,48 +53,37 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <div
+    <Layout.Header
       style={{
+        background: "#fafafa",
+        padding: "16px 12px",
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
-        height: "100%",
+        height: 64,
       }}
     >
-      {/* Left side - Logo/Brand */}
-      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-        <Text
-          strong
-          style={{
-            color: "white",
-            fontSize: "18px",
-            letterSpacing: "0.5px",
-          }}
-        >
-          Admin Hub
-        </Text>
-      </div>
+      <Flex justify="space-between" align="center" style={{ width: "100%" }}>
+        <Title level={4} style={{ margin: 0 }}>
+          {getPageTitle()}
+        </Title>
 
-      {/* Right side - Actions */}
-      <Space size="large">
-        <BellOutlined
-          style={{
-            fontSize: "20px",
-            color: "white",
-            cursor: "pointer",
-          }}
-        />
-        <Dropdown
-          menu={{ items: userMenuItems, onClick: handleMenuClick }}
-          placement="bottomRight"
-          arrow
-        >
-          <Space style={{ cursor: "pointer" }}>
-            <Avatar icon={<UserOutlined />} style={{ backgroundColor: "#1890ff" }} />
-            <Text style={{ color: "white" }}>Admin User</Text>
-          </Space>
-        </Dropdown>
-      </Space>
-    </div>
+        <Space size="middle">
+          <Button type="primary" icon={<PlusOutlined />}>
+            New Order
+          </Button>
+          <Dropdown
+            menu={{ items: userMenuItems, onClick: handleMenuClick }}
+            placement="bottomRight"
+            arrow
+          >
+            <Avatar
+              icon={<UserOutlined />}
+              style={{ backgroundColor: "#1890ff", cursor: "pointer" }}
+              size="default"
+            />
+          </Dropdown>
+        </Space>
+      </Flex>
+    </Layout.Header>
   );
 };

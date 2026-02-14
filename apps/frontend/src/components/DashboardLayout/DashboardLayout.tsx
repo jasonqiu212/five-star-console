@@ -1,34 +1,22 @@
-import { Layout, theme } from "antd";
+import { Layout } from "antd";
 import React from "react";
 import { Outlet } from "react-router";
 
 import { Sidebar } from "./Sidebar";
 import { Header as HeaderLayout } from "./Header";
 
-const { Header, Content } = Layout;
-const { useToken } = theme;
+const { Content } = Layout;
 
 export const DashboardLayout: React.FC = () => {
-  const { token } = useToken();
-
   return (
-    <Layout>
-      <Header
-        style={{
-          backgroundColor: token.colorPrimary,
-          paddingInline: "24px",
-          height: "56px",
-        }}
-      >
+    <Layout style={{ height: "100vh" }}>
+      <Sidebar />
+      <Layout>
         <HeaderLayout />
-      </Header>
-      <Layout style={{ height: "calc(100vh - 56px)" }}>
-        <Sidebar />
         <Content
           style={{
-            backgroundColor: "white",
-            paddingBlock: "12px",
-            paddingInline: "24px",
+            backgroundColor: "#fafafa",
+            padding: "24px",
             overflow: "auto",
           }}
         >
