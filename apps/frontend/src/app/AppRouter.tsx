@@ -7,6 +7,7 @@ import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { PurchaseOrders } from "./routes/PurchaseOrders";
 import { Invoices } from "./routes/Invoices";
 import { NewOrder } from "./routes/NewOrder";
+import { Configurations } from "./routes/Configurations";
 
 export const AppRouter: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ export const AppRouter: React.FC = () => {
           <Route path="new-order" element={<NewOrder />} />
           <Route path="five-star-auto-leather-invoices" element={<Invoices />} />
           <Route path="leather-and-stitch-invoices" element={<Invoices />} />
+          <Route path="configurations" element={<Configurations />} />
         </Route>
       </Route>
 
