@@ -4,8 +4,11 @@ import { BrowserRouter } from "react-router";
 
 import { AppRouter } from "./AppRouter";
 import { AuthProvider } from "../features/auth/context/AuthContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const App: React.FC = () => {
+  const queryClient = new QueryClient();
+
   const themeConfig: ThemeConfig = {
     token: {
       colorPrimary: "#596bed",
@@ -19,12 +22,14 @@ export const App: React.FC = () => {
   };
 
   return (
-    <AuthProvider>
-      <ConfigProvider theme={themeConfig}>
-        <BrowserRouter>
-          <AppRouter />
-        </BrowserRouter>
-      </ConfigProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ConfigProvider theme={themeConfig}>
+          <BrowserRouter>
+            <AppRouter />
+          </BrowserRouter>
+        </ConfigProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 };

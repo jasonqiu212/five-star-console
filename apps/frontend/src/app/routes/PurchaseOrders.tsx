@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Card, Input, Select, Space, Table, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { useListProductTypes } from "@/hooks/api/useProductTypes";
 
 // Example row type
 interface PurchaseOrderRow {
@@ -66,6 +67,9 @@ const STATUS_FILTER_ITEMS = [
 export const PurchaseOrders: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
+
+  const { data: productTypes } = useListProductTypes();
+  console.log(productTypes);
 
   const filteredData = useMemo(() => {
     return EXAMPLE_DATA.filter((row) => {

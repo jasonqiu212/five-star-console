@@ -1,4 +1,4 @@
-import { DashboardOutlined, DollarOutlined } from "@ant-design/icons";
+import { DashboardOutlined, DollarOutlined, SettingOutlined } from "@ant-design/icons";
 
 export const PAGE_TITLES: Record<string, string> = {
   "/": "Purchase Orders",
@@ -27,5 +27,10 @@ export const SIDEBAR_MENU_ITEMS = [
         label: "Leather & Stitch",
       },
     ],
+  },
+  {
+    key: "/configurations",
+    icon: <SettingOutlined />,
+    label: "Configurations",
   },
 ];

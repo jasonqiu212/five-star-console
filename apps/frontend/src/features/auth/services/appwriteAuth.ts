@@ -1,4 +1,4 @@
-import { account } from "../../../services/appwrite/client";
+import { account } from "@/api";
 import { Models } from "appwrite";
 
 export interface ApiResponse<T> {
