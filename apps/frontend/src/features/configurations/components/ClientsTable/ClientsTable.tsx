@@ -49,7 +49,7 @@ export const ClientsTable: React.FC = () => {
   ];
 
   return (
-    <Space vertical size="small">
+    <Space vertical size="small" style={{ width: "100%" }}>
       <Flex justify="end">
         <AddClientButton />
       </Flex>
@@ -60,7 +60,6 @@ export const ClientsTable: React.FC = () => {
         rowKey="$id"
         size="small"
         sticky
-        pagination={false}
       />
     </Space>
   );

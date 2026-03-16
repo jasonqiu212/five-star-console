@@ -55,7 +55,7 @@ export const ProductTypesTable: React.FC = () => {
   ];
 
   return (
-    <Space vertical size="small">
+    <Space vertical size="small" style={{ width: "100%" }}>
       <Flex justify="end">
         <AddProductTypeButton />
       </Flex>
