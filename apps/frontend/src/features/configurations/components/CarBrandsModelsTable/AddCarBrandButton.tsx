@@ -1,14 +1,14 @@
-import { useCreateClient } from "@/hooks/api/useClients";
-import type { CreateClientPayload } from "@/types/api";
+import { useCreateCarBrand } from "@/hooks/api/useCarBrands";
+import type { CreateCarBrandPayload } from "@/types/api";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal } from "antd";
 import React, { useState } from "react";
 
-export const AddClientButton: React.FC = () => {
+export const AddCarBrandButton: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const [form] = Form.useForm<CreateClientPayload>();
+  const [form] = Form.useForm<CreateCarBrandPayload>();
 
-  const createMutation = useCreateClient();
+  const createMutation = useCreateCarBrand();
 
   const handleOpen = () => {
     form.resetFields();
@@ -29,10 +29,10 @@ export const AddClientButton: React.FC = () => {
   return (
     <>
       <Button type="primary" icon={<PlusOutlined />} onClick={handleOpen}>
-        Add Client
+        Add Car Brand
       </Button>
       <Modal
-        title="Add Client"
+        title="Add car brand"
         open={open}
         onOk={handleSubmit}
         onCancel={handleCancel}
@@ -47,7 +47,7 @@ export const AddClientButton: React.FC = () => {
             label="Name"
             rules={[{ required: true, message: "Please enter a name" }]}
           >
-            <Input placeholder="Client name" maxLength={255} showCount />
+            <Input placeholder="Car brand name" maxLength={255} showCount />
           </Form.Item>
         </Form>
       </Modal>

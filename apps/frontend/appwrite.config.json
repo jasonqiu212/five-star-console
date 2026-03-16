@@ -80,7 +80,12 @@
         },
         {
             "$id": "clients",
-            "$permissions": [],
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ],
             "databaseId": "69b64fdc00079d87be9e",
             "name": "clients",
             "enabled": true,
@@ -94,6 +99,80 @@
                     "size": 255,
                     "default": null,
                     "encrypt": false
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "car_models",
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ],
+            "databaseId": "69b64fdc00079d87be9e",
+            "name": "car_models",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "carBrand",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "car_brands",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "carModels",
+                    "onDelete": "cascade",
+                    "side": "child"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "car_brands",
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ],
+            "databaseId": "69b64fdc00079d87be9e",
+            "name": "car_brands",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "carModels",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "car_models",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "carBrand",
+                    "onDelete": "cascade",
+                    "side": "parent"
                 }
             ],
             "indexes": []

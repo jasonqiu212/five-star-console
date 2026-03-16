@@ -11,3 +11,13 @@ export type ProductTypes = Models.Row & {
 export type Clients = Models.Row & {
     name: string;
 }
+
+export type CarModels = Models.Row & {
+    name: string;
+    carBrand: CarBrands;
+}
+
+export type CarBrands = Models.Row & {
+    name: string;
+    carModels: CarModels[];
+}
