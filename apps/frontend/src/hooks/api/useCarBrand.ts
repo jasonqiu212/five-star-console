@@ -23,17 +23,6 @@ export function useListCarBrands() {
   });
 }
 
-export function useDeleteCarBrand() {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (id: string) => deleteCarBrand(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
-      message.success("Car brand deleted");
-    },
-  });
-}
-
 export function useUpdateCarBrand() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -42,6 +31,17 @@ export function useUpdateCarBrand() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEY });
       message.success("Car brand updated");
+    },
+  });
+}
+
+export function useDeleteCarBrand() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteCarBrand(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      message.success("Car brand deleted");
     },
   });
 }

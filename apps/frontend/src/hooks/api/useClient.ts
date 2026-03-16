@@ -23,17 +23,6 @@ export function useListClients() {
   });
 }
 
-export function useDeleteClient() {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (id: string) => deleteClient(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
-      message.success("Client deleted");
-    },
-  });
-}
-
 export function useUpdateClient() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -42,6 +31,17 @@ export function useUpdateClient() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEY });
       message.success("Client updated");
+    },
+  });
+}
+
+export function useDeleteClient() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteClient(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      message.success("Client deleted");
     },
   });
 }

@@ -28,17 +28,6 @@ export function useListProductTypes() {
   });
 }
 
-export function useDeleteProductType() {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (id: string) => deleteProductType(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
-      message.success("Product type deleted");
-    },
-  });
-}
-
 export function useUpdateProductType() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -47,6 +36,17 @@ export function useUpdateProductType() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEY });
       message.success("Product type updated");
+    },
+  });
+}
+
+export function useDeleteProductType() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteProductType(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      message.success("Product type deleted");
     },
   });
 }
