@@ -1,4 +1,4 @@
-import { useCreateClient } from "@/hooks/api/useClients";
+import { useCreateClient } from "@/hooks/api/useClient";
 import type { CreateClientPayload } from "@/types/api";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal } from "antd";

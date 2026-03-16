@@ -3,12 +3,12 @@ import {
   deleteProductType,
   listProductTypes,
   updateProductType,
-} from "@/api/product-types";
+} from "@/api/product-type";
 import type { CreateProductTypePayload, UpdateProductTypePayload } from "@/types/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 
-const QUERY_KEY = ["product-types"];
+const QUERY_KEY = ["product-type"];
 
 export function useCreateProductType() {
   const queryClient = useQueryClient();

@@ -1,4 +1,4 @@
-import { useUpdateProductType } from "@/hooks/api/useProductTypes";
+import { useUpdateProductType } from "@/hooks/api/useProductType";
 import { UpdateProductTypePayload } from "@/types/api";
 import { ProductTypes } from "@/types/appwrite";
 import { EditOutlined } from "@ant-design/icons";

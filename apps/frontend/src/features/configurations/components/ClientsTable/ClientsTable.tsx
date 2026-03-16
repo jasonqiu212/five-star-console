@@ -1,4 +1,4 @@
-import { useDeleteClient, useListClients } from "@/hooks/api/useClients";
+import { useDeleteClient, useListClients } from "@/hooks/api/useClient";
 import { Clients } from "@/types/appwrite";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Flex, Popconfirm, Space, Table } from "antd";

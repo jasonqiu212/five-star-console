@@ -1,12 +1,12 @@
 import { apiCall } from "@/utils/api";
-import { DATABASE_ID, tablesDB } from "./client";
-import { Clients } from "@/types/appwrite";
+import { DATABASE_ID, tablesDB } from "./appwrite-client";
+import { CarBrand } from "@/types/appwrite";
 import { ID, Models, Query } from "appwrite";
-import { CreateClientPayload, UpdateClientPayload } from "@/types/api";
+import { CreateCarBrandPayload, UpdateCarBrandPayload } from "@/types/api";
 
-const TABLE_ID = "clients";
+const TABLE_ID = "car_brand";
 
-export async function createClient(payload: CreateClientPayload) {
+export async function createCarBrand(payload: CreateCarBrandPayload) {
   return apiCall(() =>
     tablesDB.createRow({
       databaseId: DATABASE_ID,
@@ -17,17 +17,17 @@ export async function createClient(payload: CreateClientPayload) {
   );
 }
 
-export async function listClients(): Promise<Models.RowList<Clients>> {
+export async function listCarBrands(): Promise<Models.RowList<CarBrand>> {
   return apiCall(() =>
     tablesDB.listRows({
       databaseId: DATABASE_ID,
       tableId: TABLE_ID,
-      queries: [Query.limit(1000)],
+      queries: [Query.select(["*", "carModels.*"]), Query.limit(1000)],
     })
   );
 }
 
-export async function updateClient(id: string, payload: UpdateClientPayload) {
+export async function updateCarBrand(id: string, payload: UpdateCarBrandPayload) {
   return apiCall(() =>
     tablesDB.updateRow({
       databaseId: DATABASE_ID,
@@ -38,7 +38,7 @@ export async function updateClient(id: string, payload: UpdateClientPayload) {
   );
 }
 
-export async function deleteClient(id: string) {
+export async function deleteCarBrand(id: string) {
   return apiCall(() =>
     tablesDB.deleteRow({
       databaseId: DATABASE_ID,

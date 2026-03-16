@@ -1,14 +1,9 @@
-import {
-  createClient,
-  deleteClient,
-  listClients,
-  updateClient,
-} from "@/api/clients";
+import { createClient, deleteClient, listClients, updateClient } from "@/api/client";
 import type { CreateClientPayload, UpdateClientPayload } from "@/types/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 
-const QUERY_KEY = ["clients"];
+const QUERY_KEY = ["client"];
 
 export function useCreateClient() {
   const queryClient = useQueryClient();

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Card, Input, Select, Space, Table, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { useListProductTypes } from "@/hooks/api/useProductTypes";
+import { useListProductTypes } from "@/hooks/api/useProductType";
 
 // Example row type
 interface PurchaseOrderRow {

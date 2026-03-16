@@ -1,4 +1,4 @@
-import { useDeleteProductType, useListProductTypes } from "@/hooks/api/useProductTypes";
+import { useDeleteProductType, useListProductTypes } from "@/hooks/api/useProductType";
 import { ProductTypes } from "@/types/appwrite";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Flex, Popconfirm, Space, Table } from "antd";

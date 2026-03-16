@@ -1,4 +1,4 @@
-import { useUpdateCarBrand } from "@/hooks/api/useCarBrands";
+import { useUpdateCarBrand } from "@/hooks/api/useCarBrand";
 import type { UpdateCarBrandPayload } from "@/types/api";
 import { CarBrands } from "@/types/appwrite";
 import { EditOutlined } from "@ant-design/icons";

@@ -1,4 +1,4 @@
-import { useCreateProductType } from "@/hooks/api/useProductTypes";
+import { useCreateProductType } from "@/hooks/api/useProductType";
 import type { CreateProductTypePayload } from "@/types/api";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal } from "antd";

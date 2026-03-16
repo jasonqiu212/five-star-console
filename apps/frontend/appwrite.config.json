@@ -47,7 +47,7 @@
     ],
     "tables": [
         {
-            "$id": "product_types",
+            "$id": "product_type",
             "$permissions": [
                 "create(\"users\")",
                 "read(\"users\")",
@@ -55,7 +55,7 @@
                 "delete(\"users\")"
             ],
             "databaseId": "69b64fdc00079d87be9e",
-            "name": "product_types",
+            "name": "product_type",
             "enabled": true,
             "rowSecurity": false,
             "columns": [
@@ -79,7 +79,7 @@
             "indexes": []
         },
         {
-            "$id": "clients",
+            "$id": "client",
             "$permissions": [
                 "create(\"users\")",
                 "read(\"users\")",
@@ -87,7 +87,7 @@
                 "delete(\"users\")"
             ],
             "databaseId": "69b64fdc00079d87be9e",
-            "name": "clients",
+            "name": "client",
             "enabled": true,
             "rowSecurity": false,
             "columns": [
@@ -104,7 +104,7 @@
             "indexes": []
         },
         {
-            "$id": "car_models",
+            "$id": "car_model",
             "$permissions": [
                 "create(\"users\")",
                 "read(\"users\")",
@@ -112,7 +112,7 @@
                 "delete(\"users\")"
             ],
             "databaseId": "69b64fdc00079d87be9e",
-            "name": "car_models",
+            "name": "car_model",
             "enabled": true,
             "rowSecurity": false,
             "columns": [
@@ -130,7 +130,7 @@
                     "type": "relationship",
                     "required": false,
                     "array": false,
-                    "relatedTable": "car_brands",
+                    "relatedTable": "car_brand",
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "carModels",
@@ -141,15 +141,10 @@
             "indexes": []
         },
         {
-            "$id": "car_brands",
-            "$permissions": [
-                "create(\"users\")",
-                "read(\"users\")",
-                "update(\"users\")",
-                "delete(\"users\")"
-            ],
+            "$id": "car_brand",
+            "$permissions": [],
             "databaseId": "69b64fdc00079d87be9e",
-            "name": "car_brands",
+            "name": "car_brand",
             "enabled": true,
             "rowSecurity": false,
             "columns": [
@@ -167,7 +162,7 @@
                     "type": "relationship",
                     "required": false,
                     "array": false,
-                    "relatedTable": "car_models",
+                    "relatedTable": "car_model",
                     "relationType": "oneToMany",
                     "twoWay": true,
                     "twoWayKey": "carBrand",

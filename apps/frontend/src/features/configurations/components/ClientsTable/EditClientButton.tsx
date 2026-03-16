@@ -1,4 +1,4 @@
-import { useUpdateClient } from "@/hooks/api/useClients";
+import { useUpdateClient } from "@/hooks/api/useClient";
 import type { UpdateClientPayload } from "@/types/api";
 import { Clients } from "@/types/appwrite";
 import { EditOutlined } from "@ant-design/icons";

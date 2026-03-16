@@ -1,4 +1,4 @@
-import { useDeleteCarBrand, useListCarBrands } from "@/hooks/api/useCarBrands";
+import { useDeleteCarBrand, useListCarBrands } from "@/hooks/api/useCarBrand";
 import { CarBrands, CarModels } from "@/types/appwrite";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Flex, Popconfirm, Space, Table } from "antd";

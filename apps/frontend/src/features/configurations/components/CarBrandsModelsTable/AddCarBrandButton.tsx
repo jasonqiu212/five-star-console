@@ -1,4 +1,4 @@
-import { useCreateCarBrand } from "@/hooks/api/useCarBrands";
+import { useCreateCarBrand } from "@/hooks/api/useCarBrand";
 import type { CreateCarBrandPayload } from "@/types/api";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal } from "antd";

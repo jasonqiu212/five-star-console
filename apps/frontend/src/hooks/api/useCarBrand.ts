@@ -1,14 +1,9 @@
-import {
-  createCarBrand,
-  deleteCarBrand,
-  listCarBrands,
-  updateCarBrand,
-} from "@/api/car-brands";
+import { createCarBrand, deleteCarBrand, listCarBrands, updateCarBrand } from "@/api/car-brand";
 import type { CreateCarBrandPayload, UpdateCarBrandPayload } from "@/types/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 
-const QUERY_KEY = ["car-brands"];
+const QUERY_KEY = ["car-brand"];
 
 export function useCreateCarBrand() {
   const queryClient = useQueryClient();
