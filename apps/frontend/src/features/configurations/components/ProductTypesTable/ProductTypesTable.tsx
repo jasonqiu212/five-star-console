@@ -1,16 +1,23 @@
-import { useDeleteProductType, useListProductTypes } from "@/hooks/api/useProductType";
-import { ProductTypes } from "@/types/appwrite";
+import {
+  useCreateProductType,
+  useDeleteProductType,
+  useListProductTypes,
+  useUpdateProductType,
+} from "@/hooks/api/useProductType";
+import { ProductType } from "@/types/appwrite";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Flex, Popconfirm, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useMemo } from "react";
-import { AddProductTypeButton } from "./AddProductTypeButton";
-import { EditProductTypeButton } from "./EditProductTypeButton";
+import { AddDropdownOptionButton } from "../AddDropdownOptionButton";
+import { EditDropdownOptionButton } from "../EditDropdownOptionButton";
 
 export const ProductTypesTable: React.FC = () => {
   const { data: productTypesData, isFetching } = useListProductTypes();
 
+  const createMutation = useCreateProductType();
   const deleteMutation = useDeleteProductType();
+  const updateMutation = useUpdateProductType();
 
   const productTypes = useMemo(() => {
     return productTypesData?.rows;
@@ -20,7 +27,7 @@ export const ProductTypesTable: React.FC = () => {
     await deleteMutation.mutateAsync(id);
   };
 
-  const columns: ColumnsType<ProductTypes> = [
+  const columns: ColumnsType<ProductType> = [
     {
       title: "Name",
       dataIndex: "name",
@@ -37,7 +44,13 @@ export const ProductTypesTable: React.FC = () => {
 
         return (
           <Space size={4}>
-            <EditProductTypeButton record={record} />
+            <EditDropdownOptionButton
+              record={record}
+              modalTitle="Edit Product Type"
+              inputPlaceholder="Product type name"
+              onSubmit={(values) => updateMutation.mutateAsync({ id: record.$id, payload: values })}
+              isPending={updateMutation.isPending}
+            />
             <Popconfirm
               title="Delete product type"
               description="Are you sure you want to delete this product type?"
@@ -57,7 +70,15 @@ export const ProductTypesTable: React.FC = () => {
   return (
     <Space vertical size="small" style={{ width: "100%" }}>
       <Flex justify="end">
-        <AddProductTypeButton />
+        <AddDropdownOptionButton
+          buttonLabel="Add Product Type"
+          modalTitle="Add Product Type"
+          inputPlaceholder="Product type name"
+          onSubmit={async (values) => {
+            await createMutation.mutateAsync(values);
+          }}
+          isPending={createMutation.isPending}
+        />
       </Flex>
       <Table
         columns={columns}

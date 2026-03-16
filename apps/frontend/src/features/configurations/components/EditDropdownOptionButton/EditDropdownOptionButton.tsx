@@ -1,19 +1,34 @@
-import { useUpdateProductType } from "@/hooks/api/useProductType";
-import { UpdateProductTypePayload } from "@/types/api";
-import { ProductTypes } from "@/types/appwrite";
 import { EditOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal } from "antd";
 import React, { useState } from "react";
 
-interface EditProductTypeButtonProps {
-  record: ProductTypes;
+export interface EditDropdownOptionRecord {
+  $id: string;
+  name: string;
 }
 
-export const EditProductTypeButton: React.FC<EditProductTypeButtonProps> = ({ record }) => {
-  const [open, setOpen] = useState(false);
-  const [form] = Form.useForm<UpdateProductTypePayload>();
+export interface EditDropdownOptionButtonProps {
+  /** Record to edit (must have $id and name) */
+  record: EditDropdownOptionRecord;
+  /** Title of the modal */
+  modalTitle: string;
+  /** Placeholder for the name input */
+  inputPlaceholder: string;
+  /** Called with the form values when the user submits. Component handles close and reset on success. */
+  onSubmit: (values: { name: string }) => Promise<unknown>;
+  /** Whether the submit action is in progress (e.g. mutation.isPending) */
+  isPending?: boolean;
+}
 
-  const updateMutation = useUpdateProductType();
+export const EditDropdownOptionButton: React.FC<EditDropdownOptionButtonProps> = ({
+  record,
+  modalTitle,
+  inputPlaceholder,
+  onSubmit,
+  isPending = false,
+}) => {
+  const [open, setOpen] = useState(false);
+  const [form] = Form.useForm<{ name: string }>();
 
   const handleOpen = () => {
     form.setFieldsValue({ name: record.name });
@@ -27,10 +42,7 @@ export const EditProductTypeButton: React.FC<EditProductTypeButtonProps> = ({ re
 
   const handleSubmit = async () => {
     const values = await form.validateFields();
-    await updateMutation.mutateAsync({
-      id: record.$id,
-      payload: values,
-    });
+    await onSubmit(values);
     handleCancel();
   };
 
@@ -44,11 +56,11 @@ export const EditProductTypeButton: React.FC<EditProductTypeButtonProps> = ({ re
         aria-label="Edit"
       />
       <Modal
-        title="Edit Product Type"
+        title={modalTitle}
         open={open}
         onOk={handleSubmit}
         onCancel={handleCancel}
-        confirmLoading={updateMutation.isPending}
+        confirmLoading={isPending}
         okText="Save"
         destroyOnHidden
         centered
@@ -59,7 +71,7 @@ export const EditProductTypeButton: React.FC<EditProductTypeButtonProps> = ({ re
             label="Name"
             rules={[{ required: true, message: "Please enter a name" }]}
           >
-            <Input placeholder="Product type name" maxLength={255} showCount />
+            <Input placeholder={inputPlaceholder} maxLength={255} showCount />
           </Form.Item>
         </Form>
       </Modal>
