@@ -142,7 +142,12 @@
         },
         {
             "$id": "car_brand",
-            "$permissions": [],
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ],
             "databaseId": "69b64fdc00079d87be9e",
             "name": "car_brand",
             "enabled": true,
@@ -168,6 +173,29 @@
                     "twoWayKey": "carBrand",
                     "onDelete": "cascade",
                     "side": "parent"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "po_number_sequence",
+            "$permissions": [
+                "read(\"users\")",
+                "update(\"users\")"
+            ],
+            "databaseId": "69b64fdc00079d87be9e",
+            "name": "po_number_sequence",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "nextValue",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": 0,
+                    "max": 9007199254740991
                 }
             ],
             "indexes": []

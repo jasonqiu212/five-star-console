@@ -1,3 +1,7 @@
+export type UpdatePoNumberSequencePayload = {
+  nextValue: number;
+};
+
 export type CreateClientPayload = {
   name: string;
 };

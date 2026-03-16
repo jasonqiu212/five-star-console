@@ -21,3 +21,7 @@ export type CarBrand = Models.Row & {
     name: string;
     carModels: CarModel[];
 }
+
+export type PoNumberSequence = Models.Row & {
+    nextValue: number;
+}
