@@ -5,11 +5,11 @@ import {
   useUpdateClient,
 } from "@/hooks/api/useClient";
 import { Client } from "@/types/appwrite";
-import { DeleteOutlined } from "@ant-design/icons";
-import { Button, Flex, Popconfirm, Space, Table } from "antd";
+import { Flex, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useMemo } from "react";
 import { AddDropdownOptionButton } from "../AddDropdownOptionButton";
+import { DeleteDropdownOptionButton } from "../DeleteDropdownOptionButton";
 import { EditDropdownOptionButton } from "../EditDropdownOptionButton";
 
 export const ClientsTable: React.FC = () => {
@@ -22,10 +22,6 @@ export const ClientsTable: React.FC = () => {
   const clients = useMemo(() => {
     return clientsData?.rows;
   }, [clientsData]);
-
-  const handleDeleteConfirm = async (id: string) => {
-    await deleteMutation.mutateAsync(id);
-  };
 
   const columns: ColumnsType<Client> = [
     {
@@ -46,16 +42,12 @@ export const ClientsTable: React.FC = () => {
             onSubmit={(values) => updateMutation.mutateAsync({ id: record.$id, payload: values })}
             isPending={updateMutation.isPending}
           />
-          <Popconfirm
-            title="Delete client"
+          <DeleteDropdownOptionButton
+            title="Delete Client"
             description="Are you sure you want to delete this client?"
-            onConfirm={() => handleDeleteConfirm(record.$id)}
-            okText="Delete"
-            okButtonProps={{ danger: true }}
-            cancelText="Cancel"
-          >
-            <Button type="link" danger icon={<DeleteOutlined />} aria-label="Delete" />
-          </Popconfirm>
+            onConfirm={() => deleteMutation.mutateAsync(record.$id)}
+            isPending={deleteMutation.isPending}
+          />
         </Space>
       ),
     },

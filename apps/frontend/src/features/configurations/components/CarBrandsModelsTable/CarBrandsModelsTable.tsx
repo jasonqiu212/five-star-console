@@ -5,28 +5,28 @@ import {
   useUpdateCarBrand,
 } from "@/hooks/api/useCarBrand";
 import { CarBrand, CarModel } from "@/types/appwrite";
-import { DeleteOutlined } from "@ant-design/icons";
-import { Button, Flex, Popconfirm, Space, Table } from "antd";
+import { Flex, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useMemo } from "react";
 import { AddDropdownOptionButton } from "../AddDropdownOptionButton";
+import { DeleteDropdownOptionButton } from "../DeleteDropdownOptionButton";
 import { EditDropdownOptionButton } from "../EditDropdownOptionButton";
 import { AddCarModelButton } from "./AddCarModelButton";
+import { useDeleteCarModel, useUpdateCarModel } from "@/hooks/api/useCarModel";
 
 export const CarBrandsModelsTable: React.FC = () => {
   const { data: carBrandsData, isFetching } = useListCarBrands();
 
-  const createMutation = useCreateCarBrand();
-  const updateMutation = useUpdateCarBrand();
-  const deleteMutation = useDeleteCarBrand();
+  const createCarBrandMutation = useCreateCarBrand();
+  const updateCarBrandMutation = useUpdateCarBrand();
+  const deleteCarBrandMutation = useDeleteCarBrand();
+
+  const updateCarModelMutation = useUpdateCarModel();
+  const deleteCarModelMutation = useDeleteCarModel();
 
   const carBrands = useMemo(() => {
     return carBrandsData?.rows;
   }, [carBrandsData]);
-
-  const handleDeleteConfirm = async (id: string) => {
-    await deleteMutation.mutateAsync(id);
-  };
 
   const columns: ColumnsType<CarBrand> = [
     {
@@ -45,19 +45,17 @@ export const CarBrandsModelsTable: React.FC = () => {
             record={record}
             modalTitle="Edit car brand"
             inputPlaceholder="Car brand name"
-            onSubmit={(values) => updateMutation.mutateAsync({ id: record.$id, payload: values })}
-            isPending={updateMutation.isPending}
+            onSubmit={(values) =>
+              updateCarBrandMutation.mutateAsync({ id: record.$id, payload: values })
+            }
+            isPending={updateCarBrandMutation.isPending}
           />
-          <Popconfirm
-            title="Delete car brand"
+          <DeleteDropdownOptionButton
+            title="Delete Car Brand"
             description="Are you sure you want to delete this car brand?"
-            onConfirm={() => handleDeleteConfirm(record.$id)}
-            okText="Delete"
-            okButtonProps={{ danger: true }}
-            cancelText="Cancel"
-          >
-            <Button type="link" danger icon={<DeleteOutlined />} aria-label="Delete" />
-          </Popconfirm>
+            onConfirm={() => deleteCarBrandMutation.mutateAsync(record.$id)}
+            isPending={deleteCarBrandMutation.isPending}
+          />
         </Space>
       ),
     },
@@ -68,6 +66,30 @@ export const CarBrandsModelsTable: React.FC = () => {
 
     const modelColumns: ColumnsType<CarModel> = [
       { title: "Car Model", dataIndex: "name", key: "name" },
+      {
+        title: "Actions",
+        key: "actions",
+        width: 100,
+        render: (_, record) => (
+          <Space size={4}>
+            <EditDropdownOptionButton
+              record={record}
+              modalTitle="Edit Car Model"
+              inputPlaceholder="Car model name"
+              onSubmit={(values) =>
+                updateCarModelMutation.mutateAsync({ id: record.$id, payload: values })
+              }
+              isPending={updateCarModelMutation.isPending}
+            />
+            <DeleteDropdownOptionButton
+              title="Delete Car Model"
+              description="Are you sure you want to delete this car model?"
+              onConfirm={() => deleteCarModelMutation.mutateAsync(record.$id)}
+              isPending={deleteCarModelMutation.isPending}
+            />
+          </Space>
+        ),
+      },
     ];
     return (
       <Table
@@ -76,7 +98,6 @@ export const CarBrandsModelsTable: React.FC = () => {
         rowKey="$id"
         size="small"
         pagination={false}
-        showHeader
       />
     );
   };
@@ -89,9 +110,9 @@ export const CarBrandsModelsTable: React.FC = () => {
           modalTitle="Add car brand"
           inputPlaceholder="Car brand name"
           onSubmit={async (values) => {
-            await createMutation.mutateAsync(values);
+            await createCarBrandMutation.mutateAsync(values);
           }}
-          isPending={createMutation.isPending}
+          isPending={createCarBrandMutation.isPending}
         />
       </Flex>
       <Table

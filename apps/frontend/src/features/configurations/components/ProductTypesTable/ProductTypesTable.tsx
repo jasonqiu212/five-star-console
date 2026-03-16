@@ -5,11 +5,11 @@ import {
   useUpdateProductType,
 } from "@/hooks/api/useProductType";
 import { ProductType } from "@/types/appwrite";
-import { DeleteOutlined } from "@ant-design/icons";
-import { Button, Flex, Popconfirm, Space, Table } from "antd";
+import { Flex, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useMemo } from "react";
 import { AddDropdownOptionButton } from "../AddDropdownOptionButton";
+import { DeleteDropdownOptionButton } from "../DeleteDropdownOptionButton";
 import { EditDropdownOptionButton } from "../EditDropdownOptionButton";
 
 export const ProductTypesTable: React.FC = () => {
@@ -22,10 +22,6 @@ export const ProductTypesTable: React.FC = () => {
   const productTypes = useMemo(() => {
     return productTypesData?.rows;
   }, [productTypesData]);
-
-  const handleDeleteConfirm = async (id: string) => {
-    await deleteMutation.mutateAsync(id);
-  };
 
   const columns: ColumnsType<ProductType> = [
     {
@@ -51,16 +47,12 @@ export const ProductTypesTable: React.FC = () => {
               onSubmit={(values) => updateMutation.mutateAsync({ id: record.$id, payload: values })}
               isPending={updateMutation.isPending}
             />
-            <Popconfirm
-              title="Delete product type"
+            <DeleteDropdownOptionButton
+              title="Delete Product Type"
               description="Are you sure you want to delete this product type?"
-              onConfirm={() => handleDeleteConfirm(record.$id)}
-              okText="Delete"
-              okButtonProps={{ danger: true }}
-              cancelText="Cancel"
-            >
-              <Button type="link" danger icon={<DeleteOutlined />} aria-label="Delete" />
-            </Popconfirm>
+              onConfirm={() => deleteMutation.mutateAsync(record.$id)}
+              isPending={deleteMutation.isPending}
+            />
           </Space>
         );
       },
