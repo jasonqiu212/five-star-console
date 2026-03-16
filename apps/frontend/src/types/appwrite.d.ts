@@ -7,3 +7,7 @@ export type ProductTypes = Models.Row & {
     name: string;
     isSystem: boolean;
 }
+
+export type Clients = Models.Row & {
+    name: string;
+}

@@ -77,6 +77,26 @@
                 }
             ],
             "indexes": []
+        },
+        {
+            "$id": "clients",
+            "$permissions": [],
+            "databaseId": "69b64fdc00079d87be9e",
+            "name": "clients",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": []
         }
     ],
     "buckets": [],
