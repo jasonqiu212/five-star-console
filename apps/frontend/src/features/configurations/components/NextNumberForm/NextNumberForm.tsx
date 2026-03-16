@@ -52,7 +52,6 @@ export const NextNumberForm: React.FC<NextNumberFormProps> = ({
         min={0}
         value={localValue ?? undefined}
         onChange={(v) => setLocalValue(v ?? null)}
-        placeholder="0"
         style={{ width: 100 }}
       />
       <Button type="primary" loading={isUpdating} onClick={handleSave} disabled={!isDirty}>

@@ -11,7 +11,7 @@ export async function listPoNumberSequences(): Promise<Models.RowList<PoNumberSe
     tablesDB.listRows({
       databaseId: DATABASE_ID,
       tableId: TABLE_ID,
-      queries: [Query.orderAsc("$createdAt"), Query.limit(1)],
+      queries: [Query.limit(1), Query.orderAsc("$createdAt")],
     })
   );
 }

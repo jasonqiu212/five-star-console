@@ -25,3 +25,8 @@ export type CarBrand = Models.Row & {
 export type PoNumberSequence = Models.Row & {
     nextValue: number;
 }
+
+export type InvoiceNumberSequence = Models.Row & {
+    nextValue: number;
+    entity: string;
+}
