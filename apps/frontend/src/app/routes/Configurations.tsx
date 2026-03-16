@@ -1,9 +1,7 @@
 import { CarBrandsModelsTable } from "@/features/configurations/components/CarBrandsModelsTable";
 import { ClientsTable } from "@/features/configurations/components/ClientsTable";
 import { ProductTypesTable } from "@/features/configurations/components/ProductTypesTable";
-import { blue } from "@ant-design/colors";
-import { UnorderedListOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Card, Collapse, Flex, Space, Typography } from "antd";
+import { Card, Collapse, Space } from "antd";
 import React from "react";
 
 export const Configurations: React.FC = () => {
