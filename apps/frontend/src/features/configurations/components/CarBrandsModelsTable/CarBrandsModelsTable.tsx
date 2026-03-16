@@ -11,6 +11,7 @@ import type { ColumnsType } from "antd/es/table";
 import React, { useMemo } from "react";
 import { AddDropdownOptionButton } from "../AddDropdownOptionButton";
 import { EditDropdownOptionButton } from "../EditDropdownOptionButton";
+import { AddCarModelButton } from "./AddCarModelButton";
 
 export const CarBrandsModelsTable: React.FC = () => {
   const { data: carBrandsData, isFetching } = useListCarBrands();
@@ -36,9 +37,10 @@ export const CarBrandsModelsTable: React.FC = () => {
     {
       title: "Actions",
       key: "actions",
-      width: 100,
+      width: 150,
       render: (_, record) => (
         <Space size={4}>
+          <AddCarModelButton id={record.$id} />
           <EditDropdownOptionButton
             record={record}
             modalTitle="Edit car brand"

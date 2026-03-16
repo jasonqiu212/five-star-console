@@ -50,6 +50,7 @@ export const EditDropdownOptionButton: React.FC<EditDropdownOptionButtonProps> =
     <>
       <Button
         color="default"
+        size="small"
         type="link"
         icon={<EditOutlined />}
         onClick={handleOpen}
