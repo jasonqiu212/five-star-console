@@ -1,8 +1,9 @@
 import React from "react";
-import { Card, Table } from "antd";
+import { Card, Table, Tabs } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useListOrders } from "@/hooks/api/useOrder";
 import { Order } from "@/types/appwrite";
+import { formatDate } from "@/utils";
 
 export const PurchaseOrders: React.FC = () => {
   const { data: orders } = useListOrders();
@@ -13,6 +14,7 @@ export const PurchaseOrders: React.FC = () => {
       dataIndex: "orderDate",
       key: "orderDate",
       sorter: (a, b) => a.orderDate.localeCompare(b.orderDate),
+      render: (value) => formatDate(value),
     },
     {
       title: "Client",
@@ -34,11 +36,27 @@ export const PurchaseOrders: React.FC = () => {
 
   return (
     <Card size="small">
-      <Table
-        size="small"
-        columns={columns}
-        dataSource={orders?.rows}
-        pagination={{ pageSize: 10 }}
+      <Tabs
+        items={[
+          {
+            key: "ongoing",
+            label: "Ongoing",
+            children: (
+              <Table
+                size="small"
+                columns={columns}
+                dataSource={orders?.rows}
+                pagination={{ pageSize: 10 }}
+                rowKey="$id"
+              />
+            ),
+          },
+          {
+            key: "completed",
+            label: "Completed",
+            children: null,
+          },
+        ]}
       />
     </Card>
   );

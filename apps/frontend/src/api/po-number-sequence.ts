@@ -1,4 +1,4 @@
-import { apiCall } from "@/utils/api";
+import { apiCall } from "@/utils";
 import { DATABASE_ID, tablesDB } from "./appwrite-client";
 import { PoNumberSequence } from "@/types/appwrite";
 import { Models, Query } from "appwrite";
