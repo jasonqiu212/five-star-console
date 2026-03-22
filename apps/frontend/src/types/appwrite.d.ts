@@ -14,6 +14,12 @@ export enum OrderItemSeatReplacementScope {
     PARTIAL = "Partial"
 }
 
+export enum InvoiceStatus {
+    OPEN = "Open",
+    PAID = "Paid",
+    CANCELLED = "Cancelled"
+}
+
 export type ProductType = Models.Row & {
     name: string;
     isSystem: boolean;
@@ -52,7 +58,6 @@ export type OrderItem = Models.Row & {
     doorPanelDetails: string | null;
     designDetails: string | null;
     details: string | null;
-    unitPriceExclTax: number;
     isBtProduction: boolean;
     btProductionScope: string | null;
     isSgProduction: boolean;
@@ -65,19 +70,42 @@ export type OrderItem = Models.Row & {
 
 export type Order = Models.Row & {
     orderDate: string;
-    invoiceNumber: string;
     poNumber: string;
     client: string;
-    salesperson: string | null;
     clientDetails: string | null;
     carBrand: string;
     carModel: string;
     carPlate: string;
-    billingComments: string | null;
     handoverDate: string | null;
+    orderItems: OrderItem[];
+    completedDate: string | null;
+    remarks: string | null;
+    invoices: Invoice[];
+}
+
+export type InvoiceItem = Models.Row & {
+    title: string;
+    description: string | null;
+    unitPriceExclTax: number;
+    invoice: Invoice;
+}
+
+export type Invoice = Models.Row & {
+    invoiceNumber: string;
     taxRate: number;
     subtotalExclTax: number;
     totalTax: number;
     totalInclTax: number;
-    orderItems: OrderItem[];
+    billingComments: string | null;
+    openDate: string;
+    cancelledDate: string | null;
+    paidDate: string | null;
+    status: InvoiceStatus;
+    client: string;
+    clientDetails: string | null;
+    carBrand: string;
+    carModel: string;
+    carPlate: string;
+    invoiceItems: InvoiceItem[];
+    order: Order;
 }

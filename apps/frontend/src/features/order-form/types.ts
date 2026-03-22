@@ -9,6 +9,8 @@ export interface OrderItem {
 
 export interface OrderFormValues {
   orderDate?: Dayjs;
+  /** When false, invoice fields are hidden and not required on submit. */
+  createInvoice?: boolean;
   invoiceNumber?: string;
   poNumber?: string;
   client?: string;
