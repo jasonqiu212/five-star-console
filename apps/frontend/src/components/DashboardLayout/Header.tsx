@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown, Avatar, Typography, Button, Flex, Layout, Switch, Segmented } from "antd";
+import { Dropdown, Avatar, Typography, Button, Flex, Layout } from "antd";
 import {
   LogoutOutlined,
   MenuOutlined,
@@ -125,7 +125,7 @@ export const Header: React.FC<HeaderProps> = ({ isMobile, onMobileMenuToggle }) 
         </Button>
 
         <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" arrow>
-          <Flex align="center" gap="small">
+          <Flex align="center" gap="small" style={{ cursor: "pointer" }}>
             <Avatar style={{ backgroundColor: blue[6], cursor: "pointer" }}>
               {getUserInitial()}
             </Avatar>
