@@ -1,12 +1,21 @@
 import React from "react";
-import { Dropdown, Avatar, Typography, Button, Flex, Layout } from "antd";
-import { LogoutOutlined, MenuOutlined, PlusOutlined } from "@ant-design/icons";
+import { Dropdown, Avatar, Typography, Button, Flex, Layout, Switch, Segmented } from "antd";
+import {
+  LogoutOutlined,
+  MenuOutlined,
+  MoonFilled,
+  MoonOutlined,
+  PlusOutlined,
+  SunFilled,
+  SunOutlined,
+} from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { useLocation, useNavigate } from "react-router";
 import { PAGE_TITLES } from "./constants";
 import { blue } from "@ant-design/colors";
 import { useAuth } from "../../features/auth/hooks/useAuth";
 import Logo from "../../assets/logo.png";
+import { useTheme } from "@/features/theme";
 
 const { Title } = Typography;
 
@@ -19,6 +28,7 @@ export const Header: React.FC<HeaderProps> = ({ isMobile, onMobileMenuToggle }) 
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { setTheme, isDark } = useTheme();
 
   const getPageTitle = () => {
     const path = location.pathname;
@@ -31,6 +41,21 @@ export const Header: React.FC<HeaderProps> = ({ isMobile, onMobileMenuToggle }) 
   };
 
   const userMenuItems: MenuProps["items"] = [
+    {
+      key: "light-mode",
+      icon: isDark ? <SunOutlined /> : <SunFilled />,
+      label: "Light Mode",
+      onClick: () => setTheme(false),
+    },
+    {
+      key: "dark-mode",
+      icon: isDark ? <MoonFilled /> : <MoonOutlined />,
+      label: "Dark Mode",
+      onClick: () => setTheme(true),
+    },
+    {
+      type: "divider",
+    },
     {
       key: "logout",
       icon: <LogoutOutlined />,
@@ -56,13 +81,13 @@ export const Header: React.FC<HeaderProps> = ({ isMobile, onMobileMenuToggle }) 
   return (
     <Layout.Header
       style={{
-        background: isMobile ? "#f6f6f6" : "#fafafa",
+        background: isDark ? (isMobile ? "#141414" : "#050505") : isMobile ? "#fff" : "#fafafa",
         padding: "16px 12px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         height: 64,
-        ...(isMobile && { borderBottom: "1px solid #f0f0f0" }),
+        ...(isMobile && { borderBottom: `1px solid ${isDark ? "#303030" : "#f0f0f0"}` }),
       }}
     >
       <Flex align="center" gap="middle">
@@ -78,7 +103,12 @@ export const Header: React.FC<HeaderProps> = ({ isMobile, onMobileMenuToggle }) 
               src={Logo}
               alt="Five Star Console"
               height={32}
-              style={{ display: "block", cursor: "pointer" }}
+              style={{
+                display: "block",
+                cursor: "pointer",
+                backgroundColor: isDark ? "#fff" : "transparent",
+                borderRadius: 16,
+              }}
               onClick={() => navigate("/")}
             />
           </>

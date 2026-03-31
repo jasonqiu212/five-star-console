@@ -4,6 +4,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router";
 import Logo from "../../assets/logo.png";
 import { SIDEBAR_MENU_ITEMS } from "./constants";
+import { useTheme } from "@/features/theme";
 
 const { Sider } = Layout;
 
@@ -11,6 +12,7 @@ export const Sidebar: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isDark } = useTheme();
 
   const handleMenuClick = ({ key }: { key: string }) => {
     navigate(key);
@@ -22,8 +24,8 @@ export const Sidebar: React.FC = () => {
       collapsedWidth={60}
       collapsed={collapsed}
       style={{
-        background: "#f6f6f6",
-        borderRight: "1px solid #f0f0f0",
+        background: isDark ? "#141414" : "#fff",
+        borderRight: `1px solid ${isDark ? "#303030" : "#f0f0f0"}`,
         padding: "16px 12px",
       }}
     >
@@ -34,7 +36,16 @@ export const Sidebar: React.FC = () => {
         style={{ width: "100%", height: "100%" }}
       >
         <Space align="center" style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
-          <img src={Logo} alt="Five Star Console" height={32} style={{ display: "block" }} />
+          <img
+            src={Logo}
+            alt="Five Star Console"
+            height={32}
+            style={{
+              display: "block",
+              backgroundColor: isDark ? "#fff" : "transparent",
+              borderRadius: 16,
+            }}
+          />
           {!collapsed && (
             <Typography.Text style={{ fontSize: 16 }}>
               Five Star <span style={{ fontWeight: 700 }}>Console</span>

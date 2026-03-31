@@ -27,7 +27,6 @@ export const DrawerMenu: React.FC<DrawerMenuProps> = ({ open, onClose }) => {
       closable
       mask
       styles={{
-        section: { background: "#f6f6f6" },
         body: { padding: "16px 12px" },
       }}
     >

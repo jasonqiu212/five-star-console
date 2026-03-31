@@ -6,6 +6,7 @@ import { PAGE_TITLES } from "./constants";
 import { DrawerMenu } from "./DrawerMenu";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
+import { useTheme } from "@/features/theme";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -15,6 +16,7 @@ export const DashboardLayout: React.FC = () => {
   const isMobile = !screens.md;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { isDark } = useTheme();
   const pageTitle = PAGE_TITLES[location.pathname] ?? "";
 
   return (
@@ -24,7 +26,7 @@ export const DashboardLayout: React.FC = () => {
         <Header isMobile={isMobile} onMobileMenuToggle={() => setMobileMenuOpen(true)} />
         <Content
           style={{
-            backgroundColor: "#fafafa",
+            backgroundColor: isDark ? "#050505" : "#fafafa",
             paddingInline: 12,
             overflow: "auto",
           }}
@@ -37,9 +39,7 @@ export const DashboardLayout: React.FC = () => {
           <Outlet />
         </Content>
       </Layout>
-      {isMobile && (
-        <DrawerMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
-      )}
+      {isMobile && <DrawerMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />}
     </Layout>
   );
 };
