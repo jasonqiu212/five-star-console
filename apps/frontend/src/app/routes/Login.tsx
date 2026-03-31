@@ -2,6 +2,7 @@ import { Button, Card, Flex, Form, Input, message } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../features/auth/hooks/useAuth";
+import { useTheme } from "@/features/theme";
 
 interface LoginFormValues {
   email: string;
@@ -12,6 +13,7 @@ export const Login: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { loginAction } = useAuth();
+  const { isDark } = useTheme();
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: LoginFormValues) => {
@@ -30,8 +32,12 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <Flex justify="center" align="center" style={{ height: "100vh", backgroundColor: "#fafafa" }}>
-      <Card title="Log In" style={{ width: 400 }}>
+    <Flex
+      justify="center"
+      align="center"
+      style={{ height: "100vh", backgroundColor: isDark ? "#050505" : "#f6f6f6" }}
+    >
+      <Card title="Log In" variant="borderless" style={{ width: 400 }}>
         <Form form={form} layout="vertical" onFinish={onFinish} autoComplete="off">
           <Form.Item
             label="Email"

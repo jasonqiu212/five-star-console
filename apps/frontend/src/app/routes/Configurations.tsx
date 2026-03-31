@@ -43,7 +43,7 @@ export const Configurations: React.FC = () => {
 
   return (
     <Space vertical size="small" style={{ width: "100%" }}>
-      <Card title="Next Invoice Number">
+      <Card title="Next Invoice Number" variant="borderless">
         <Space orientation="vertical" size="small">
           <Space>
             <Typography.Text>Five Star Auto Leather: </Typography.Text>
@@ -66,7 +66,7 @@ export const Configurations: React.FC = () => {
           </Space>
         </Space>
       </Card>
-      <Card title="Next PO Number">
+      <Card title="Next PO Number" variant="borderless">
         <NextNumberForm
           value={poNumberValue}
           onUpdate={onUpdatePoNumberSequence}
@@ -74,7 +74,7 @@ export const Configurations: React.FC = () => {
           isUpdating={isUpdatingPoNumberSequence}
         />
       </Card>
-      <Card title="Dropdown Options">
+      <Card title="Dropdown Options" variant="borderless">
         <Collapse items={collapseItems} styles={{ body: { padding: 12 } }} />
       </Card>
     </Space>

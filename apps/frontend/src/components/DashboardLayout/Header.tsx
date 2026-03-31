@@ -81,13 +81,12 @@ export const Header: React.FC<HeaderProps> = ({ isMobile, onMobileMenuToggle }) 
   return (
     <Layout.Header
       style={{
-        background: isDark ? (isMobile ? "#141414" : "#050505") : isMobile ? "#fff" : "#fafafa",
+        background: isDark ? (isMobile ? "#141414" : "#050505") : isMobile ? "#fff" : "#f6f6f6",
         padding: "16px 12px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         height: 64,
-        ...(isMobile && { borderBottom: `1px solid ${isDark ? "#303030" : "#f0f0f0"}` }),
       }}
     >
       <Flex align="center" gap="middle">

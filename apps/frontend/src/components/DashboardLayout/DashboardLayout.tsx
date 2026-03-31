@@ -26,7 +26,7 @@ export const DashboardLayout: React.FC = () => {
         <Header isMobile={isMobile} onMobileMenuToggle={() => setMobileMenuOpen(true)} />
         <Content
           style={{
-            backgroundColor: isDark ? "#050505" : "#fafafa",
+            backgroundColor: isDark ? "#050505" : "#f6f6f6",
             paddingInline: 12,
             overflow: "auto",
           }}

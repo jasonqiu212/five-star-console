@@ -25,7 +25,6 @@ export const Sidebar: React.FC = () => {
       collapsed={collapsed}
       style={{
         background: isDark ? "#141414" : "#fff",
-        borderRight: `1px solid ${isDark ? "#303030" : "#f0f0f0"}`,
         padding: "16px 12px",
       }}
     >

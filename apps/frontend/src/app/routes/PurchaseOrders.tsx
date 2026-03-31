@@ -35,7 +35,7 @@ export const PurchaseOrders: React.FC = () => {
   ];
 
   return (
-    <Card size="small">
+    <Card size="small" variant="borderless">
       <Tabs
         items={[
           {
