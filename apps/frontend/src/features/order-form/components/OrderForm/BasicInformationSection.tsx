@@ -4,7 +4,7 @@ import React from "react";
 export const BasicInformationSection: React.FC = () => {
   return (
     <Card title="Basic Information" style={{ width: "100%" }}>
-      <div style={{ maxWidth: 720, marginInline: "auto" }}>
+      <div style={{ maxWidth: 850, marginInline: "auto" }}>
         <Form.Item
           label="Order date"
           name="orderDate"
@@ -13,11 +13,19 @@ export const BasicInformationSection: React.FC = () => {
           <DatePicker style={{ width: "100%" }} />
         </Form.Item>
 
-        <Form.Item label="PO number" name="poNumber">
+        <Form.Item
+          label="PO number"
+          name="poNumber"
+          rules={[{ required: true, message: "Please enter PO number" }]}
+        >
           <Input placeholder="Enter PO number" disabled />
         </Form.Item>
 
-        <Form.Item label="Client" name="client">
+        <Form.Item
+          label="Client"
+          name="client"
+          rules={[{ required: true, message: "Please enter client" }]}
+        >
           <Input placeholder="Enter client" />
         </Form.Item>
 
@@ -25,15 +33,27 @@ export const BasicInformationSection: React.FC = () => {
           <Input placeholder="Enter client details" />
         </Form.Item>
 
-        <Form.Item label="Car brand" name="carBrand">
+        <Form.Item
+          label="Car brand"
+          name="carBrand"
+          rules={[{ required: true, message: "Please enter car brand" }]}
+        >
           <Input placeholder="Enter car brand" />
         </Form.Item>
 
-        <Form.Item label="Car model" name="carModel">
+        <Form.Item
+          label="Car model"
+          name="carModel"
+          rules={[{ required: true, message: "Please enter car model" }]}
+        >
           <Input placeholder="Enter car model" />
         </Form.Item>
 
-        <Form.Item label="Car plate" name="carPlate">
+        <Form.Item
+          label="Car plate"
+          name="carPlate"
+          rules={[{ required: true, message: "Please enter car plate" }]}
+        >
           <Input placeholder="Enter car plate" />
         </Form.Item>
 

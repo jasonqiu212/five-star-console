@@ -1,7 +1,6 @@
 import { Collapse, Form, Switch, Typography } from "antd";
 import React from "react";
 
-/** Rare toggles (e.g. skip invoice). Collapsed by default so the main form stays scannable. */
 export const OrderOptionsCollapse: React.FC = () => {
   return (
     <Collapse
@@ -9,15 +8,14 @@ export const OrderOptionsCollapse: React.FC = () => {
       items={[
         {
           key: "more",
-          label: "More options",
+          label: "More Options",
           children: (
-            <div style={{ maxWidth: 720, marginInline: "auto" }}>
+            <div style={{ maxWidth: 850, marginInline: "auto" }}>
               <Form.Item label="Create invoice" name="createInvoice" valuePropName="checked">
                 <Switch />
               </Form.Item>
               <Typography.Paragraph type="secondary" style={{ marginBottom: 0 }}>
-                Turn off only when this order should not generate an invoice. Invoice fields stay in
-                the Invoice section when this is on.
+                Turn off only when this order should not generate an invoice.
               </Typography.Paragraph>
             </div>
           ),

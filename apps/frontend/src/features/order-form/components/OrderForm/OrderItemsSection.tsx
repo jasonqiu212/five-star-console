@@ -1,56 +1,144 @@
-import { Button, Card, Form, Input, InputNumber } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
+import { Button, Card, Flex, Form, FormInstance, Input, InputNumber, Radio, Select } from "antd";
+import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import React from "react";
+import { OrderFormValues } from "../../types";
 
 const FORM_LIST_NAME = "items";
 
-export const OrderItemsSection: React.FC = () => {
+interface OrderItemsSectionProps {
+  form: FormInstance<OrderFormValues>;
+}
+
+export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form }) => {
   return (
-    <Card title="Order items" style={{ width: "100%" }}>
-      <div style={{ maxWidth: 720, marginInline: "auto" }}>
+    <Card title="Order Items" style={{ width: "100%" }}>
+      <div style={{ maxWidth: 850, marginInline: "auto" }}>
         <Form.List name={FORM_LIST_NAME}>
           {(fields, { add, remove }) => (
-            <div style={{ display: "flex", rowGap: 16, flexDirection: "column" }}>
+            <Flex vertical gap="small">
               {fields.map((field) => (
                 <Card
                   size="small"
                   title={`Item ${field.name + 1}`}
                   key={field.key}
                   extra={
-                    <CloseOutlined
+                    <Button
+                      danger
+                      type="text"
                       onClick={() => remove(field.name)}
-                      style={{ color: "#ff4d4f", fontSize: 14, cursor: "pointer" }}
+                      icon={<CloseOutlined />}
                     />
                   }
                 >
                   <Form.Item
-                    label="Description"
-                    name={[field.name, "description"]}
-                    rules={[{ required: true, message: "Required" }]}
+                    label="Product Type"
+                    name={[field.name, "productType"]}
+                    rules={[{ required: true, message: "Please select product type" }]}
                   >
-                    <Input placeholder="Item description" />
+                    <Select
+                      placeholder="Select product type"
+                      options={[{ label: "Leather Seats", value: "LeatherSeats" }]}
+                    />
                   </Form.Item>
-                  <Form.Item
-                    label="Quantity"
-                    name={[field.name, "quantity"]}
-                    rules={[{ required: true, message: "Required" }]}
-                  >
-                    <InputNumber min={1} placeholder="1" style={{ width: "100%" }} />
+
+                  <Form.Item noStyle shouldUpdate>
+                    {() => {
+                      const productType = form.getFieldValue([
+                        FORM_LIST_NAME,
+                        field.name,
+                        "productType",
+                      ]);
+                      if (productType !== "LeatherSeats") return null;
+
+                      const scope = form.getFieldValue([
+                        FORM_LIST_NAME,
+                        field.name,
+                        "seatReplacementScope",
+                      ]);
+
+                      return (
+                        <>
+                          <Form.Item
+                            label="Leather Type"
+                            name={[field.name, "leatherType"]}
+                            rules={[{ required: true, message: "Please select leather type" }]}
+                          >
+                            <Radio.Group
+                              options={[
+                                { label: "Full Leather", value: "FullLeather" },
+                                { label: "Half Leather", value: "HalfLeather" },
+                                { label: "PVC", value: "PVC" },
+                              ]}
+                            />
+                          </Form.Item>
+
+                          <Form.Item
+                            label="Seat Replacement Scope"
+                            name={[field.name, "seatReplacementScope"]}
+                            rules={[
+                              { required: true, message: "Please select seat replacement scope" },
+                            ]}
+                          >
+                            <Radio.Group
+                              options={[
+                                { label: "Whole", value: "Whole" },
+                                { label: "Partial", value: "Partial" },
+                              ]}
+                            />
+                          </Form.Item>
+
+                          {scope === "Partial" && (
+                            <Form.Item
+                              label="Partial Set Details"
+                              name={[field.name, "partialSetDetails"]}
+                              rules={[
+                                { required: true, message: "Please enter partial set details" },
+                              ]}
+                            >
+                              <Input placeholder="Enter partial set details" />
+                            </Form.Item>
+                          )}
+
+                          <Form.Item
+                            label="Color"
+                            name={[field.name, "color"]}
+                            rules={[{ required: true, message: "Please enter color" }]}
+                          >
+                            <Input placeholder="Enter color" />
+                          </Form.Item>
+
+                          <Form.Item
+                            label="Thread"
+                            name={[field.name, "thread"]}
+                            rules={[{ required: true, message: "Please enter thread" }]}
+                          >
+                            <Input placeholder="Enter thread" />
+                          </Form.Item>
+                        </>
+                      );
+                    }}
                   </Form.Item>
+
                   <Form.Item
-                    label="Unit price"
-                    name={[field.name, "unitPrice"]}
-                    rules={[{ required: true, message: "Required" }]}
+                    label="Net Price"
+                    name={[field.name, "netPrice"]}
+                    rules={[{ required: true, message: "Please enter net price" }]}
                   >
-                    <InputNumber min={0} step={0.01} placeholder="0.00" style={{ width: "100%" }} />
+                    <InputNumber
+                      min={0}
+                      step={0.01}
+                      placeholder="0.00"
+                      prefix="S$"
+                      style={{ width: "100%" }}
+                    />
                   </Form.Item>
                 </Card>
               ))}
 
-              <Button type="dashed" onClick={() => add()} block>
-                + Add Item
+              <Button type="dashed" icon={<PlusOutlined />} onClick={() => add()} block>
+                Add Item
               </Button>
-            </div>
+            </Flex>
           )}
         </Form.List>
       </div>

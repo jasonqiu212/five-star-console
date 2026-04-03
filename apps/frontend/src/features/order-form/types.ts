@@ -5,6 +5,12 @@ export interface OrderItem {
   description?: string;
   quantity?: number;
   unitPrice?: number;
+  productType?: string;
+  leatherType?: "FullLeather" | "HalfLeather" | "PVC";
+  seatReplacementScope?: "Whole" | "Partial";
+  partialSetDetails?: string;
+  color?: string;
+  thread?: string;
 }
 
 export interface OrderFormValues {
