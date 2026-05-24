@@ -7,5 +7,5 @@ export default async (context: any) => {
     return createOrder(context);
   }
 
-  return context.res.json({ error: "Not found" }, 404);
+  return context.res.json({ success: false, error: "Not found" }, 404);
 };

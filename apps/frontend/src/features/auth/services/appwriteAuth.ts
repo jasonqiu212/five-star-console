@@ -1,11 +1,6 @@
 import { account } from "@/api";
+import { ApiResponse } from "@/types/api";
 import { Models } from "appwrite";
-
-export interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: string;
-}
 
 /**
  * Login with email and password using Appwrite
@@ -50,10 +45,8 @@ export const getCurrentUser = async (): Promise<
       data: user,
     };
   } catch (error: any) {
-    // User is not authenticated
     return {
       success: false,
-      data: null,
       error: error.message || "Not authenticated",
     };
   }
@@ -77,24 +70,11 @@ export const logout = async (): Promise<ApiResponse<void>> => {
   }
 };
 
-/**
- * Create a JWT for the current session to pass to Appwrite Functions
- * @returns JWT string
- */
-export const createJwt = async (): Promise<string> => {
-  const { jwt } = await account.createJWT();
-  return jwt;
-};
-
-/**
- * Check if there's an active session
- * @returns True if user has an active session
- */
-export const checkSession = async (): Promise<boolean> => {
+export const createJwt = async (): Promise<ApiResponse<string>> => {
   try {
-    await account.getSession({ sessionId: "current" });
-    return true;
-  } catch {
-    return false;
+    const { jwt } = await account.createJWT();
+    return { success: true, data: jwt };
+  } catch (error: any) {
+    return { success: false, error: error.message || "Failed to create JWT" };
   }
 };
