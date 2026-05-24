@@ -1,12 +1,13 @@
 import { Client, ID, TablesDB } from "node-appwrite";
 
 export async function createOrder(context: any) {
-  const { req, res } = context;
+  const { req, res, log } = context;
 
   const client = new Client()
     .setEndpoint(process.env.APPWRITE_FUNCTION_API_ENDPOINT ?? "")
     .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID ?? "");
 
+  log(JSON.stringify(req.headers));
   if (req.headers["x-appwrite-user-jwt"]) {
     client.setJWT(req.headers["x-appwrite-user-jwt"]);
   } else {
