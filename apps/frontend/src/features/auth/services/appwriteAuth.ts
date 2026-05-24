@@ -78,6 +78,15 @@ export const logout = async (): Promise<ApiResponse<void>> => {
 };
 
 /**
+ * Create a JWT for the current session to pass to Appwrite Functions
+ * @returns JWT string
+ */
+export const createJwt = async (): Promise<string> => {
+  const { jwt } = await account.createJWT();
+  return jwt;
+};
+
+/**
  * Check if there's an active session
  * @returns True if user has an active session
  */

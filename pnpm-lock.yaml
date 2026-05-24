@@ -98,7 +98,7 @@ importers:
         version: 5.9.3
     devDependencies:
       '@types/node':
-        specifier: ^20.12.12
+        specifier: ^20.19.33
         version: 20.19.33
 
   packages/shared-types: {}
