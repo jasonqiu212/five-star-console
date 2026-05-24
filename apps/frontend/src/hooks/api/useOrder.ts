@@ -1,18 +1,20 @@
-import { listOrders } from "@/api/order";
-import { useQuery } from "@tanstack/react-query";
+import { createOrder, listOrders } from "@/api/order";
+import { CreateOrderPayload } from "@/types/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { message } from "antd";
 
 const QUERY_KEY = ["order"];
 
-// export function useCreateClient() {
-//   const queryClient = useQueryClient();
-//   return useMutation({
-//     mutationFn: (payload: CreateClientPayload) => createClient(payload),
-//     onSuccess: () => {
-//       queryClient.invalidateQueries({ queryKey: QUERY_KEY });
-//       message.success("Client created");
-//     },
-//   });
-// }
+export function useCreateOrder() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: CreateOrderPayload) => createOrder(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      message.success("Order created");
+    },
+  });
+}
 
 export function useListOrders() {
   return useQuery({

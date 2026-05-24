@@ -30,3 +30,7 @@ export type CreateProductTypePayload = {
 };
 
 export type UpdateProductTypePayload = Partial<CreateProductTypePayload>;
+
+export type CreateOrderPayload = {
+  name: string;
+};

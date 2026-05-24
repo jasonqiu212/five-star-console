@@ -1,4 +1,4 @@
-import { Client, Account, TablesDB } from "appwrite";
+import { Client, Account, TablesDB, Functions } from "appwrite";
 
 // Validate required environment variables
 const endpoint = import.meta.env.VITE_APPWRITE_ENDPOINT;
@@ -15,5 +15,7 @@ const client = new Client().setEndpoint(endpoint).setProject(projectId);
 
 export const account = new Account(client);
 export const tablesDB = new TablesDB(client);
+export const functions = new Functions(client);
 
 export const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+export const ORDER_FUNCTIONS_ID = import.meta.env.VITE_APPWRITE_ORDER_FUNCTIONS_ID;
