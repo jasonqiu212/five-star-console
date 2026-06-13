@@ -5,7 +5,7 @@
   "main": "dist/main.js",
   "type": "module",
   "scripts": {
-    "build": "tsc"
+    "build": "esbuild src/main.ts --bundle --platform=node --format=esm --outfile=dist/main.js --external:node-appwrite"
   },
   "dependencies": {
     "node-appwrite": "^20.2.1",
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.33",
+    "esbuild": "^0.28.1",
     "typescript": "^5.4.5"
   }
 }
