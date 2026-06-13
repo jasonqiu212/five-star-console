@@ -2,7 +2,7 @@ import { apiCall } from "@/utils";
 import { DATABASE_ID, tablesDB } from "./appwrite-client";
 import { PoNumberSequence } from "@/types/appwrite";
 import { Models, Query } from "appwrite";
-import { UpdatePoNumberSequencePayload } from "@/types/api";
+import { UpdatePoNumberSequencePayload } from "shared-types";
 
 const TABLE_ID = "po_number_sequence";
 

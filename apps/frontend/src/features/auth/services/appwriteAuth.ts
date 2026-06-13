@@ -1,5 +1,5 @@
 import { account } from "@/api";
-import { ApiResponse } from "@/types/api";
+import { ApiResponse } from "shared-types";
 import { Models } from "appwrite";
 
 /**

@@ -2,7 +2,7 @@ import { apiCall } from "@/utils";
 import { DATABASE_ID, tablesDB } from "./appwrite-client";
 import { Client } from "@/types/appwrite";
 import { ID, Models, Query } from "appwrite";
-import { CreateClientPayload, UpdateClientPayload } from "@/types/api";
+import { CreateClientPayload, UpdateClientPayload } from "shared-types";
 
 const TABLE_ID = "client";
 
