@@ -11,7 +11,7 @@ export function createOrder(payload: CreateOrderPayload): Promise<void> {
       functionId: ORDER_FUNCTIONS_ID,
       body: JSON.stringify(payload),
       method: ExecutionMethod.POST,
-      xpath: "/orders",
+      xpath: "/create-order",
     })
   );
 }
