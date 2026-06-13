@@ -1,80 +1,19 @@
 import { account } from "@/api";
-import { ApiResponse } from "shared-types";
 import { Models } from "appwrite";
 
-/**
- * Login with email and password using Appwrite
- * @param email - User email
- * @param password - User password
- * @returns API response with user data
- */
 export const login = async (
   email: string,
   password: string
-): Promise<ApiResponse<Models.User<Models.Preferences>>> => {
-  try {
-    // Create email session with Appwrite
-    await account.createEmailPasswordSession({ email, password });
-
-    // Get the current user data
-    const user = await account.get();
-
-    return {
-      success: true,
-      data: user,
-    };
-  } catch (error: any) {
-    return {
-      success: false,
-      error: error.message || "Login failed",
-    };
-  }
+): Promise<Models.User<Models.Preferences>> => {
+  await account.createEmailPasswordSession({ email, password });
+  return account.get();
 };
 
-/**
- * Get the currently authenticated user
- * @returns API response with user data or null if not authenticated
- */
-export const getCurrentUser = async (): Promise<
-  ApiResponse<Models.User<Models.Preferences> | null>
-> => {
-  try {
-    const user = await account.get();
-    return {
-      success: true,
-      data: user,
-    };
-  } catch (error: any) {
-    return {
-      success: false,
-      error: error.message || "Not authenticated",
-    };
-  }
+export const logout = async (): Promise<void> => {
+  await account.deleteSession({ sessionId: "current" });
 };
 
-/**
- * Logout the current user
- * Deletes the current session
- */
-export const logout = async (): Promise<ApiResponse<void>> => {
-  try {
-    await account.deleteSession({ sessionId: "current" });
-    return {
-      success: true,
-    };
-  } catch (error: any) {
-    return {
-      success: false,
-      error: error.message || "Logout failed",
-    };
-  }
-};
-
-export const createJwt = async (): Promise<ApiResponse<string>> => {
-  try {
-    const { jwt } = await account.createJWT();
-    return { success: true, data: jwt };
-  } catch (error: any) {
-    return { success: false, error: error.message || "Failed to create JWT" };
-  }
+export const createJwt = async (): Promise<string> => {
+  const { jwt } = await account.createJWT();
+  return jwt;
 };

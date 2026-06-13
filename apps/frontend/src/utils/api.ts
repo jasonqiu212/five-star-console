@@ -1,5 +1,5 @@
 import { message } from "antd";
-import { AppwriteException } from "appwrite";
+import { AppwriteException, Models } from "appwrite";
 
 export async function apiCall<T>(fn: () => Promise<T>): Promise<T> {
   try {
@@ -13,4 +13,15 @@ export async function apiCall<T>(fn: () => Promise<T>): Promise<T> {
 
     throw err;
   }
+}
+
+export async function functionCall<T>(fn: () => Promise<Models.Execution>): Promise<T> {
+  const execution = await apiCall(fn);
+  if (execution.responseStatusCode !== 200) {
+    const body = JSON.parse(execution.responseBody);
+    const errorMessage = body.error ?? "Function call failed";
+    message.error(errorMessage);
+    throw new Error(errorMessage);
+  }
+  return JSON.parse(execution.responseBody) as T;
 }

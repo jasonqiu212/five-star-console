@@ -10,7 +10,7 @@ export async function createOrder(context: any) {
   if (req.headers["x-appwrite-user-jwt"]) {
     client.setJWT(req.headers["x-appwrite-user-jwt"]);
   } else {
-    return res.json({ success: false, error: "Unauthorized" }, 401);
+    return res.json({ error: "Unauthorized" }, 401);
   }
 
   const tablesDB = new TablesDB(client);
@@ -24,9 +24,9 @@ export async function createOrder(context: any) {
       rowId: ID.unique(),
       data: body,
     });
-  } catch (e) {
-    return res.json({ success: false, error: "Failed to create row" }, 500);
+  } catch (_e) {
+    return res.json({ error: "Failed to create row" }, 500);
   }
 
-  return res.json({ success: true });
+  return res.json({});
 }

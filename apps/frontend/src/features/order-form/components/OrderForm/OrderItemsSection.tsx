@@ -2,14 +2,18 @@ import { Button, Card, Flex, Form, FormInstance, Input, InputNumber, Radio, Sele
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import React from "react";
 import { OrderFormValues } from "../../types";
+import type { ProductType } from "shared-types";
 
 const FORM_LIST_NAME = "items";
 
 interface OrderItemsSectionProps {
   form: FormInstance<OrderFormValues>;
+  productTypes: ProductType[];
 }
 
-export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form }) => {
+export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, productTypes }) => {
+  const productTypeOptions = productTypes.map((pt) => ({ label: pt.name, value: pt.$id }));
+
   return (
     <Card title="Order Items" style={{ width: "100%" }}>
       <div style={{ maxWidth: 850, marginInline: "auto" }}>
@@ -35,20 +39,18 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form }) =>
                     name={[field.name, "productType"]}
                     rules={[{ required: true, message: "Please select product type" }]}
                   >
-                    <Select
-                      placeholder="Select product type"
-                      options={[{ label: "Leather Seats", value: "LeatherSeats" }]}
-                    />
+                    <Select placeholder="Select product type" options={productTypeOptions} />
                   </Form.Item>
 
                   <Form.Item noStyle shouldUpdate>
                     {() => {
-                      const productType = form.getFieldValue([
+                      const productTypeId = form.getFieldValue([
                         FORM_LIST_NAME,
                         field.name,
                         "productType",
                       ]);
-                      if (productType !== "LeatherSeats") return null;
+                      const selectedType = productTypes.find((pt) => pt.$id === productTypeId);
+                      if (!selectedType?.isSystem) return null;
 
                       const scope = form.getFieldValue([
                         FORM_LIST_NAME,

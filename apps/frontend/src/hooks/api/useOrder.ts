@@ -30,26 +30,3 @@ export function useGetOrderMeta() {
     queryFn: () => getOrderMeta(),
   });
 }
-
-// export function useUpdateClient() {
-//   const queryClient = useQueryClient();
-//   return useMutation({
-//     mutationFn: ({ id, payload }: { id: string; payload: UpdateClientPayload }) =>
-//       updateClient(id, payload),
-//     onSuccess: () => {
-//       queryClient.invalidateQueries({ queryKey: QUERY_KEY });
-//       message.success("Client updated");
-//     },
-//   });
-// }
-
-// export function useDeleteClient() {
-//   const queryClient = useQueryClient();
-//   return useMutation({
-//     mutationFn: (id: string) => deleteClient(id),
-//     onSuccess: () => {
-//       queryClient.invalidateQueries({ queryKey: QUERY_KEY });
-//       message.success("Client deleted");
-//     },
-//   });
-// }

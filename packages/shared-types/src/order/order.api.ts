@@ -1,11 +1,10 @@
-import type { Client, ProductType } from "../appwrite/appwrite";
-import type { ApiResponse } from "../api";
-
-export type GetOrderMetaResponse = ApiResponse<{
-  clients: Client[];
-  productTypes: ProductType[];
-}>;
+import { Client, ProductType } from "../appwrite/appwrite";
 
 export type CreateOrderPayload = {
   name: string;
+};
+
+export type GetOrderMetaResponse = {
+  clients: Client[];
+  productTypes: ProductType[];
 };

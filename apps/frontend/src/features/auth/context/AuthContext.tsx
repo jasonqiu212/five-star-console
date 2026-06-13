@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import { AuthState, LoginCredentials } from "../types";
 import * as appwriteAuth from "../services/appwriteAuth";
+import { account } from "@/api";
 
 interface AuthContextValue extends AuthState {
   loginAction: (credentials: LoginCredentials) => Promise<void>;
@@ -22,68 +23,34 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [state, setState] = useState<AuthState>(initialState);
 
-  /**
-   * Login action using Appwrite
-   */
   const loginAction = useCallback(async (credentials: LoginCredentials) => {
+    setState((prev) => ({ ...prev, isLoading: true }));
     try {
-      setState((prev) => ({ ...prev, isLoading: true }));
-
-      const response = await appwriteAuth.login(credentials.email, credentials.password);
-
-      if (response.success && response.data) {
-        setState({
-          user: response.data,
-          isAuthenticated: true,
-          isLoading: false,
-        });
-      } else {
-        setState((prev) => ({ ...prev, isLoading: false }));
-        throw new Error("Login failed");
-      }
+      const user = await appwriteAuth.login(credentials.email, credentials.password);
+      setState({ user, isAuthenticated: true, isLoading: false });
     } catch (error) {
       setState((prev) => ({ ...prev, isLoading: false }));
       throw error;
     }
   }, []);
 
-  /**
-   * Logout action using Appwrite
-   */
   const logout = useCallback(async () => {
     try {
       await appwriteAuth.logout();
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
-      // Always reset state even if logout fails
-      setState({
-        user: null,
-        isAuthenticated: false,
-        isLoading: false,
-      });
+      setState({ user: null, isAuthenticated: false, isLoading: false });
     }
   }, []);
 
-  /**
-   * Initialize auth state by checking for active Appwrite session
-   */
   useEffect(() => {
     const initializeAuth = async () => {
-      const response = await appwriteAuth.getCurrentUser();
-
-      if (response.success && response.data) {
-        setState({
-          user: response.data,
-          isAuthenticated: true,
-          isLoading: false,
-        });
-      } else {
-        setState({
-          user: null,
-          isAuthenticated: false,
-          isLoading: false,
-        });
+      try {
+        const user = await account.get();
+        setState({ user, isAuthenticated: true, isLoading: false });
+      } catch {
+        setState({ user: null, isAuthenticated: false, isLoading: false });
       }
     };
 

@@ -7,7 +7,7 @@ import { InvoiceSection } from "./InvoiceSection";
 import { OrderItemsSection } from "./OrderItemsSection";
 import { OrderOptionsCollapse } from "./OrderOptionsCollapse";
 import dayjs from "dayjs";
-import { useCreateOrder } from "@/hooks/api/useOrder";
+import { useCreateOrder, useGetOrderMeta } from "@/hooks/api/useOrder";
 
 export const OrderForm: React.FC = () => {
   const [form] = Form.useForm<OrderFormValues>();
@@ -20,6 +20,10 @@ export const OrderForm: React.FC = () => {
   }, []);
 
   const { mutateAsync: createOrderAsync } = useCreateOrder();
+  const { data: orderMeta } = useGetOrderMeta();
+
+  const clients = orderMeta?.clients ?? [];
+  const productTypes = orderMeta?.productTypes ?? [];
 
   const onFinish = (_values: OrderFormValues) => {
     message.success("Order submitted successfully");
@@ -43,9 +47,9 @@ export const OrderForm: React.FC = () => {
         <Button type="primary" onClick={testSubmit}>
           Test
         </Button>
-        <BasicInformationSection />
+        <BasicInformationSection clients={clients} />
         <InvoiceSection form={form} />
-        <OrderItemsSection form={form} />
+        <OrderItemsSection form={form} productTypes={productTypes} />
         <OrderOptionsCollapse />
         <Form.Item style={{ textAlign: "right" }}>
           <Button type="primary" htmlType="submit">
