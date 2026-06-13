@@ -25,35 +25,51 @@ export async function getOrderMeta(context: any) {
   const tablesDB = new TablesDB(client);
   const databaseId = process.env.APPWRITE_DATABASE_ID ?? "";
 
+  const t = () => Date.now();
+  const elapsed = (start: number) => `${Date.now() - start}ms`;
+
   try {
+    const totalStart = t();
+    context.log("[getOrderMeta] starting parallel queries");
+
+    const timed = <T>(label: string, promise: Promise<T>): Promise<T> => {
+      const start = t();
+      return promise.then(
+        (r) => { context.log(`[getOrderMeta] ${label} done in ${elapsed(start)}`); return r; },
+        (e) => { context.log(`[getOrderMeta] ${label} failed after ${elapsed(start)}: ${e}`); return Promise.reject(e); }
+      );
+    };
+
     const [clientsResult, productTypesResult, invoiceSeqResult, poSeqResult, carBrandsResult] =
       await Promise.all([
-        tablesDB.listRows<ClientType>({
+        timed("client", tablesDB.listRows<ClientType>({
           databaseId,
           tableId: "client",
           queries: [Query.limit(1000)],
-        }),
-        tablesDB.listRows<ProductType>({
+        })),
+        timed("product_type", tablesDB.listRows<ProductType>({
           databaseId,
           tableId: "product_type",
           queries: [Query.limit(1000)],
-        }),
-        tablesDB.listRows<InvoiceNumberSequence>({
+        })),
+        timed("invoice_number_sequence", tablesDB.listRows<InvoiceNumberSequence>({
           databaseId,
           tableId: "invoice_number_sequence",
           queries: [Query.limit(10)],
-        }),
-        tablesDB.listRows<PoNumberSequence>({
+        })),
+        timed("po_number_sequence", tablesDB.listRows<PoNumberSequence>({
           databaseId,
           tableId: "po_number_sequence",
           queries: [Query.limit(1)],
-        }),
-        tablesDB.listRows<CarBrand>({
+        })),
+        timed("car_brand", tablesDB.listRows<CarBrand>({
           databaseId,
           tableId: "car_brand",
           queries: [Query.select(["*", "carModels.*"]), Query.limit(1000)],
-        }),
+        })),
       ]);
+
+    context.log(`[getOrderMeta] all queries done in ${elapsed(totalStart)}`);
 
     const fiveStarSeq = invoiceSeqResult.rows.find(
       (r) => r.entity === InvoiceOrgEntity.FiveStarAutoLeather
