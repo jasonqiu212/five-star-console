@@ -39,7 +39,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         });
       } else {
         setState((prev) => ({ ...prev, isLoading: false }));
-        throw new Error(response.error || "Login failed");
+        throw new Error("Login failed");
       }
     } catch (error) {
       setState((prev) => ({ ...prev, isLoading: false }));
