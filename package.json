@@ -12,6 +12,7 @@
     "packages/*"
   ],
   "scripts": {
+    "generate-appwrite-types": "appwrite pull tables && appwrite types -l ts packages/shared-types/src/appwrite",
     "dev:frontend": "pnpm --filter five-star-console-frontend dev",
     "dev:backend": "pnpm --filter five-star-console-backend dev",
     "build:frontend": "pnpm --filter five-star-console-frontend build",
@@ -34,6 +35,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "prettier": "^3.4.2",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.21.0"
+    "typescript-eslint": "^8.21.0",
+    "appwrite-cli": "16.0.0"
   }
 }

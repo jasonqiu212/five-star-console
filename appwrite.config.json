@@ -38,6 +38,27 @@
             }
         }
     },
+    "functions": [
+        {
+            "$id": "69bdfb460029a485ab7e",
+            "name": "order-functions",
+            "runtime": "node-20.0",
+            "path": "functions/order-functions",
+            "entrypoint": "dist/main.js",
+            "execute": [
+                "users"
+            ],
+            "enabled": true,
+            "logging": true,
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "commands": "pnpm install && pnpm run build",
+            "scopes": [
+                "users.read"
+            ]
+        }
+    ],
     "tablesDB": [
         {
             "$id": "69b64fdc00079d87be9e",
