@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@ant-design/colors": "^8.0.1",
+    "shared-types": "workspace:*",
     "@ant-design/icons": "^6.1.0",
     "@tanstack/react-query": "^5.90.21",
     "antd": "^6.3.0",

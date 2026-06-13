@@ -3,6 +3,7 @@ import { DATABASE_ID, tablesDB, functions, ORDER_FUNCTIONS_ID } from "./appwrite
 import { Order } from "@/types/appwrite";
 import { ExecutionMethod, Models, Query } from "appwrite";
 import { CreateOrderPayload } from "@/types/api";
+import type { GetOrderMetaResponse } from "shared-types";
 
 const TABLE_ID = "order";
 
@@ -11,9 +12,20 @@ export async function createOrder(payload: CreateOrderPayload): Promise<Models.E
     return functions.createExecution({
       functionId: ORDER_FUNCTIONS_ID,
       body: JSON.stringify(payload),
-      xpath: "/orders",
       method: ExecutionMethod.POST,
+      xpath: "/orders",
     });
+  });
+}
+
+export async function getOrderMeta(): Promise<GetOrderMetaResponse> {
+  return apiCall(async () => {
+    const execution = await functions.createExecution({
+      functionId: ORDER_FUNCTIONS_ID,
+      method: ExecutionMethod.GET,
+      xpath: "/get-order-meta",
+    });
+    return JSON.parse(execution.responseBody) as GetOrderMetaResponse;
   });
 }
 

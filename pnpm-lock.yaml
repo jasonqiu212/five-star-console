@@ -71,6 +71,9 @@ importers:
       react-router:
         specifier: ^7.6.2
         version: 7.13.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      shared-types:
+        specifier: workspace:*
+        version: link:../../packages/shared-types
     devDependencies:
       '@types/react':
         specifier: ^18.2.55
@@ -93,6 +96,9 @@ importers:
       node-appwrite:
         specifier: ^20.2.1
         version: 20.3.0
+      shared-types:
+        specifier: workspace:*
+        version: link:../../packages/shared-types
       typescript:
         specifier: ^5.4.5
         version: 5.9.3
