@@ -1,13 +1,27 @@
 import { Card, DatePicker, Form, Input, Select } from "antd";
 import React from "react";
-import type { Client } from "shared-types";
+import type { CarBrand, Client } from "shared-types";
 
 interface BasicInformationSectionProps {
   clients: Client[];
+  carBrands: CarBrand[];
 }
 
-export const BasicInformationSection: React.FC<BasicInformationSectionProps> = ({ clients }) => {
+export const BasicInformationSection: React.FC<BasicInformationSectionProps> = ({
+  clients,
+  carBrands,
+}) => {
+  const form = Form.useFormInstance();
+  const selectedBrandName = Form.useWatch("carBrand", form);
+
   const clientOptions = clients.map((c) => ({ label: c.name, value: c.$id }));
+  const carBrandOptions = carBrands.map((b) => ({ label: b.name, value: b.name }));
+
+  const selectedBrand = carBrands.find((b) => b.name === selectedBrandName);
+  const carModelOptions = (selectedBrand?.carModels ?? []).map((m) => ({
+    label: m.name,
+    value: m.name,
+  }));
 
   return (
     <Card title="Basic Information" style={{ width: "100%" }}>
@@ -50,17 +64,33 @@ export const BasicInformationSection: React.FC<BasicInformationSectionProps> = (
         <Form.Item
           label="Car brand"
           name="carBrand"
-          rules={[{ required: true, message: "Please enter car brand" }]}
+          rules={[{ required: true, message: "Please select a car brand" }]}
         >
-          <Input placeholder="Enter car brand" />
+          <Select
+            placeholder="Select car brand"
+            options={carBrandOptions}
+            showSearch
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            onChange={() => form.setFieldValue("carModel", undefined)}
+          />
         </Form.Item>
 
         <Form.Item
           label="Car model"
           name="carModel"
-          rules={[{ required: true, message: "Please enter car model" }]}
+          rules={[{ required: true, message: "Please select a car model" }]}
         >
-          <Input placeholder="Enter car model" />
+          <Select
+            placeholder={selectedBrandName ? "Select car model" : "Select a car brand first"}
+            options={carModelOptions}
+            showSearch
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            disabled={!selectedBrandName}
+          />
         </Form.Item>
 
         <Form.Item

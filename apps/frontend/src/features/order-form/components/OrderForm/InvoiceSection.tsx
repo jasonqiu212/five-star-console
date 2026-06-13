@@ -1,14 +1,27 @@
-import { Card, Form, FormInstance, Input, Typography } from "antd";
-import React from "react";
+import { Card, Form, FormInstance, Input, Select, Typography } from "antd";
+import React, { useEffect } from "react";
+import { InvoiceOrgEntity, InvoiceOrgEntityMeta } from "shared-types";
 
 import type { OrderFormValues } from "../../types";
 
 interface InvoiceSectionProps {
   form: FormInstance<OrderFormValues>;
+  nextInvoiceNumbers?: { fiveStarAutoLeather: number; leatherAndStitch: number };
 }
 
-export const InvoiceSection: React.FC<InvoiceSectionProps> = ({ form }) => {
+export const InvoiceSection: React.FC<InvoiceSectionProps> = ({ form, nextInvoiceNumbers }) => {
   const createInvoice = Form.useWatch("createInvoice", form) ?? true;
+  const invoiceEntity = Form.useWatch("invoiceEntity", form);
+
+  useEffect(() => {
+    if (!nextInvoiceNumbers) return;
+    const entity = invoiceEntity ?? InvoiceOrgEntity.FiveStarAutoLeather;
+    const nextNumber =
+      entity === InvoiceOrgEntity.FiveStarAutoLeather
+        ? nextInvoiceNumbers.fiveStarAutoLeather
+        : nextInvoiceNumbers.leatherAndStitch;
+    form.setFieldValue("invoiceNumber", String(nextNumber));
+  }, [invoiceEntity, nextInvoiceNumbers, form]);
 
   return (
     <Card title="Invoice" style={{ width: "100%" }}>
@@ -21,6 +34,14 @@ export const InvoiceSection: React.FC<InvoiceSectionProps> = ({ form }) => {
           </Typography.Paragraph>
         ) : (
           <>
+            <Form.Item
+              label="Entity"
+              name="invoiceEntity"
+              rules={[{ required: createInvoice, message: "Please select an entity" }]}
+            >
+              <Select options={InvoiceOrgEntityMeta.options} />
+            </Form.Item>
+
             <Form.Item
               label="Invoice number"
               name="invoiceNumber"

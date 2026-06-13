@@ -2,23 +2,19 @@ import {
   useListInvoiceNumberSequences,
   useUpdateInvoiceNumberSequence,
 } from "@/hooks/api/useInvoiceNumberSequence";
-
-enum Entity {
-  FiveStarAutoLeather = "five-star-auto-leather",
-  LeatherAndStitch = "leather-and-stitch",
-}
+import { InvoiceOrgEntity } from "shared-types";
 
 export function useInvoiceNumberSequenceForm() {
   const { data, isLoading } = useListInvoiceNumberSequences();
   const updateSequence = useUpdateInvoiceNumberSequence();
 
   const fiveStarAutoLeatherSequence = data?.rows?.find(
-    (row) => row.entity === Entity.FiveStarAutoLeather
+    (row) => row.entity === InvoiceOrgEntity.FiveStarAutoLeather
   );
   const fiveStarAutoLeatherValue = fiveStarAutoLeatherSequence?.nextValue ?? null;
 
   const leatherAndStitchSequence = data?.rows?.find(
-    (row) => row.entity === Entity.LeatherAndStitch
+    (row) => row.entity === InvoiceOrgEntity.LeatherAndStitch
   );
   const leatherAndStitchValue = leatherAndStitchSequence?.nextValue ?? null;
 

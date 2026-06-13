@@ -7,6 +7,7 @@ export * from "./car-model/car-model.api";
 export * from "./client/client.api";
 
 export * from "./number-sequence/number-sequence.api";
+export * from "./number-sequence/number-sequence.enum";
 
 export * from "./order/order.api";
 

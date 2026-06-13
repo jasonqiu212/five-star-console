@@ -1,5 +1,6 @@
 import { Button, Form, message, Space } from "antd";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
+import { InvoiceOrgEntity } from "shared-types";
 
 import type { OrderFormValues } from "../../types";
 import { BasicInformationSection } from "./BasicInformationSection";
@@ -16,6 +17,7 @@ export const OrderForm: React.FC = () => {
     return {
       orderDate: dayjs(),
       createInvoice: true,
+      invoiceEntity: InvoiceOrgEntity.FiveStarAutoLeather,
     };
   }, []);
 
@@ -24,6 +26,14 @@ export const OrderForm: React.FC = () => {
 
   const clients = orderMeta?.clients ?? [];
   const productTypes = orderMeta?.productTypes ?? [];
+  const carBrands = orderMeta?.carBrands ?? [];
+  const nextInvoiceNumbers = orderMeta?.nextInvoiceNumbers;
+
+  useEffect(() => {
+    if (orderMeta?.nextPoNumber != null) {
+      form.setFieldValue("poNumber", String(orderMeta.nextPoNumber));
+    }
+  }, [orderMeta?.nextPoNumber, form]);
 
   const onFinish = (_values: OrderFormValues) => {
     message.success("Order submitted successfully");
@@ -47,8 +57,8 @@ export const OrderForm: React.FC = () => {
         <Button type="primary" onClick={testSubmit}>
           Test
         </Button>
-        <BasicInformationSection clients={clients} />
-        <InvoiceSection form={form} />
+        <BasicInformationSection clients={clients} carBrands={carBrands} />
+        <InvoiceSection form={form} nextInvoiceNumbers={nextInvoiceNumbers} />
         <OrderItemsSection form={form} productTypes={productTypes} />
         <OrderOptionsCollapse />
         <Form.Item style={{ textAlign: "right" }}>
