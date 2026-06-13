@@ -1,17 +1,10 @@
-export type OrderMetaClient = {
-  $id: string;
-  name: string;
-};
+import type { Client, ProductType } from "../appwrite/appwrite";
+import type { ApiResponse } from "../api";
 
-export type OrderMetaProductType = {
-  $id: string;
-  name: string;
-  isSystem: boolean;
-};
-
-export type GetOrderMetaResponse =
-  | { success: true; data: { clients: OrderMetaClient[]; productTypes: OrderMetaProductType[] } }
-  | { success: false; error: string };
+export type GetOrderMetaResponse = ApiResponse<{
+  clients: Client[];
+  productTypes: ProductType[];
+}>;
 
 export type CreateOrderPayload = {
   name: string;
