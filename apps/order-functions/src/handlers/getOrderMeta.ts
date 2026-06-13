@@ -40,34 +40,31 @@ export async function getOrderMeta(context: any) {
       );
     };
 
-    const [clientsResult, productTypesResult, invoiceSeqResult, poSeqResult, carBrandsResult] =
-      await Promise.all([
-        timed("client", tablesDB.listRows<ClientType>({
-          databaseId,
-          tableId: "client",
-          queries: [Query.limit(1000)],
-        })),
-        timed("product_type", tablesDB.listRows<ProductType>({
-          databaseId,
-          tableId: "product_type",
-          queries: [Query.limit(1000)],
-        })),
-        timed("invoice_number_sequence", tablesDB.listRows<InvoiceNumberSequence>({
-          databaseId,
-          tableId: "invoice_number_sequence",
-          queries: [Query.limit(10)],
-        })),
-        timed("po_number_sequence", tablesDB.listRows<PoNumberSequence>({
-          databaseId,
-          tableId: "po_number_sequence",
-          queries: [Query.limit(1)],
-        })),
-        timed("car_brand", tablesDB.listRows<CarBrand>({
-          databaseId,
-          tableId: "car_brand",
-          queries: [Query.select(["*", "carModels.*"]), Query.limit(1000)],
-        })),
-      ]);
+    const clientsResult = await timed("client", tablesDB.listRows<ClientType>({
+      databaseId,
+      tableId: "client",
+      queries: [Query.limit(1000)],
+    }));
+    const productTypesResult = await timed("product_type", tablesDB.listRows<ProductType>({
+      databaseId,
+      tableId: "product_type",
+      queries: [Query.limit(1000)],
+    }));
+    const invoiceSeqResult = await timed("invoice_number_sequence", tablesDB.listRows<InvoiceNumberSequence>({
+      databaseId,
+      tableId: "invoice_number_sequence",
+      queries: [Query.limit(10)],
+    }));
+    const poSeqResult = await timed("po_number_sequence", tablesDB.listRows<PoNumberSequence>({
+      databaseId,
+      tableId: "po_number_sequence",
+      queries: [Query.limit(1)],
+    }));
+    const carBrandsResult = await timed("car_brand", tablesDB.listRows<CarBrand>({
+      databaseId,
+      tableId: "car_brand",
+      queries: [Query.select(["*", "carModels.*"]), Query.limit(1000)],
+    }));
 
     context.log(`[getOrderMeta] all queries done in ${elapsed(totalStart)}`);
 
