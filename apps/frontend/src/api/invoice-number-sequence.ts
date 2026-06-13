@@ -1,6 +1,6 @@
 import { apiCall } from "@/utils";
 import { DATABASE_ID, tablesDB } from "./appwrite-client";
-import { InvoiceNumberSequence } from "@/types/appwrite";
+import { InvoiceNumberSequence } from "shared-types";
 import { Models, Query } from "appwrite";
 import { UpdateInvoiceNumberSequencePayload } from "shared-types";
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Table, Tabs } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useListOrders } from "@/hooks/api/useOrder";
-import { Order } from "@/types/appwrite";
+import { Order } from "shared-types";
 import { formatDate } from "@/utils";
 
 export const PurchaseOrders: React.FC = () => {

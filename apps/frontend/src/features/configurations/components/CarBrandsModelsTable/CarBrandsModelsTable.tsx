@@ -4,7 +4,7 @@ import {
   useListCarBrands,
   useUpdateCarBrand,
 } from "@/hooks/api/useCarBrand";
-import { CarBrand, CarModel } from "@/types/appwrite";
+import { CarBrand, CarModel } from "shared-types";
 import { Flex, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useMemo } from "react";

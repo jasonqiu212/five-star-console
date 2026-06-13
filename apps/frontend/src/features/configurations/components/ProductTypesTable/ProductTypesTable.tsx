@@ -4,7 +4,7 @@ import {
   useListProductTypes,
   useUpdateProductType,
 } from "@/hooks/api/useProductType";
-import { ProductType } from "@/types/appwrite";
+import { ProductType } from "shared-types";
 import { Flex, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useMemo } from "react";

@@ -1,6 +1,6 @@
 import { apiCall } from "@/utils";
 import { DATABASE_ID, tablesDB } from "./appwrite-client";
-import { CarBrand } from "@/types/appwrite";
+import { CarBrand } from "shared-types";
 import { ID, Models, Query } from "appwrite";
 import { CreateCarBrandPayload, UpdateCarBrandPayload } from "shared-types";
 

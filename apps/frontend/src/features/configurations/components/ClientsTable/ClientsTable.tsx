@@ -4,7 +4,7 @@ import {
   useListClients,
   useUpdateClient,
 } from "@/hooks/api/useClient";
-import { Client } from "@/types/appwrite";
+import { Client } from "shared-types";
 import { Flex, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useMemo } from "react";
