@@ -12,7 +12,7 @@
     "packages/*"
   ],
   "scripts": {
-    "generate-appwrite-types": "appwrite pull tables && appwrite types -l ts packages/shared-types/src/appwrite",
+    "generate-appwrite-types": "appwrite pull tables && appwrite types -l ts packages/shared-types/src/appwrite && mv packages/shared-types/src/appwrite/appwrite.d.ts packages/shared-types/src/appwrite/appwrite.ts",
     "dev:frontend": "pnpm --filter five-star-console-frontend dev",
     "dev:backend": "pnpm --filter five-star-console-backend dev",
     "build:frontend": "pnpm --filter five-star-console-frontend build",

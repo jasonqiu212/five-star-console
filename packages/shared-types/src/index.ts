@@ -1,4 +1,4 @@
-export * from "./appwrite/appwrite.d";
+export * from "./appwrite/appwrite";
 
 export * from "./car-brand/car-brand.api";
 
