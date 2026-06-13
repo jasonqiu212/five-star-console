@@ -28,5 +28,5 @@ export async function createOrder(context: any) {
     return res.json({ error: "Failed to create row" }, 500);
   }
 
-  return res.json({});
+  return res.json();
 }

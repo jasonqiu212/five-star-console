@@ -12,5 +12,5 @@ export default async (context: any) => {
     return getOrderMeta(context);
   }
 
-  return context.res.json({ success: false, error: "Not found" }, 404);
+  return context.res.json({ error: "Path not found" }, 404);
 };
