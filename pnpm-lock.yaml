@@ -99,13 +99,13 @@ importers:
       shared-types:
         specifier: workspace:*
         version: link:../../packages/shared-types
-      typescript:
-        specifier: ^5.4.5
-        version: 5.9.3
     devDependencies:
       '@types/node':
         specifier: ^20.19.33
         version: 20.19.33
+      typescript:
+        specifier: ^5.4.5
+        version: 5.9.3
 
   packages/shared-types:
     dependencies:

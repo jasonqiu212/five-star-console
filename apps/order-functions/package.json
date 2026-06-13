@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "node-appwrite": "^20.2.1",
-    "shared-types": "workspace:*",
-    "typescript": "^5.4.5"
+    "shared-types": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^20.19.33"
+    "@types/node": "^20.19.33",
+    "typescript": "^5.4.5"
   }
 }

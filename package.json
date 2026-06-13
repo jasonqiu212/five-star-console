@@ -17,6 +17,7 @@
     "dev:backend": "pnpm --filter five-star-console-backend dev",
     "build:frontend": "pnpm --filter five-star-console-frontend build",
     "build:backend": "pnpm --filter five-star-console-backend build",
+    "build:order-functions": "pnpm --filter five-star-console-order-functions build",
     "build": "pnpm -r build",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
