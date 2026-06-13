@@ -1,5 +1,5 @@
 import { createCarModel, deleteCarModel, listCarModels, updateCarModel } from "@/api/car-model";
-import type { CreateCarModelPayload, UpdateCarModelPayload } from "@/types/api";
+import type { CreateCarModelPayload, UpdateCarModelPayload } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 

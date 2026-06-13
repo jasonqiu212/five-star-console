@@ -1,5 +1,5 @@
 import { createOrder, getOrderMeta, listOrders } from "@/api/order";
-import { CreateOrderPayload } from "@/types/api";
+import { CreateOrderPayload } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 

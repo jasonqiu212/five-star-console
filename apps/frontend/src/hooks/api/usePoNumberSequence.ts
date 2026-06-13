@@ -1,5 +1,5 @@
 import { listPoNumberSequences, updatePoNumberSequence } from "@/api/po-number-sequence";
-import type { UpdatePoNumberSequencePayload } from "@/types/api";
+import type { UpdatePoNumberSequencePayload } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 

@@ -4,7 +4,7 @@ import {
   listProductTypes,
   updateProductType,
 } from "@/api/product-type";
-import type { CreateProductTypePayload, UpdateProductTypePayload } from "@/types/api";
+import type { CreateProductTypePayload, UpdateProductTypePayload } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 

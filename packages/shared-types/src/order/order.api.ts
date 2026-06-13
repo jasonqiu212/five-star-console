@@ -12,3 +12,7 @@ export type OrderMetaProductType = {
 export type GetOrderMetaResponse =
   | { success: true; data: { clients: OrderMetaClient[]; productTypes: OrderMetaProductType[] } }
   | { success: false; error: string };
+
+export type CreateOrderPayload = {
+  name: string;
+};

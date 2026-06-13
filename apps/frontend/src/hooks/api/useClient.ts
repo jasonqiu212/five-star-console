@@ -1,5 +1,5 @@
 import { createClient, deleteClient, listClients, updateClient } from "@/api/client";
-import type { CreateClientPayload, UpdateClientPayload } from "@/types/api";
+import type { CreateClientPayload, UpdateClientPayload } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 

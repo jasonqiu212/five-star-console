@@ -1,5 +1,5 @@
 import { useCreateCarModel } from "@/hooks/api/useCarModel";
-import { CreateCarModelPayload } from "@/types/api";
+import { CreateCarModelPayload } from "shared-types";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal } from "antd";
 import React, { useState } from "react";

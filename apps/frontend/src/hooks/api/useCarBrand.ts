@@ -1,5 +1,5 @@
 import { createCarBrand, deleteCarBrand, listCarBrands, updateCarBrand } from "@/api/car-brand";
-import type { CreateCarBrandPayload, UpdateCarBrandPayload } from "@/types/api";
+import type { CreateCarBrandPayload, UpdateCarBrandPayload } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 

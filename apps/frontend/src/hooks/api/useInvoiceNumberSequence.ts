@@ -2,7 +2,7 @@ import {
   listInvoiceNumberSequences,
   updateInvoiceNumberSequence,
 } from "@/api/invoice-number-sequence";
-import type { UpdateInvoiceNumberSequencePayload } from "@/types/api";
+import type { UpdateInvoiceNumberSequencePayload } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 
