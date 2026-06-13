@@ -1,9 +1,10 @@
-import { createOrder, listOrders } from "@/api/order";
+import { createOrder, getOrderMeta, listOrders } from "@/api/order";
 import { CreateOrderPayload } from "@/types/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 
 const QUERY_KEY = ["order"];
+const ORDER_META_QUERY_KEY = ["order-meta"];
 
 export function useCreateOrder() {
   const queryClient = useQueryClient();
@@ -20,6 +21,13 @@ export function useListOrders() {
   return useQuery({
     queryKey: QUERY_KEY,
     queryFn: () => listOrders(),
+  });
+}
+
+export function useGetOrderMeta() {
+  return useQuery({
+    queryKey: ORDER_META_QUERY_KEY,
+    queryFn: () => getOrderMeta(),
   });
 }
 
