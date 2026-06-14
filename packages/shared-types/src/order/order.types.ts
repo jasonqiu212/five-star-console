@@ -13,17 +13,18 @@ export interface ServerOrderItem {
 export interface ServerOrder {
   $id: string;
   orderDate: string;
+  poNumber?: string;
+  client?: string;
+  clientDetails?: string;
+  carBrand?: string;
+  carModel?: string;
+  carPlate?: string;
+  handoverDate?: string;
+
   createInvoice: boolean;
   invoiceEntity?: string;
   invoiceNumber?: string;
-  poNumber?: string;
-  clientId?: string;
-  salesperson?: string;
-  clientDetails?: string;
-  carBrandId?: string;
-  carModel?: string;
-  carPlate?: string;
   billingComments?: string;
-  handoverDate?: string;
+
   items?: ServerOrderItem[];
 }

@@ -15,19 +15,23 @@ export interface OrderItem {
 }
 
 export interface OrderFormValues {
+  /** Basic Information */
   orderDate?: Dayjs;
-  /** When false, invoice fields are hidden and not required on submit. */
-  createInvoice?: boolean;
-  invoiceEntity?: InvoiceOrgEntity;
-  invoiceNumber?: string;
   poNumber?: string;
   client?: string;
-  salesperson?: string;
   clientDetails?: string;
   carBrand?: string;
   carModel?: string;
   carPlate?: string;
   billingComments?: string;
   handoverDate?: Dayjs;
+
+  /** Invoice */
+  /** When false, invoice fields are hidden and not required on submit. */
+  createInvoice?: boolean;
+  invoiceEntity?: InvoiceOrgEntity;
+  invoiceNumber?: string;
+
+  /** Order items */
   items?: OrderItem[];
 }

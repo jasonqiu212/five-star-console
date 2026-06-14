@@ -14,7 +14,7 @@ export const BasicInformationSection: React.FC<BasicInformationSectionProps> = (
   const form = Form.useFormInstance();
   const selectedBrandName = Form.useWatch("carBrand", form);
 
-  const clientOptions = clients.map((c) => ({ label: c.name, value: c.$id }));
+  const clientOptions = clients.map((c) => ({ label: c.name, value: c.name }));
   const carBrandOptions = carBrands.map((b) => ({ label: b.name, value: b.name }));
 
   const selectedBrand = carBrands.find((b) => b.name === selectedBrandName);

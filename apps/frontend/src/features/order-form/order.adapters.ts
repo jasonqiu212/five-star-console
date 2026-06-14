@@ -4,19 +4,18 @@ import type { OrderFormValues } from "./types";
 
 export function toServerOrder(values: OrderFormValues): Omit<ServerOrder, "$id"> {
   return {
-    orderDate: values.orderDate?.toISOString() ?? new Date().toISOString(),
+    orderDate: values.orderDate?.format("YYYY-MM-DD") ?? dayjs().format("YYYY-MM-DD"),
     createInvoice: values.createInvoice ?? false,
     invoiceEntity: values.invoiceEntity,
     invoiceNumber: values.invoiceNumber,
     poNumber: values.poNumber,
-    clientId: values.client,
-    salesperson: values.salesperson,
+    client: values.client,
     clientDetails: values.clientDetails,
-    carBrandId: values.carBrand,
+    carBrand: values.carBrand,
     carModel: values.carModel,
     carPlate: values.carPlate,
     billingComments: values.billingComments,
-    handoverDate: values.handoverDate?.toISOString(),
+    handoverDate: values.handoverDate?.format("YYYY-MM-DD"),
     items: values.items,
   };
 }
@@ -28,10 +27,9 @@ export function toFormValues(order: ServerOrder): OrderFormValues {
     invoiceEntity: order.invoiceEntity as InvoiceOrgEntity | undefined,
     invoiceNumber: order.invoiceNumber,
     poNumber: order.poNumber,
-    client: order.clientId,
-    salesperson: order.salesperson,
+    client: order.client,
     clientDetails: order.clientDetails,
-    carBrand: order.carBrandId,
+    carBrand: order.carBrand,
     carModel: order.carModel,
     carPlate: order.carPlate,
     billingComments: order.billingComments,

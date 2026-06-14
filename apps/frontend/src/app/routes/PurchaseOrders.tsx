@@ -19,7 +19,7 @@ export const PurchaseOrders: React.FC = () => {
     {
       title: "Client",
       key: "client",
-      render: (record) => `${record.client}${record.salesperson ? ` (${record.salesperson})` : ""}`,
+      render: (record) => record.client,
     },
     {
       title: "Car Model",
