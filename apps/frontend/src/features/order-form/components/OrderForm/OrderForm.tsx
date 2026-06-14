@@ -1,4 +1,4 @@
-import { Button, Form, message, Space } from "antd";
+import { Button, Form, message, Space, Spin } from "antd";
 import React, { useEffect, useMemo } from "react";
 import { InvoiceOrgEntity } from "shared-types";
 
@@ -8,7 +8,7 @@ import { InvoiceSection } from "./InvoiceSection";
 import { OrderItemsSection } from "./OrderItemsSection";
 import { OrderOptionsCollapse } from "./OrderOptionsCollapse";
 import dayjs from "dayjs";
-import { useCreateOrder, useGetOrderMeta } from "@/hooks/api/useOrder";
+import { useGetOrderMeta } from "@/hooks/api/useOrder";
 
 export const OrderForm: React.FC = () => {
   const [form] = Form.useForm<OrderFormValues>();
@@ -21,8 +21,7 @@ export const OrderForm: React.FC = () => {
     };
   }, []);
 
-  const { mutateAsync: createOrderAsync } = useCreateOrder();
-  const { data: orderMeta } = useGetOrderMeta();
+  const { data: orderMeta, isFetching: isOrderMetaFetching } = useGetOrderMeta();
 
   const clients = orderMeta?.clients ?? [];
   const productTypes = orderMeta?.productTypes ?? [];
@@ -35,38 +34,34 @@ export const OrderForm: React.FC = () => {
     }
   }, [orderMeta?.nextPoNumber, form]);
 
-  const onFinish = (_values: OrderFormValues) => {
+  const onFinish = (values: OrderFormValues) => {
+    console.log(values);
     message.success("Order submitted successfully");
-    form.resetFields();
-  };
-
-  const testSubmit = () => {
-    createOrderAsync({ name: "test" });
+    // form.resetFields();
   };
 
   return (
-    <Form
-      form={form}
-      layout="horizontal"
-      onFinish={onFinish}
-      labelCol={{ span: 6 }}
-      labelWrap
-      initialValues={initialValues}
-    >
-      <Space vertical style={{ width: "100%" }}>
-        <Button type="primary" onClick={testSubmit}>
-          Test
-        </Button>
-        <BasicInformationSection clients={clients} carBrands={carBrands} />
-        <InvoiceSection form={form} nextInvoiceNumbers={nextInvoiceNumbers} />
-        <OrderItemsSection form={form} productTypes={productTypes} />
-        <OrderOptionsCollapse />
-        <Form.Item style={{ textAlign: "right" }}>
-          <Button type="primary" htmlType="submit">
-            Create
-          </Button>
-        </Form.Item>
-      </Space>
-    </Form>
+    <Spin spinning={isOrderMetaFetching}>
+      <Form
+        form={form}
+        layout="horizontal"
+        onFinish={onFinish}
+        labelCol={{ span: 6 }}
+        labelWrap
+        initialValues={initialValues}
+      >
+        <Space vertical style={{ width: "100%" }}>
+          <BasicInformationSection clients={clients} carBrands={carBrands} />
+          <InvoiceSection form={form} nextInvoiceNumbers={nextInvoiceNumbers} />
+          <OrderItemsSection form={form} productTypes={productTypes} />
+          <OrderOptionsCollapse />
+          <Form.Item style={{ textAlign: "right" }}>
+            <Button type="primary" htmlType="submit">
+              Create
+            </Button>
+          </Form.Item>
+        </Space>
+      </Form>
+    </Spin>
   );
 };
