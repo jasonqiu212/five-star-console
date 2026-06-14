@@ -3,6 +3,7 @@ import React, { useEffect, useMemo } from "react";
 import { InvoiceOrgEntity } from "shared-types";
 
 import type { OrderFormValues } from "../../types";
+import { toServerOrder } from "../../order.adapters";
 import { BasicInformationSection } from "./BasicInformationSection";
 import { InvoiceSection } from "./InvoiceSection";
 import { OrderItemsSection } from "./OrderItemsSection";
@@ -35,7 +36,8 @@ export const OrderForm: React.FC = () => {
   }, [orderMeta?.nextPoNumber, form]);
 
   const onFinish = (values: OrderFormValues) => {
-    console.log(values);
+    const serverOrder = toServerOrder(values);
+    console.log(serverOrder);
     message.success("Order submitted successfully");
     // form.resetFields();
   };
