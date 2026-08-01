@@ -1,4 +1,4 @@
-import { createOrder, getOrderMeta, listOrders } from "@/api/order";
+import { createOrder, getOrderMeta } from "@/api/order";
 import { CreateOrderPayload } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
@@ -14,13 +14,6 @@ export function useCreateOrder() {
       queryClient.invalidateQueries({ queryKey: QUERY_KEY });
       message.success("Order created");
     },
-  });
-}
-
-export function useListOrders() {
-  return useQuery({
-    queryKey: QUERY_KEY,
-    queryFn: () => listOrders(),
   });
 }
 

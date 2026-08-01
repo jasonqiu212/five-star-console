@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, Table, Tabs } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { useListOrders } from "@/hooks/api/useOrder";
 import { Order } from "shared-types";
 import { formatDate } from "@/utils";
+import { useListOrders } from "@/features/orders/hooks/order.hooks";
 
 export const PurchaseOrders: React.FC = () => {
   const { data: orders } = useListOrders();
