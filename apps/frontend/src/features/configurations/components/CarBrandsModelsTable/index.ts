@@ -1,1 +1,1 @@
-export * from "./CarBrandsModelsTable";
+export * from "./CarBrandsTable";

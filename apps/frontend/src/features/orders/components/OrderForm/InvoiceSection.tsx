@@ -6,7 +6,7 @@ import type { OrderFormValues } from "../../types";
 
 interface InvoiceSectionProps {
   form: FormInstance<OrderFormValues>;
-  nextInvoiceNumbers?: { fiveStarAutoLeather: number; leatherAndStitch: number };
+  nextInvoiceNumbers?: { fiveStarAutoLeather?: number; leatherAndStitch?: number };
 }
 
 export const InvoiceSection: React.FC<InvoiceSectionProps> = ({ form, nextInvoiceNumbers }) => {
@@ -18,8 +18,8 @@ export const InvoiceSection: React.FC<InvoiceSectionProps> = ({ form, nextInvoic
     const entity = invoiceEntity ?? InvoiceOrgEntity.FiveStarAutoLeather;
     const invoiceNumber =
       entity === InvoiceOrgEntity.FiveStarAutoLeather
-        ? "FS-" + String(nextInvoiceNumbers.fiveStarAutoLeather)
-        : "LS-" + String(nextInvoiceNumbers.leatherAndStitch);
+        ? "FS-" + String(nextInvoiceNumbers.fiveStarAutoLeather ?? 0)
+        : "LS-" + String(nextInvoiceNumbers.leatherAndStitch ?? 0);
     form.setFieldValue("invoiceNumber", invoiceNumber);
   }, [invoiceEntity, nextInvoiceNumbers, form]);
 

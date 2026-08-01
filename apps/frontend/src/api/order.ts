@@ -1,5 +1,10 @@
-import { apiCall, functionCall } from "@/utils";
-import { DATABASE_ID, tablesDB, functions, ORDER_FUNCTIONS_ID } from "./appwrite-client";
+import { apiCall, functionCall } from "@/shared/utils";
+import {
+  DATABASE_ID,
+  tablesDB,
+  functions,
+  ORDER_FUNCTIONS_ID,
+} from "../shared/appwrite/appwrite-client";
 import { CreateOrderPayload, GetOrderMetaResponse, Order } from "shared-types";
 import { ExecutionMethod, Models, Query } from "appwrite";
 

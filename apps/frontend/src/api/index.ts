@@ -6,4 +6,4 @@
  */
 
 // Core client and service instances
-export { account, tablesDB, DATABASE_ID } from "./appwrite-client";
+export { account, tablesDB, DATABASE_ID } from "../shared/appwrite/appwrite-client";

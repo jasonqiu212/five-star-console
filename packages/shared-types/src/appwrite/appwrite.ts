@@ -29,23 +29,8 @@ export type Client = Models.Row & {
     name: string;
 }
 
-export type CarModel = Models.Row & {
-    name: string;
-    carBrand: CarBrand;
-}
-
 export type CarBrand = Models.Row & {
     name: string;
-    carModels: CarModel[];
-}
-
-export type PoNumberSequence = Models.Row & {
-    nextValue: number;
-}
-
-export type InvoiceNumberSequence = Models.Row & {
-    nextValue: number;
-    entity: string;
 }
 
 export type OrderItem = Models.Row & {
@@ -108,4 +93,9 @@ export type Invoice = Models.Row & {
     carPlate: string;
     invoiceItems: InvoiceItem[];
     order: Order;
+}
+
+export type NextNumberSequence = Models.Row & {
+    nextValue: number;
+    key: string;
 }

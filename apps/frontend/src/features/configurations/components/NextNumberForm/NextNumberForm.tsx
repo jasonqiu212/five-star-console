@@ -3,14 +3,14 @@ import React, { useEffect, useState } from "react";
 
 export interface NextNumberFormProps {
   /** Current value (e.g. from API). */
-  value: number | null;
+  value?: number;
   /** Called when user saves; receives the new number. */
   onUpdate: (newValue: number) => void | Promise<void>;
   /** True while the initial value is loading. */
   isLoading?: boolean;
   /** True while the save/update request is in progress. */
   isUpdating?: boolean;
-  /** Shown when value is null (e.g. no sequence configured). */
+  /** Shown when value is undefined (e.g. no sequence configured). */
   noValueMessage?: React.ReactNode;
 }
 
@@ -21,14 +21,14 @@ export const NextNumberForm: React.FC<NextNumberFormProps> = ({
   isUpdating = false,
   noValueMessage = "No value configured",
 }) => {
-  const [localValue, setLocalValue] = useState<number | null>(value);
+  const [localValue, setLocalValue] = useState<number | undefined>(value);
 
   useEffect(() => {
     setLocalValue(value);
   }, [value]);
 
   const handleSave = () => {
-    if (localValue == null) return;
+    if (localValue == undefined) return;
     void onUpdate(localValue);
   };
 
@@ -36,13 +36,13 @@ export const NextNumberForm: React.FC<NextNumberFormProps> = ({
     setLocalValue(value);
   };
 
-  const isDirty = value != null && localValue !== value;
+  const isDirty = value != undefined && localValue !== value;
 
   if (isLoading) {
     return <Spin size="small" />;
   }
 
-  if (value == null) {
+  if (value == undefined) {
     return <span>{noValueMessage}</span>;
   }
 
@@ -50,8 +50,8 @@ export const NextNumberForm: React.FC<NextNumberFormProps> = ({
     <Space size="small">
       <InputNumber
         min={0}
-        value={localValue ?? undefined}
-        onChange={(v) => setLocalValue(v ?? null)}
+        value={localValue}
+        onChange={(v) => setLocalValue(v ?? undefined)}
         style={{ width: 100 }}
       />
       <Button type="primary" loading={isUpdating} onClick={handleSave} disabled={!isDirty}>

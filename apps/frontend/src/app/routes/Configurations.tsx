@@ -1,4 +1,4 @@
-import { CarBrandsModelsTable } from "@/features/configurations/components/CarBrandsModelsTable";
+import { CarBrandsTable } from "@/features/configurations/components/CarBrandsModelsTable";
 import { ClientsTable } from "@/features/configurations/components/ClientsTable";
 import { NextNumberForm } from "@/features/configurations/components/NextNumberForm";
 import { ProductTypesTable } from "@/features/configurations/components/ProductTypesTable";
@@ -31,8 +31,8 @@ export const Configurations: React.FC = () => {
     },
     {
       key: "carBrandsModels",
-      label: "Car Brands & Models",
-      children: <CarBrandsModelsTable />,
+      label: "Car Brands",
+      children: <CarBrandsTable />,
     },
     {
       key: "productTypes",

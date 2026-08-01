@@ -1,4 +1,4 @@
-export type UpdateInvoiceNumberSequencePayload = {
+export type UpdateNextNumberSequencePayload = {
   nextValue: number;
 };
 

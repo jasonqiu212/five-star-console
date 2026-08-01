@@ -7,10 +7,10 @@ export type CreateOrderPayload = {
 export type GetOrderMetaResponse = {
   clients: Client[];
   productTypes: ProductType[];
-  nextPoNumber: number;
+  nextPoNumber?: number;
   nextInvoiceNumbers: {
-    fiveStarAutoLeather: number;
-    leatherAndStitch: number;
+    fiveStarAutoLeather?: number;
+    leatherAndStitch?: number;
   };
   carBrands: CarBrand[];
 };

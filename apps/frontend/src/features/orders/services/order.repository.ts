@@ -1,32 +1,9 @@
-import { apiCall } from "@/utils";
-import { DATABASE_ID, tablesDB } from "@/api/appwrite-client";
-import { Models, Query } from "appwrite";
+import { DATABASE_ID } from "@/shared/appwrite/appwrite-client";
 import { Order } from "shared-types";
+import { createRepository } from "@/shared/repositories/create-repository";
 
 const TABLE_ID = "order";
 
-// create
-
-export async function list(): Promise<Models.RowList<Order>> {
-  return apiCall(() =>
-    tablesDB.listRows({
-      databaseId: DATABASE_ID,
-      tableId: TABLE_ID,
-      queries: [Query.limit(1000)],
-    })
-  );
-}
-
-export async function getById(id: string): Promise<Order> {
-  return apiCall(() =>
-    tablesDB.getRow({
-      databaseId: DATABASE_ID,
-      tableId: TABLE_ID,
-      rowId: id,
-    })
-  );
-}
-
-// update
-
-// delete
+export const orderRepository = {
+  ...createRepository<Order>({ databaseId: DATABASE_ID, tableId: TABLE_ID }),
+};

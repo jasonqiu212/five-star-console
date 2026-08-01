@@ -1,18 +1,40 @@
-import { useQuery } from "@tanstack/react-query";
-import { getOrderById, listOrders } from "../services/order.service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { orderService } from "../services/order.service";
+import { CreateOrderPayload } from "shared-types";
+import { message } from "antd";
 
 const QUERY_KEY = "order";
+
+export function useCreateOrder() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: CreateOrderPayload) => orderService.createOrder(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
+      message.success("Order created");
+    },
+  });
+}
+
+export function useGetOrderMeta() {
+  return useQuery({
+    queryKey: ["order-meta"],
+    queryFn: () => orderService.getOrderMeta(),
+    staleTime: 0,
+    gcTime: 0,
+  });
+}
 
 export function useListOrders() {
   return useQuery({
     queryKey: [QUERY_KEY],
-    queryFn: () => listOrders(),
+    queryFn: () => orderService.listOrders(),
   });
 }
 
 export function useGetOrderById(orderId: string) {
   return useQuery({
     queryKey: [QUERY_KEY, orderId],
-    queryFn: () => getOrderById(orderId),
+    queryFn: () => orderService.getOrderById(orderId),
   });
 }

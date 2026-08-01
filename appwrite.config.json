@@ -125,43 +125,6 @@
             "indexes": []
         },
         {
-            "$id": "car_model",
-            "$permissions": [
-                "create(\"users\")",
-                "read(\"users\")",
-                "update(\"users\")",
-                "delete(\"users\")"
-            ],
-            "databaseId": "69b64fdc00079d87be9e",
-            "name": "car_model",
-            "enabled": true,
-            "rowSecurity": false,
-            "columns": [
-                {
-                    "key": "name",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null,
-                    "encrypt": false
-                },
-                {
-                    "key": "carBrand",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedTable": "car_brand",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "carModels",
-                    "onDelete": "cascade",
-                    "side": "child"
-                }
-            ],
-            "indexes": []
-        },
-        {
             "$id": "car_brand",
             "$permissions": [
                 "create(\"users\")",
@@ -176,73 +139,6 @@
             "columns": [
                 {
                     "key": "name",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null,
-                    "encrypt": false
-                },
-                {
-                    "key": "carModels",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedTable": "car_model",
-                    "relationType": "oneToMany",
-                    "twoWay": true,
-                    "twoWayKey": "carBrand",
-                    "onDelete": "cascade",
-                    "side": "parent"
-                }
-            ],
-            "indexes": []
-        },
-        {
-            "$id": "po_number_sequence",
-            "$permissions": [
-                "read(\"users\")",
-                "update(\"users\")"
-            ],
-            "databaseId": "69b64fdc00079d87be9e",
-            "name": "po_number_sequence",
-            "enabled": true,
-            "rowSecurity": false,
-            "columns": [
-                {
-                    "key": "nextValue",
-                    "type": "integer",
-                    "required": true,
-                    "array": false,
-                    "default": null,
-                    "min": 0,
-                    "max": 9007199254740991
-                }
-            ],
-            "indexes": []
-        },
-        {
-            "$id": "invoice_number_sequence",
-            "$permissions": [
-                "read(\"users\")",
-                "update(\"users\")"
-            ],
-            "databaseId": "69b64fdc00079d87be9e",
-            "name": "invoice_number_sequence",
-            "enabled": true,
-            "rowSecurity": false,
-            "columns": [
-                {
-                    "key": "nextValue",
-                    "type": "integer",
-                    "required": true,
-                    "array": false,
-                    "default": null,
-                    "min": 0,
-                    "max": 9223372036854775807
-                },
-                {
-                    "key": "entity",
                     "type": "string",
                     "required": true,
                     "array": false,
@@ -768,6 +664,38 @@
                     "twoWayKey": "invoices",
                     "onDelete": "cascade",
                     "side": "child"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "next_number_sequence",
+            "$permissions": [
+                "read(\"users\")",
+                "update(\"users\")"
+            ],
+            "databaseId": "69b64fdc00079d87be9e",
+            "name": "next_number_sequence",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "nextValue",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": 0,
+                    "max": 9223372036854775807
+                },
+                {
+                    "key": "key",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
                 }
             ],
             "indexes": []

@@ -1,9 +1,3 @@
-import {
-  useCreateClient,
-  useDeleteClient,
-  useListClients,
-  useUpdateClient,
-} from "@/hooks/api/useClient";
 import { Client } from "shared-types";
 import { Flex, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
@@ -11,6 +5,12 @@ import React, { useMemo } from "react";
 import { AddDropdownOptionButton } from "../AddDropdownOptionButton";
 import { DeleteDropdownOptionButton } from "../DeleteDropdownOptionButton";
 import { EditDropdownOptionButton } from "../EditDropdownOptionButton";
+import {
+  useCreateClient,
+  useDeleteClient,
+  useListClients,
+  useUpdateClient,
+} from "../../hooks/client.hooks";
 
 export const ClientsTable: React.FC = () => {
   const { data: clientsData, isFetching } = useListClients();

@@ -1,16 +1,16 @@
-import { createCarBrand, deleteCarBrand, listCarBrands, updateCarBrand } from "@/api/car-brand";
 import type { CreateCarBrandPayload, UpdateCarBrandPayload } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
+import { carBrandService } from "../services/car-brand.service";
 
-const QUERY_KEY = ["car-brand"];
+const QUERY_KEY = "car-brand";
 
 export function useCreateCarBrand() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: CreateCarBrandPayload) => createCarBrand(payload),
+    mutationFn: (payload: CreateCarBrandPayload) => carBrandService.createCarBrand(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       message.success("Car brand created");
     },
   });
@@ -18,8 +18,8 @@ export function useCreateCarBrand() {
 
 export function useListCarBrands() {
   return useQuery({
-    queryKey: QUERY_KEY,
-    queryFn: () => listCarBrands(),
+    queryKey: [QUERY_KEY],
+    queryFn: () => carBrandService.listCarBrands(),
   });
 }
 
@@ -27,9 +27,9 @@ export function useUpdateCarBrand() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: UpdateCarBrandPayload }) =>
-      updateCarBrand(id, payload),
+      carBrandService.updateCarBrand(id, payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       message.success("Car brand updated");
     },
   });
@@ -38,9 +38,9 @@ export function useUpdateCarBrand() {
 export function useDeleteCarBrand() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (id: string) => deleteCarBrand(id),
+    mutationFn: (id: string) => carBrandService.deleteCarBrand(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       message.success("Car brand deleted");
     },
   });

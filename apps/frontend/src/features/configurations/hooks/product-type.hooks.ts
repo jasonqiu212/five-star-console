@@ -1,21 +1,17 @@
-import {
-  createProductType,
-  deleteProductType,
-  listProductTypes,
-  updateProductType,
-} from "@/api/product-type";
 import type { CreateProductTypePayload, UpdateProductTypePayload } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
+import { productTypeService } from "../services/product-type.service";
 
-const QUERY_KEY = ["product-type"];
+const QUERY_KEY = "product-type";
 
 export function useCreateProductType() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: CreateProductTypePayload) => createProductType(payload),
+    mutationFn: (payload: CreateProductTypePayload) =>
+      productTypeService.createProductType(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       message.success("Product type created");
     },
   });
@@ -23,8 +19,8 @@ export function useCreateProductType() {
 
 export function useListProductTypes() {
   return useQuery({
-    queryKey: QUERY_KEY,
-    queryFn: () => listProductTypes(),
+    queryKey: [QUERY_KEY],
+    queryFn: () => productTypeService.listProductTypes(),
   });
 }
 
@@ -32,9 +28,9 @@ export function useUpdateProductType() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: UpdateProductTypePayload }) =>
-      updateProductType(id, payload),
+      productTypeService.updateProductType(id, payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       message.success("Product type updated");
     },
   });
@@ -43,9 +39,9 @@ export function useUpdateProductType() {
 export function useDeleteProductType() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (id: string) => deleteProductType(id),
+    mutationFn: (id: string) => productTypeService.deleteProductType(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       message.success("Product type deleted");
     },
   });

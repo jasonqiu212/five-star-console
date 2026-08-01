@@ -1,18 +1,14 @@
-import {
-  useListPoNumberSequences,
-  useUpdatePoNumberSequence,
-} from "@/hooks/api/usePoNumberSequence";
+import { useGetNextPoNumber, useUpdateNextNumberSequence } from "./next-number-sequence.hooks";
 
 export function usePoNumberSequenceForm() {
-  const { data, isLoading } = useListPoNumberSequences();
-  const updateSequence = useUpdatePoNumberSequence();
-  const firstSequence = data?.rows?.[0];
-  const value = firstSequence?.nextValue ?? null;
+  const { data, isLoading } = useGetNextPoNumber();
+  const updateSequence = useUpdateNextNumberSequence();
+  const value = data?.nextValue;
 
   const onUpdate = (newValue: number) => {
-    if (firstSequence == null) return;
+    if (data == undefined) return;
     updateSequence.mutate({
-      id: firstSequence.$id,
+      id: data.$id,
       payload: { nextValue: newValue },
     });
   };

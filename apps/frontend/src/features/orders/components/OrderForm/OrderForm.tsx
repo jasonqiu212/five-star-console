@@ -9,7 +9,7 @@ import { InvoiceSection } from "./InvoiceSection";
 import { OrderItemsSection } from "./OrderItemsSection";
 import { OrderOptionsCollapse } from "./OrderOptionsCollapse";
 import dayjs from "dayjs";
-import { useGetOrderMeta } from "@/hooks/api/useOrder";
+import { useGetOrderMeta } from "../../hooks/order.hooks";
 
 export const OrderForm: React.FC = () => {
   const [form] = Form.useForm<OrderFormValues>();

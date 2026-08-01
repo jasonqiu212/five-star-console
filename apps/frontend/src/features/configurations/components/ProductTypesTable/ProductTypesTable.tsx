@@ -1,9 +1,3 @@
-import {
-  useCreateProductType,
-  useDeleteProductType,
-  useListProductTypes,
-  useUpdateProductType,
-} from "@/hooks/api/useProductType";
 import { ProductType } from "shared-types";
 import { Flex, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
@@ -11,6 +5,12 @@ import React, { useMemo } from "react";
 import { AddDropdownOptionButton } from "../AddDropdownOptionButton";
 import { DeleteDropdownOptionButton } from "../DeleteDropdownOptionButton";
 import { EditDropdownOptionButton } from "../EditDropdownOptionButton";
+import {
+  useCreateProductType,
+  useDeleteProductType,
+  useListProductTypes,
+  useUpdateProductType,
+} from "../../hooks/product-type.hooks";
 
 export const ProductTypesTable: React.FC = () => {
   const { data: productTypesData, isFetching } = useListProductTypes();

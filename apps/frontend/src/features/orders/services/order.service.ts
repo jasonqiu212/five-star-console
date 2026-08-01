@@ -1,19 +1,40 @@
-import { CreateOrderPayload, Order } from "shared-types";
-import * as orderRepository from "./order.repository";
+import { CreateOrderPayload, GetOrderMetaResponse, Order } from "shared-types";
 import { Models } from "appwrite";
+import { orderRepository } from "./order.repository";
+import { clientRepository } from "@/features/configurations/services/client.repository";
+import { carBrandRepository } from "@/features/configurations/services/car-brand.repository";
+import { productTypeRepository } from "@/features/configurations/services/product-type.repository";
+import { nextNumberSequenceService } from "@/features/configurations/services/next-number-sequence.service";
 
-export function createOrder(payload: CreateOrderPayload): Promise<void> {
-  return Promise.resolve();
-}
+export const orderService = {
+  async createOrder(payload: CreateOrderPayload): Promise<void> {
+    return Promise.resolve();
+  },
 
-export function getOrderMeta(): Promise<void> {
-  return Promise.resolve();
-}
+  async getOrderMeta(): Promise<GetOrderMetaResponse> {
+    const clients = (await clientRepository.list()).rows;
+    const productTypes = (await productTypeRepository.list()).rows;
+    const nextPoNumber = (await nextNumberSequenceService.getNextPoNumber())?.nextValue;
+    const nextInvoiceNumbers = await nextNumberSequenceService.getNextInvoiceNumbers();
+    const carBrands = (await carBrandRepository.list()).rows;
 
-export async function listOrders(): Promise<Models.RowList<Order>> {
-  return orderRepository.list();
-}
+    return {
+      clients: clients,
+      productTypes: productTypes,
+      nextPoNumber,
+      nextInvoiceNumbers: {
+        fiveStarAutoLeather: nextInvoiceNumbers?.fiveStarAutoLeather?.nextValue,
+        leatherAndStitch: nextInvoiceNumbers?.leatherAndStitch?.nextValue,
+      },
+      carBrands: carBrands,
+    };
+  },
 
-export async function getOrderById(orderId: string): Promise<Order> {
-  return orderRepository.getById(orderId);
-}
+  async listOrders(): Promise<Models.RowList<Order>> {
+    return orderRepository.list();
+  },
+
+  async getOrderById(orderId: string): Promise<Order> {
+    return orderRepository.getById(orderId);
+  },
+};

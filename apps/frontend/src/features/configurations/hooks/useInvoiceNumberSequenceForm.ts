@@ -1,35 +1,27 @@
 import {
-  useListInvoiceNumberSequences,
-  useUpdateInvoiceNumberSequence,
-} from "@/hooks/api/useInvoiceNumberSequence";
-import { InvoiceOrgEntity } from "shared-types";
+  useGetNextInvoiceNumbers,
+  useUpdateNextNumberSequence,
+} from "./next-number-sequence.hooks";
 
 export function useInvoiceNumberSequenceForm() {
-  const { data, isLoading } = useListInvoiceNumberSequences();
-  const updateSequence = useUpdateInvoiceNumberSequence();
+  const { data, isLoading } = useGetNextInvoiceNumbers();
+  const updateSequence = useUpdateNextNumberSequence();
 
-  const fiveStarAutoLeatherSequence = data?.rows?.find(
-    (row) => row.entity === InvoiceOrgEntity.FiveStarAutoLeather
-  );
-  const fiveStarAutoLeatherValue = fiveStarAutoLeatherSequence?.nextValue ?? null;
-
-  const leatherAndStitchSequence = data?.rows?.find(
-    (row) => row.entity === InvoiceOrgEntity.LeatherAndStitch
-  );
-  const leatherAndStitchValue = leatherAndStitchSequence?.nextValue ?? null;
+  const fiveStarAutoLeatherValue = data?.fiveStarAutoLeather?.nextValue;
+  const leatherAndStitchValue = data?.leatherAndStitch?.nextValue;
 
   const onUpdateFiveStarAutoLeather = (newValue: number) => {
-    if (fiveStarAutoLeatherSequence == null) return;
+    if (data?.fiveStarAutoLeather == undefined) return;
     updateSequence.mutate({
-      id: fiveStarAutoLeatherSequence.$id,
+      id: data.fiveStarAutoLeather.$id,
       payload: { nextValue: newValue },
     });
   };
 
   const onUpdateLeatherAndStitch = (newValue: number) => {
-    if (leatherAndStitchSequence == null) return;
+    if (data?.leatherAndStitch == undefined) return;
     updateSequence.mutate({
-      id: leatherAndStitchSequence.$id,
+      id: data.leatherAndStitch.$id,
       payload: { nextValue: newValue },
     });
   };
