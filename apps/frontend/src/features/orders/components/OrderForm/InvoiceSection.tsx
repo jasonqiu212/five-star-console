@@ -51,7 +51,7 @@ export const InvoiceSection: React.FC<InvoiceSectionProps> = ({ form, nextInvoic
             </Form.Item>
 
             <Form.Item label="Billing comments" name="billingComments">
-              <Input.TextArea rows={3} placeholder="Enter billing comments" />
+              <Input.TextArea rows={3} />
             </Form.Item>
           </>
         )}

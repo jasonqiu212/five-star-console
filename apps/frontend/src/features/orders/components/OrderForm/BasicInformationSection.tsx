@@ -12,16 +12,9 @@ export const BasicInformationSection: React.FC<BasicInformationSectionProps> = (
   carBrands,
 }) => {
   const form = Form.useFormInstance();
-  const selectedBrandName = Form.useWatch("carBrand", form);
 
   const clientOptions = clients.map((c) => ({ label: c.name, value: c.name }));
   const carBrandOptions = carBrands.map((b) => ({ label: b.name, value: b.name }));
-
-  const selectedBrand = carBrands.find((b) => b.name === selectedBrandName);
-  const carModelOptions = (selectedBrand?.carModels ?? []).map((m) => ({
-    label: m.name,
-    value: m.name,
-  }));
 
   return (
     <Card title="Basic Information" style={{ width: "100%" }}>
@@ -48,17 +41,16 @@ export const BasicInformationSection: React.FC<BasicInformationSectionProps> = (
           rules={[{ required: true, message: "Please select a client" }]}
         >
           <Select
-            placeholder="Select client"
             options={clientOptions}
-            showSearch
-            filterOption={(input, option) =>
-              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-            }
+            showSearch={{
+              filterOption: (input, option) =>
+                (option?.label ?? "").toLowerCase().includes(input.toLowerCase()),
+            }}
           />
         </Form.Item>
 
         <Form.Item label="Client details" name="clientDetails">
-          <Input placeholder="Enter client details" />
+          <Input />
         </Form.Item>
 
         <Form.Item
@@ -67,12 +59,11 @@ export const BasicInformationSection: React.FC<BasicInformationSectionProps> = (
           rules={[{ required: true, message: "Please select a car brand" }]}
         >
           <Select
-            placeholder="Select car brand"
             options={carBrandOptions}
-            showSearch
-            filterOption={(input, option) =>
-              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-            }
+            showSearch={{
+              filterOption: (input, option) =>
+                (option?.label ?? "").toLowerCase().includes(input.toLowerCase()),
+            }}
             onChange={() => form.setFieldValue("carModel", undefined)}
           />
         </Form.Item>
@@ -80,17 +71,9 @@ export const BasicInformationSection: React.FC<BasicInformationSectionProps> = (
         <Form.Item
           label="Car model"
           name="carModel"
-          rules={[{ required: true, message: "Please select a car model" }]}
+          rules={[{ required: true, message: "Please enter car model" }]}
         >
-          <Select
-            placeholder={selectedBrandName ? "Select car model" : "Select a car brand first"}
-            options={carModelOptions}
-            showSearch
-            filterOption={(input, option) =>
-              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-            }
-            disabled={!selectedBrandName}
-          />
+          <Input />
         </Form.Item>
 
         <Form.Item
@@ -98,7 +81,7 @@ export const BasicInformationSection: React.FC<BasicInformationSectionProps> = (
           name="carPlate"
           rules={[{ required: true, message: "Please enter car plate" }]}
         >
-          <Input placeholder="Enter car plate" />
+          <Input />
         </Form.Item>
 
         <Form.Item label="Handover date" name="handoverDate">

@@ -39,7 +39,7 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
                     name={[field.name, "productType"]}
                     rules={[{ required: true, message: "Please select product type" }]}
                   >
-                    <Select placeholder="Select product type" options={productTypeOptions} />
+                    <Select options={productTypeOptions} />
                   </Form.Item>
 
                   <Form.Item noStyle shouldUpdate>
