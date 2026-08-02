@@ -7,14 +7,14 @@ const QUERY_KEY = "next-number-sequence";
 
 export function useGetNextInvoiceNumbers() {
   return useQuery({
-    queryKey: [QUERY_KEY],
+    queryKey: [QUERY_KEY, "invoice"],
     queryFn: () => nextNumberSequenceService.getNextInvoiceNumbers(),
   });
 }
 
 export function useGetNextPoNumber() {
   return useQuery({
-    queryKey: [QUERY_KEY],
+    queryKey: [QUERY_KEY, "po"],
     queryFn: () => nextNumberSequenceService.getNextPoNumber(),
   });
 }
