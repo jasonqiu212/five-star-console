@@ -1,10 +1,12 @@
+import { OrderItemLeatherType, OrderItemSeatReplacementScope } from "../appwrite/appwrite";
+
 export interface ServerOrderItem {
   description?: string;
   quantity?: number;
   unitPrice?: number;
   productType?: string;
-  leatherType?: "FullLeather" | "HalfLeather" | "PVC";
-  seatReplacementScope?: "Whole" | "Partial";
+  leatherType?: OrderItemLeatherType;
+  seatReplacementScope?: OrderItemSeatReplacementScope;
   partialSetDetails?: string;
   color?: string;
   thread?: string;

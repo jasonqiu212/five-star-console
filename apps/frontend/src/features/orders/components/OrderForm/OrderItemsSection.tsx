@@ -2,7 +2,11 @@ import { Button, Card, Flex, Form, FormInstance, Input, InputNumber, Radio, Sele
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import React from "react";
 import { OrderFormValues } from "../../types";
-import type { ProductType } from "shared-types";
+import {
+  OrderItemLeatherTypeMeta,
+  OrderItemSeatReplacementScopeMeta,
+  type ProductType,
+} from "shared-types";
 
 const FORM_LIST_NAME = "items";
 
@@ -65,13 +69,7 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
                             name={[field.name, "leatherType"]}
                             rules={[{ required: true, message: "Please select leather type" }]}
                           >
-                            <Radio.Group
-                              options={[
-                                { label: "Full Leather", value: "FullLeather" },
-                                { label: "Half Leather", value: "HalfLeather" },
-                                { label: "PVC", value: "PVC" },
-                              ]}
-                            />
+                            <Radio.Group options={OrderItemLeatherTypeMeta.options} />
                           </Form.Item>
 
                           <Form.Item
@@ -81,12 +79,7 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
                               { required: true, message: "Please select seat replacement scope" },
                             ]}
                           >
-                            <Radio.Group
-                              options={[
-                                { label: "Whole", value: "Whole" },
-                                { label: "Partial", value: "Partial" },
-                              ]}
-                            />
+                            <Radio.Group options={OrderItemSeatReplacementScopeMeta.options} />
                           </Form.Item>
 
                           {scope === "Partial" && (
@@ -97,7 +90,7 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
                                 { required: true, message: "Please enter partial set details" },
                               ]}
                             >
-                              <Input placeholder="Enter partial set details" />
+                              <Input />
                             </Form.Item>
                           )}
 
@@ -106,7 +99,7 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
                             name={[field.name, "color"]}
                             rules={[{ required: true, message: "Please enter color" }]}
                           >
-                            <Input placeholder="Enter color" />
+                            <Input />
                           </Form.Item>
 
                           <Form.Item
@@ -114,7 +107,7 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
                             name={[field.name, "thread"]}
                             rules={[{ required: true, message: "Please enter thread" }]}
                           >
-                            <Input placeholder="Enter thread" />
+                            <Input />
                           </Form.Item>
                         </>
                       );
@@ -126,13 +119,7 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
                     name={[field.name, "netPrice"]}
                     rules={[{ required: true, message: "Please enter net price" }]}
                   >
-                    <InputNumber
-                      min={0}
-                      step={0.01}
-                      placeholder="0.00"
-                      prefix="S$"
-                      style={{ width: "100%" }}
-                    />
+                    <InputNumber min={0} step={0.01} prefix="S$" style={{ width: "100%" }} />
                   </Form.Item>
                 </Card>
               ))}
