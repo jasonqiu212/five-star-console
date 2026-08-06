@@ -1,17 +1,32 @@
 import type { Dayjs } from "dayjs";
-import type { InvoiceOrgEntity } from "shared-types";
+import type {
+  InvoiceOrgEntity,
+  OrderItemLeatherType,
+  OrderItemSeatReplacementScope,
+} from "shared-types";
 
-/** Single line item in the order (used inside Form.List) */
 export interface OrderItem {
-  description?: string;
-  quantity?: number;
-  unitPrice?: number;
   productType?: string;
-  leatherType?: "FullLeather" | "HalfLeather" | "PVC";
-  seatReplacementScope?: "Whole" | "Partial";
+  leatherType?: OrderItemLeatherType;
+  seatReplacementScope?: OrderItemSeatReplacementScope;
   partialSetDetails?: string;
   color?: string;
   thread?: string;
+
+  details?: string;
+
+  netPrice: number;
+
+  // Production details
+  doorPanelDetails?: string;
+  designDetails?: string;
+  isBtProduction?: boolean;
+  btProductionScope?: string;
+  isSgProduction?: boolean;
+  sgProductionScope?: string;
+  isSgReadyStock?: boolean;
+  sgReadyStockScope?: string;
+  replaceStock?: boolean;
 }
 
 export interface OrderFormValues {

@@ -1,4 +1,16 @@
-import { Button, Card, Flex, Form, FormInstance, Input, InputNumber, Radio, Select } from "antd";
+import {
+  Button,
+  Card,
+  Divider,
+  Flex,
+  Form,
+  FormInstance,
+  Input,
+  InputNumber,
+  Radio,
+  Select,
+  Switch,
+} from "antd";
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import React from "react";
 import { OrderFormValues } from "../../types";
@@ -54,7 +66,7 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
                         "productType",
                       ]);
                       const selectedType = productTypes.find((pt) => pt.$id === productTypeId);
-                      if (!selectedType?.isSystem) return null;
+                      if (selectedType?.name !== "Leather Seats") return null;
 
                       const scope = form.getFieldValue([
                         FORM_LIST_NAME,
@@ -114,12 +126,145 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
                     }}
                   </Form.Item>
 
+                  <Form.Item noStyle shouldUpdate>
+                    {() => {
+                      const productTypeId = form.getFieldValue([
+                        FORM_LIST_NAME,
+                        field.name,
+                        "productType",
+                      ]);
+                      const selectedType = productTypes.find((pt) => pt.$id === productTypeId);
+                      if (selectedType?.name === "Leather Seats") return null;
+
+                      return (
+                        <>
+                          <Form.Item label="Details" name={[field.name, "details"]}>
+                            <Input />
+                          </Form.Item>
+                        </>
+                      );
+                    }}
+                  </Form.Item>
+
                   <Form.Item
                     label="Net Price"
                     name={[field.name, "netPrice"]}
                     rules={[{ required: true, message: "Please enter net price" }]}
                   >
                     <InputNumber min={0} step={0.01} prefix="S$" style={{ width: "100%" }} />
+                  </Form.Item>
+
+                  <Form.Item noStyle shouldUpdate>
+                    {() => {
+                      const productTypeId = form.getFieldValue([
+                        FORM_LIST_NAME,
+                        field.name,
+                        "productType",
+                      ]);
+                      const selectedType = productTypes.find((pt) => pt.$id === productTypeId);
+                      if (selectedType?.name !== "Leather Seats") return null;
+
+                      const isBtProduction = form.getFieldValue([
+                        FORM_LIST_NAME,
+                        field.name,
+                        "isBtProduction",
+                      ]);
+                      const isSgProduction = form.getFieldValue([
+                        FORM_LIST_NAME,
+                        field.name,
+                        "isSgProduction",
+                      ]);
+                      const isSgReadyStock = form.getFieldValue([
+                        FORM_LIST_NAME,
+                        field.name,
+                        "isSgReadyStock",
+                      ]);
+
+                      return (
+                        <>
+                          <Divider titlePlacement="center">
+                            <Flex align="center" gap={4} style={{ fontWeight: 400, fontSize: 14 }}>
+                              Production Details
+                              {/* <Tooltip title="Details about the production of this item, such as color, thread, and design.">
+                        <InfoCircleOutlined />
+                      </Tooltip> */}
+                            </Flex>
+                          </Divider>
+
+                          <Form.Item
+                            label="Door Panel Details"
+                            name={[field.name, "doorPanelDetails"]}
+                          >
+                            <Input placeholder="e.g., color/stitching" />
+                          </Form.Item>
+
+                          <Form.Item label="Design Details" name={[field.name, "designDetails"]}>
+                            <Input />
+                          </Form.Item>
+
+                          {/* production source, production scope, need to replace stock? */}
+                          <Form.Item
+                            label="Batam Production?"
+                            name={[field.name, "isBtProduction"]}
+                            valuePropName="checked"
+                          >
+                            <Switch />
+                          </Form.Item>
+
+                          {isBtProduction && (
+                            <Form.Item
+                              label="Batam Production Scope"
+                              name={[field.name, "btProductionScope"]}
+                            >
+                              <Input />
+                            </Form.Item>
+                          )}
+
+                          <Form.Item
+                            label="SG Production?"
+                            name={[field.name, "isSgProduction"]}
+                            valuePropName="checked"
+                          >
+                            <Switch />
+                          </Form.Item>
+
+                          {isSgProduction && (
+                            <Form.Item
+                              label="SG Production Scope"
+                              name={[field.name, "sgProductionScope"]}
+                            >
+                              <Input />
+                            </Form.Item>
+                          )}
+
+                          <Form.Item
+                            label="Use SG Ready Stock?"
+                            name={[field.name, "isSgReadyStock"]}
+                            valuePropName="checked"
+                          >
+                            <Switch />
+                          </Form.Item>
+
+                          {isSgReadyStock && (
+                            <>
+                              <Form.Item
+                                label="SG Ready Stock Scope"
+                                name={[field.name, "sgReadyStockScope"]}
+                              >
+                                <Input />
+                              </Form.Item>
+                              <Form.Item
+                                label="Replace Stock?"
+                                name={[field.name, "replaceStock"]}
+                                valuePropName="checked"
+                              >
+                                <Switch />
+                              </Form.Item>
+                            </>
+                          )}
+                        </>
+                      );
+                    }}
                   </Form.Item>
                 </Card>
               ))}
