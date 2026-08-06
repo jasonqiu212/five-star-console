@@ -1,4 +1,4 @@
-import { Button, Form, message, Space, Spin } from "antd";
+import { Button, Form, Space, Spin } from "antd";
 import React, { useEffect, useMemo } from "react";
 import { InvoiceOrgEntity } from "shared-types";
 
@@ -9,7 +9,7 @@ import { InvoiceSection } from "./InvoiceSection";
 import { OrderItemsSection } from "./OrderItemsSection";
 import { OrderOptionsCollapse } from "./OrderOptionsCollapse";
 import dayjs from "dayjs";
-import { useGetOrderMeta } from "../../hooks/order.hooks";
+import { useCreateOrder, useGetOrderMeta } from "../../hooks/order.hooks";
 
 export const OrderForm: React.FC = () => {
   const [form] = Form.useForm<OrderFormValues>();
@@ -21,6 +21,8 @@ export const OrderForm: React.FC = () => {
       invoiceEntity: InvoiceOrgEntity.FiveStarAutoLeather,
     };
   }, []);
+
+  const createMutation = useCreateOrder();
 
   const { data: orderMeta, isFetching: isOrderMetaFetching } = useGetOrderMeta();
 
@@ -37,9 +39,12 @@ export const OrderForm: React.FC = () => {
 
   const onFinish = (values: OrderFormValues) => {
     const serverOrder = toServerOrder(values);
-    console.log(serverOrder);
-    message.success("Order submitted successfully");
-    // form.resetFields();
+
+    createMutation.mutate(serverOrder, {
+      onSuccess: () => {
+        form.resetFields();
+      },
+    });
   };
 
   return (

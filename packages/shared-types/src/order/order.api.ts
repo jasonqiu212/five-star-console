@@ -1,8 +1,7 @@
 import { CarBrand, Client, ProductType } from "../appwrite/appwrite";
+import { ServerOrder } from "./order.types";
 
-export type CreateOrderPayload = {
-  name: string;
-};
+export type CreateOrderPayload = Omit<ServerOrder, "$id">;
 
 export type GetOrderMetaResponse = {
   clients: Client[];

@@ -8,6 +8,7 @@ import { nextNumberSequenceService } from "@/features/configurations/services/ne
 
 export const orderService = {
   async createOrder(payload: CreateOrderPayload): Promise<void> {
+    console.log("Creating order with payload:", payload);
     return Promise.resolve();
   },
 
