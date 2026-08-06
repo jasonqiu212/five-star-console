@@ -20,7 +20,7 @@ export const Login: React.FC = () => {
     try {
       setLoading(true);
       await loginAction(values);
-      message.success("Login successful!");
+      message.success("Login successful");
       navigate("/");
     } catch (error) {
       message.error(
