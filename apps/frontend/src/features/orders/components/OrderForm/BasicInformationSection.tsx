@@ -24,7 +24,7 @@ export const BasicInformationSection: React.FC<BasicInformationSectionProps> = (
           name="orderDate"
           rules={[{ required: true, message: "Please enter order date" }]}
         >
-          <DatePicker style={{ width: "100%" }} />
+          <DatePicker style={{ width: "100%" }} allowClear={false} />
         </Form.Item>
 
         <Form.Item

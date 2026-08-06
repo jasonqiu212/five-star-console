@@ -54,9 +54,13 @@ export const OrderForm: React.FC = () => {
       >
         <Space vertical style={{ width: "100%" }}>
           <BasicInformationSection clients={clients} carBrands={carBrands} />
+
           <InvoiceSection form={form} nextInvoiceNumbers={nextInvoiceNumbers} />
+
           <OrderItemsSection form={form} productTypes={productTypes} />
+
           <OrderOptionsCollapse />
+
           <Form.Item style={{ textAlign: "right" }}>
             <Button type="primary" htmlType="submit">
               Create
