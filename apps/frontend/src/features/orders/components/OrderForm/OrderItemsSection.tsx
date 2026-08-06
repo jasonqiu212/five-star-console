@@ -182,8 +182,8 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
 
                       return (
                         <>
-                          <Divider titlePlacement="center">
-                            <Flex align="center" gap={4} style={{ fontWeight: 400, fontSize: 14 }}>
+                          <Divider titlePlacement="start">
+                            <Flex align="center" gap={4} style={{ fontWeight: 600, fontSize: 14 }}>
                               Production Details
                               {/* <Tooltip title="Details about the production of this item, such as color, thread, and design.">
                         <InfoCircleOutlined />
@@ -202,7 +202,6 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
                             <Input />
                           </Form.Item>
 
-                          {/* production source, production scope, need to replace stock? */}
                           <Form.Item
                             label="Batam Production?"
                             name={[field.name, "isBtProduction"]}
