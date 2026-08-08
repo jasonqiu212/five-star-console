@@ -12,3 +12,4 @@ export * from "./order/order.types";
 export * from "./order/order.enum";
 
 export * from "./product-type/product-type.api";
+export * from "./product-type/product-type.constants";

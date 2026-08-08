@@ -15,6 +15,7 @@ import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import React from "react";
 import { OrderFormValues } from "../../types";
 import {
+  LEATHER_SEATS_PRODUCT_TYPE_NAME,
   OrderItemLeatherTypeMeta,
   OrderItemSeatReplacementScopeMeta,
   type ProductType,
@@ -28,7 +29,7 @@ interface OrderItemsSectionProps {
 }
 
 export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, productTypes }) => {
-  const productTypeOptions = productTypes.map((pt) => ({ label: pt.name, value: pt.$id }));
+  const productTypeOptions = productTypes.map((pt) => ({ label: pt.name, value: pt.name }));
 
   return (
     <Card title="Order Items" style={{ width: "100%" }}>
@@ -71,13 +72,12 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
 
                   <Form.Item noStyle shouldUpdate>
                     {() => {
-                      const productTypeId = form.getFieldValue([
+                      const productType = form.getFieldValue([
                         FORM_LIST_NAME,
                         field.name,
                         "productType",
                       ]);
-                      const selectedType = productTypes.find((pt) => pt.$id === productTypeId);
-                      if (selectedType?.name !== "Leather Seats") return null;
+                      if (productType !== LEATHER_SEATS_PRODUCT_TYPE_NAME) return null;
 
                       const scope = form.getFieldValue([
                         FORM_LIST_NAME,
@@ -139,13 +139,12 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
 
                   <Form.Item noStyle shouldUpdate>
                     {() => {
-                      const productTypeId = form.getFieldValue([
+                      const productType = form.getFieldValue([
                         FORM_LIST_NAME,
                         field.name,
                         "productType",
                       ]);
-                      const selectedType = productTypes.find((pt) => pt.$id === productTypeId);
-                      if (selectedType?.name === "Leather Seats") return null;
+                      if (productType === LEATHER_SEATS_PRODUCT_TYPE_NAME) return null;
 
                       return (
                         <>
@@ -167,13 +166,12 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
 
                   <Form.Item noStyle shouldUpdate>
                     {() => {
-                      const productTypeId = form.getFieldValue([
+                      const productType = form.getFieldValue([
                         FORM_LIST_NAME,
                         field.name,
                         "productType",
                       ]);
-                      const selectedType = productTypes.find((pt) => pt.$id === productTypeId);
-                      if (selectedType?.name !== "Leather Seats") return null;
+                      if (productType !== LEATHER_SEATS_PRODUCT_TYPE_NAME) return null;
 
                       const isBtProduction = form.getFieldValue([
                         FORM_LIST_NAME,

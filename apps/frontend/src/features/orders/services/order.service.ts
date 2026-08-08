@@ -47,9 +47,9 @@ export const orderService = {
           carModel: params.carModel,
           carPlate: params.carPlate,
           handoverDate: params.handoverDate,
-          batam_production_status: hasBatamProduction ? BatamProductionStatus.WAITING : null,
-          sg_production_status: hasSgProduction ? SgProductionStatus.WAITING : null,
-          installation_status: InstallationStatus.WAITING,
+          batamProductionStatus: hasBatamProduction ? BatamProductionStatus.WAITING : null,
+          sgProductionStatus: hasSgProduction ? SgProductionStatus.WAITING : null,
+          installationStatus: InstallationStatus.WAITING,
         },
         { rowId: orderId, transactionId }
       );
@@ -155,7 +155,11 @@ export const orderService = {
 
   async listOrders(params: ListOrdersRequest): Promise<ListOrdersResponse> {
     const { pagination } = params;
-    return orderRepository.list([Query.limit(pagination.limit), Query.offset(pagination.offset)]);
+    return orderRepository.list([
+      Query.limit(pagination.limit),
+      Query.offset(pagination.offset),
+      Query.select(["*", "orderItems.*"]),
+    ]);
   },
 
   async getOrderById(orderId: string): Promise<Order> {
