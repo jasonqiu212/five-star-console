@@ -1,17 +1,127 @@
-import { CreateOrderPayload, GetOrderMetaResponse, Order } from "shared-types";
-import { Models } from "appwrite";
+import {
+  CreateOrderPayload,
+  GetOrderMetaResponse,
+  InvoiceOrgEntity,
+  InvoiceStatus,
+  Order,
+} from "shared-types";
+import { ID, Models } from "appwrite";
 import { orderRepository } from "./order.repository";
+import { orderItemRepository } from "./order-item.repository";
+import { invoiceRepository } from "@/features/invoices/services/invoice.repository";
+import { invoiceItemRepository } from "@/features/invoices/services/invoice-item.repository";
 import { clientRepository } from "@/features/configurations/services/client.repository";
 import { carBrandRepository } from "@/features/configurations/services/car-brand.repository";
 import { productTypeRepository } from "@/features/configurations/services/product-type.repository";
 import { nextNumberSequenceService } from "@/features/configurations/services/next-number-sequence.service";
+import { tablesDB } from "@/shared/appwrite/appwrite-client";
+import { TAX_RATE } from "./constants";
+
+function formatInvoiceNumber(entity: InvoiceOrgEntity, nextValue: number): string {
+  const prefix = entity === InvoiceOrgEntity.LEATHER_AND_STITCH ? "LS-" : "FS-";
+  return prefix + String(nextValue);
+}
 
 export const orderService = {
-  async createOrder(payload: CreateOrderPayload): Promise<void> {
-    console.log("Creating order with payload:", payload);
-    // TODO: add logic to create order + order items
-    // TODO: add logic to create invoice if createInvoice is true
-    return Promise.resolve();
+  async createOrder(payload: CreateOrderPayload): Promise<string> {
+    const { $id: transactionId } = await tablesDB.createTransaction({ ttl: 60 });
+
+    try {
+      const poNumber = await nextNumberSequenceService.consumeNextPoNumber(transactionId);
+
+      const orderId = ID.unique();
+      await orderRepository.createWithRelationships(
+        {
+          orderDate: payload.orderDate,
+          poNumber: String(poNumber),
+          client: payload.client,
+          clientDetails: payload.clientDetails,
+          carBrand: payload.carBrand,
+          carModel: payload.carModel,
+          carPlate: payload.carPlate,
+          handoverDate: payload.handoverDate,
+        },
+        { rowId: orderId, transactionId }
+      );
+
+      await Promise.all(
+        payload.items.map((item) =>
+          orderItemRepository.createWithRelationships(
+            {
+              productType: item.productType,
+              leatherType: item.leatherType,
+              seatReplacementScope: item.seatReplacementScope,
+              partialSetDetails: item.partialSetDetails,
+              color: item.color,
+              thread: item.thread,
+              doorPanelDetails: item.doorPanelDetails,
+              designDetails: item.designDetails,
+              details: item.details,
+              isBtProduction: item.isBtProduction,
+              btProductionScope: item.btProductionScope,
+              isSgProduction: item.isSgProduction,
+              sgProductionScope: item.sgProductionScope,
+              isSgReadyStock: item.isSgReadyStock,
+              sgReadyStockScope: item.sgReadyStockScope,
+              replaceStock: item.replaceStock,
+              order: orderId,
+            },
+            { transactionId }
+          )
+        )
+      );
+
+      if (payload.createInvoice && payload.invoiceEntity) {
+        const invoiceNumber = await nextNumberSequenceService.consumeNextInvoiceNumber(
+          payload.invoiceEntity,
+          transactionId
+        );
+
+        const subtotalExclTax = payload.items.reduce((sum, item) => sum + item.netPrice, 0);
+        const totalTax = subtotalExclTax * TAX_RATE;
+        const totalInclTax = subtotalExclTax + totalTax;
+
+        const invoiceId = ID.unique();
+        await invoiceRepository.createWithRelationships(
+          {
+            invoiceNumber: formatInvoiceNumber(payload.invoiceEntity, invoiceNumber),
+            taxRate: TAX_RATE,
+            subtotalExclTax,
+            totalTax,
+            totalInclTax,
+            billingComments: payload.billingComments,
+            openDate: payload.orderDate,
+            status: InvoiceStatus.OPEN,
+            client: payload.client,
+            clientDetails: payload.clientDetails,
+            carBrand: payload.carBrand,
+            carModel: payload.carModel,
+            carPlate: payload.carPlate,
+            order: orderId,
+          },
+          { rowId: invoiceId, transactionId }
+        );
+
+        await Promise.all(
+          payload.items.map((item) =>
+            invoiceItemRepository.createWithRelationships(
+              {
+                title: [item.productType, item.details].filter(Boolean).join(" - "),
+                unitPriceExclTax: item.netPrice,
+                invoice: invoiceId,
+              },
+              { transactionId }
+            )
+          )
+        );
+      }
+
+      await tablesDB.updateTransaction({ transactionId, commit: true });
+      return orderId;
+    } catch (error) {
+      await tablesDB.updateTransaction({ transactionId, rollback: true });
+      throw error;
+    }
   },
 
   async getOrderMeta(): Promise<GetOrderMetaResponse> {
