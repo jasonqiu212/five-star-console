@@ -445,7 +445,7 @@
                     "side": "parent"
                 },
                 {
-                    "key": "batam_production_status",
+                    "key": "batamProductionStatus",
                     "type": "string",
                     "required": false,
                     "array": false,
@@ -454,7 +454,7 @@
                     "encrypt": false
                 },
                 {
-                    "key": "sg_production_status",
+                    "key": "sgProductionStatus",
                     "type": "string",
                     "required": false,
                     "array": false,
@@ -463,7 +463,7 @@
                     "encrypt": false
                 },
                 {
-                    "key": "installation_status",
+                    "key": "installationStatus",
                     "type": "string",
                     "required": true,
                     "array": false,
@@ -476,7 +476,11 @@
         },
         {
             "$id": "invoice_item",
-            "$permissions": [],
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")"
+            ],
             "databaseId": "69b64fdc00079d87be9e",
             "name": "invoice_item",
             "enabled": true,
@@ -526,7 +530,11 @@
         },
         {
             "$id": "invoice",
-            "$permissions": [],
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")"
+            ],
             "databaseId": "69b64fdc00079d87be9e",
             "name": "invoice",
             "enabled": true,
