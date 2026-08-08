@@ -17,7 +17,7 @@ export enum BatamProductionStatus {
   PRODUCTION = "Production",
   READY_FOR_SHIPPING = "ReadyForShipping",
   SHIPPING = "Shipping",
-  DONE = "Done",
+  ARRIVED = "Arrived",
 }
 
 export const BatamProductionStatusMeta = createEnumMeta<BatamProductionStatus>({
@@ -25,7 +25,7 @@ export const BatamProductionStatusMeta = createEnumMeta<BatamProductionStatus>({
   [BatamProductionStatus.PRODUCTION]: "Production",
   [BatamProductionStatus.READY_FOR_SHIPPING]: "Ready for Shipping",
   [BatamProductionStatus.SHIPPING]: "Shipping",
-  [BatamProductionStatus.DONE]: "Done",
+  [BatamProductionStatus.ARRIVED]: "Arrived",
 });
 
 export enum SgProductionStatus {

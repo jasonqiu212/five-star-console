@@ -1,14 +1,23 @@
 import React from "react";
 import { Card, Table, Tabs } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { Order } from "shared-types";
+import { BatamProductionStatus, InstallationStatus, Order, SgProductionStatus } from "shared-types";
 import { formatDate } from "@/shared/utils";
 import { useListOrders } from "@/features/orders/hooks/order.hooks";
+import { BatamProductionStatusTag } from "@/components/tags/BatamProductionStatusTag";
+import { SgProductionStatusTag } from "@/components/tags/SgProductionStatusTag";
+import { InstallationStatusTag } from "@/components/tags/InstallationStatusTag";
 
 export const PurchaseOrders: React.FC = () => {
   const { data: orders } = useListOrders();
 
   const columns: ColumnsType<Order> = [
+    {
+      title: "PO Number",
+      dataIndex: "poNumber",
+      key: "poNumber",
+      sorter: (a, b) => a.poNumber.localeCompare(b.poNumber),
+    },
     {
       title: "Order Date",
       dataIndex: "orderDate",
@@ -31,6 +40,33 @@ export const PurchaseOrders: React.FC = () => {
       dataIndex: "carPlate",
       key: "carPlate",
       sorter: (a, b) => a.carPlate.localeCompare(b.carPlate),
+    },
+    {
+      title: "Batam Production",
+      dataIndex: "batam_production_status",
+      key: "batam_production_status",
+      render: (value: BatamProductionStatus | null) =>
+        value ? <BatamProductionStatusTag status={value} /> : "-",
+    },
+    {
+      title: "SG Production",
+      dataIndex: "sg_production_status",
+      key: "sg_production_status",
+      render: (value: SgProductionStatus | null) =>
+        value ? <SgProductionStatusTag status={value} /> : "-",
+    },
+    {
+      title: "Installation",
+      dataIndex: "installation_status",
+      key: "installation_status",
+      render: (value: InstallationStatus | null) =>
+        value ? <InstallationStatusTag status={value} /> : "-",
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      width: 100,
+      render: () => null,
     },
   ];
 
