@@ -10,7 +10,7 @@ import {
 const TAX_RATE = 0.09;
 
 function formatInvoiceNumber(entity: string, nextValue: number): string {
-  const prefix = entity === InvoiceOrgEntity.LeatherAndStitch ? "LS-" : "FS-";
+  const prefix = entity === InvoiceOrgEntity.LEATHER_AND_STITCH ? "LS-" : "FS-";
   return prefix + String(nextValue);
 }
 

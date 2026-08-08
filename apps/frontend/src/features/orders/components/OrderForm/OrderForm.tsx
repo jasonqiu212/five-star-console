@@ -18,7 +18,7 @@ export const OrderForm: React.FC = () => {
     return {
       orderDate: dayjs(),
       createInvoice: true,
-      invoiceEntity: InvoiceOrgEntity.FiveStarAutoLeather,
+      invoiceEntity: InvoiceOrgEntity.FIVE_STAR_AUTO_LEATHER,
     };
   }, []);
 

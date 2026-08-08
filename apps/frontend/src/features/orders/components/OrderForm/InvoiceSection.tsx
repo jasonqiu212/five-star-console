@@ -15,9 +15,9 @@ export const InvoiceSection: React.FC<InvoiceSectionProps> = ({ form, nextInvoic
 
   useEffect(() => {
     if (!nextInvoiceNumbers) return;
-    const entity = invoiceEntity ?? InvoiceOrgEntity.FiveStarAutoLeather;
+    const entity = invoiceEntity ?? InvoiceOrgEntity.FIVE_STAR_AUTO_LEATHER;
     const invoiceNumber =
-      entity === InvoiceOrgEntity.FiveStarAutoLeather
+      entity === InvoiceOrgEntity.FIVE_STAR_AUTO_LEATHER
         ? "FS-" + String(nextInvoiceNumbers.fiveStarAutoLeather ?? 0)
         : "LS-" + String(nextInvoiceNumbers.leatherAndStitch ?? 0);
     form.setFieldValue("invoiceNumber", invoiceNumber);

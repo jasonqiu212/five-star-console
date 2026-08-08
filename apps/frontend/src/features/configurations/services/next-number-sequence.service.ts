@@ -6,10 +6,10 @@ export const nextNumberSequenceService = {
     const sequences = await nextNumberSequenceRepository.list();
     return {
       fiveStarAutoLeather: sequences.rows.find(
-        (seq) => seq.key === `invoice-${InvoiceOrgEntity.FiveStarAutoLeather}`
+        (seq) => seq.key === `invoice-${InvoiceOrgEntity.FIVE_STAR_AUTO_LEATHER}`
       ),
       leatherAndStitch: sequences.rows.find(
-        (seq) => seq.key === `invoice-${InvoiceOrgEntity.LeatherAndStitch}`
+        (seq) => seq.key === `invoice-${InvoiceOrgEntity.LEATHER_AND_STITCH}`
       ),
     };
   },
