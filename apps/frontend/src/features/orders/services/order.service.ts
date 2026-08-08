@@ -27,6 +27,10 @@ function formatInvoiceNumber(entity: InvoiceOrgEntity, nextValue: number): strin
 
 export const orderService = {
   async createOrder(payload: CreateOrderPayload): Promise<string> {
+    if (payload.items.length === 0) {
+      throw new Error("At least 1 order item is required");
+    }
+
     const { $id: transactionId } = await tablesDB.createTransaction({ ttl: 60 });
 
     try {
