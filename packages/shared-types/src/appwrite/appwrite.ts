@@ -66,6 +66,9 @@ export type Order = Models.Row & {
     completedDate: string | null;
     remarks: string | null;
     invoices: Invoice[];
+    batam_production_status: string | null;
+    sg_production_status: string | null;
+    installation_status: string;
 }
 
 export type InvoiceItem = Models.Row & {
