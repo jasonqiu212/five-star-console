@@ -7,11 +7,11 @@ export interface ServerOrder {
   orderDate: string;
   poNumber: string;
   client: string;
-  clientDetails?: string;
+  clientDetails: string | null;
   carBrand: string;
   carModel: string;
   carPlate: string;
-  handoverDate?: string;
+  handoverDate: string | null;
 
   /** Invoice */
   createInvoice: boolean;
