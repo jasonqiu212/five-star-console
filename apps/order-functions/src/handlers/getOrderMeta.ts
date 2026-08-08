@@ -53,10 +53,10 @@ export async function getOrderMeta(context: any) {
     });
 
     const fiveStarSeq = invoiceSeqResult.rows.find(
-      (r) => r.entity === InvoiceOrgEntity.FiveStarAutoLeather
+      (r) => r.entity === InvoiceOrgEntity.FIVE_STAR_AUTO_LEATHER
     );
     const leatherSeq = invoiceSeqResult.rows.find(
-      (r) => r.entity === InvoiceOrgEntity.LeatherAndStitch
+      (r) => r.entity === InvoiceOrgEntity.LEATHER_AND_STITCH
     );
 
     const result: GetOrderMetaResponse = {

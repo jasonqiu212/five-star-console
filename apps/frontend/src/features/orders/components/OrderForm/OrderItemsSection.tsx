@@ -33,8 +33,19 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
   return (
     <Card title="Order Items" style={{ width: "100%" }}>
       <div style={{ maxWidth: 850, marginInline: "auto" }}>
-        <Form.List name={FORM_LIST_NAME}>
-          {(fields, { add, remove }) => (
+        <Form.List
+          name={FORM_LIST_NAME}
+          rules={[
+            {
+              validator: async (_, items) => {
+                if (!items || items.length < 1) {
+                  return Promise.reject(new Error("Please add at least 1 order item"));
+                }
+              },
+            },
+          ]}
+        >
+          {(fields, { add, remove }, { errors }) => (
             <Flex vertical gap="small">
               {fields.map((field) => (
                 <Card
@@ -271,6 +282,10 @@ export const OrderItemsSection: React.FC<OrderItemsSectionProps> = ({ form, prod
               <Button type="dashed" icon={<PlusOutlined />} onClick={() => add()} block>
                 Add Item
               </Button>
+
+              <Form.Item>
+                <Form.ErrorList errors={errors} />
+              </Form.Item>
             </Flex>
           )}
         </Form.List>

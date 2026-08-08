@@ -1,11 +1,11 @@
 import { createEnumMeta } from "../utils/enum";
 
 export enum InvoiceOrgEntity {
-  FiveStarAutoLeather = "five-star-auto-leather",
-  LeatherAndStitch = "leather-and-stitch",
+  FIVE_STAR_AUTO_LEATHER = "five-star-auto-leather",
+  LEATHER_AND_STITCH = "leather-and-stitch",
 }
 
 export const InvoiceOrgEntityMeta = createEnumMeta<InvoiceOrgEntity>({
-  [InvoiceOrgEntity.FiveStarAutoLeather]: "Five Star Auto Leather",
-  [InvoiceOrgEntity.LeatherAndStitch]: "Leather & Stitch",
+  [InvoiceOrgEntity.FIVE_STAR_AUTO_LEATHER]: "Five Star Auto Leather",
+  [InvoiceOrgEntity.LEATHER_AND_STITCH]: "Leather & Stitch",
 });

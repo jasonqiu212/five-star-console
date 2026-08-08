@@ -1,0 +1,1 @@
+export { InstallationStatusTag } from "./InstallationStatusTag";

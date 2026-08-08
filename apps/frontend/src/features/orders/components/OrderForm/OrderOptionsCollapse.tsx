@@ -9,6 +9,7 @@ export const OrderOptionsCollapse: React.FC = () => {
         {
           key: "more",
           label: "More Options",
+          forceRender: true,
           children: (
             <div style={{ maxWidth: 850, marginInline: "auto" }}>
               <Form.Item label="Create invoice" name="createInvoice" valuePropName="checked">
