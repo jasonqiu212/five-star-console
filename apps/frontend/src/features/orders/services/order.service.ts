@@ -9,6 +9,8 @@ import { nextNumberSequenceService } from "@/features/configurations/services/ne
 export const orderService = {
   async createOrder(payload: CreateOrderPayload): Promise<void> {
     console.log("Creating order with payload:", payload);
+    // TODO: add logic to create order + order items
+    // TODO: add logic to create invoice if createInvoice is true
     return Promise.resolve();
   },
 
