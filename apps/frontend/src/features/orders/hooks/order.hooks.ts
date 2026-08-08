@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { orderService } from "../services/order.service";
-import { CreateOrderPayload } from "shared-types";
+import { CreateOrderPayload, ListOrdersRequest } from "shared-types";
 import { message } from "antd";
 
 const QUERY_KEY = "order";
@@ -25,10 +25,10 @@ export function useGetOrderMeta() {
   });
 }
 
-export function useListOrders() {
+export function useListOrders(payload: ListOrdersRequest) {
   return useQuery({
-    queryKey: [QUERY_KEY],
-    queryFn: () => orderService.listOrders(),
+    queryKey: [QUERY_KEY, payload],
+    queryFn: () => orderService.listOrders(payload),
   });
 }
 

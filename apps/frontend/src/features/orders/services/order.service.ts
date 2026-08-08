@@ -4,10 +4,12 @@ import {
   GetOrderMetaResponse,
   InstallationStatus,
   InvoiceStatus,
+  ListOrdersRequest,
+  ListOrdersResponse,
   Order,
   SgProductionStatus,
 } from "shared-types";
-import { ID, Models } from "appwrite";
+import { ID, Query } from "appwrite";
 import { orderRepository } from "./order.repository";
 import { orderItemRepository } from "./order-item.repository";
 import { invoiceRepository } from "@/features/invoices/services/invoice.repository";
@@ -21,8 +23,8 @@ import { TAX_RATE } from "./constants";
 import { formatInvoiceNumber } from "./utils";
 
 export const orderService = {
-  async createOrder(payload: CreateOrderPayload): Promise<string> {
-    if (payload.items.length === 0) {
+  async createOrder(params: CreateOrderPayload): Promise<string> {
+    if (params.items.length === 0) {
       throw new Error("At least 1 order item is required");
     }
 
@@ -31,20 +33,20 @@ export const orderService = {
     try {
       const poNumber = await nextNumberSequenceService.consumeNextPoNumber(transactionId);
 
-      const hasBatamProduction = payload.items.some((item) => item.isBtProduction);
-      const hasSgProduction = payload.items.some((item) => item.isSgProduction);
+      const hasBatamProduction = params.items.some((item) => item.isBtProduction);
+      const hasSgProduction = params.items.some((item) => item.isSgProduction);
 
       const orderId = ID.unique();
       await orderRepository.createWithRelationships(
         {
-          orderDate: payload.orderDate,
+          orderDate: params.orderDate,
           poNumber: String(poNumber),
-          client: payload.client,
-          clientDetails: payload.clientDetails,
-          carBrand: payload.carBrand,
-          carModel: payload.carModel,
-          carPlate: payload.carPlate,
-          handoverDate: payload.handoverDate,
+          client: params.client,
+          clientDetails: params.clientDetails,
+          carBrand: params.carBrand,
+          carModel: params.carModel,
+          carPlate: params.carPlate,
+          handoverDate: params.handoverDate,
           batam_production_status: hasBatamProduction ? BatamProductionStatus.WAITING : null,
           sg_production_status: hasSgProduction ? SgProductionStatus.WAITING : null,
           installation_status: InstallationStatus.WAITING,
@@ -53,7 +55,7 @@ export const orderService = {
       );
 
       await Promise.all(
-        payload.items.map((item) =>
+        params.items.map((item) =>
           orderItemRepository.createWithRelationships(
             {
               productType: item.productType,
@@ -79,39 +81,39 @@ export const orderService = {
         )
       );
 
-      if (payload.createInvoice && payload.invoiceEntity) {
+      if (params.createInvoice && params.invoiceEntity) {
         const invoiceNumber = await nextNumberSequenceService.consumeNextInvoiceNumber(
-          payload.invoiceEntity,
+          params.invoiceEntity,
           transactionId
         );
 
-        const subtotalExclTax = payload.items.reduce((sum, item) => sum + item.netPrice, 0);
+        const subtotalExclTax = params.items.reduce((sum, item) => sum + item.netPrice, 0);
         const totalTax = subtotalExclTax * TAX_RATE;
         const totalInclTax = subtotalExclTax + totalTax;
 
         const invoiceId = ID.unique();
         await invoiceRepository.createWithRelationships(
           {
-            invoiceNumber: formatInvoiceNumber(payload.invoiceEntity, invoiceNumber),
+            invoiceNumber: formatInvoiceNumber(params.invoiceEntity, invoiceNumber),
             taxRate: TAX_RATE,
             subtotalExclTax,
             totalTax,
             totalInclTax,
-            billingComments: payload.billingComments,
-            openDate: payload.orderDate,
+            billingComments: params.billingComments,
+            openDate: params.orderDate,
             status: InvoiceStatus.OPEN,
-            client: payload.client,
-            clientDetails: payload.clientDetails,
-            carBrand: payload.carBrand,
-            carModel: payload.carModel,
-            carPlate: payload.carPlate,
+            client: params.client,
+            clientDetails: params.clientDetails,
+            carBrand: params.carBrand,
+            carModel: params.carModel,
+            carPlate: params.carPlate,
             order: orderId,
           },
           { rowId: invoiceId, transactionId }
         );
 
         await Promise.all(
-          payload.items.map((item) =>
+          params.items.map((item) =>
             invoiceItemRepository.createWithRelationships(
               {
                 title: [item.productType, item.details].filter(Boolean).join(" - "),
@@ -151,8 +153,9 @@ export const orderService = {
     };
   },
 
-  async listOrders(): Promise<Models.RowList<Order>> {
-    return orderRepository.list();
+  async listOrders(params: ListOrdersRequest): Promise<ListOrdersResponse> {
+    const { pagination } = params;
+    return orderRepository.list([Query.limit(pagination.limit), Query.offset(pagination.offset)]);
   },
 
   async getOrderById(orderId: string): Promise<Order> {

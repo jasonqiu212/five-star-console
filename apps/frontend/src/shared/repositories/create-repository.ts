@@ -42,11 +42,12 @@ export function createRepository<T extends Models.Row>(config: {
       );
     },
 
-    async list(): Promise<Models.RowList<T>> {
+    async list(queries?: string[]): Promise<Models.RowList<T>> {
       return apiCall(() =>
         tablesDB.listRows({
           databaseId: config.databaseId,
           tableId: config.tableId,
+          queries,
         })
       );
     },

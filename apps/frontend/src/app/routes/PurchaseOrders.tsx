@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Card, Flex, Table, Tabs } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { BatamProductionStatus, InstallationStatus, Order, SgProductionStatus } from "shared-types";
@@ -10,7 +10,11 @@ import { InstallationStatusTag } from "@/components/tags/InstallationStatusTag";
 import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 
 export const PurchaseOrders: React.FC = () => {
-  const { data: orders } = useListOrders();
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(25);
+  const { data: orders } = useListOrders({
+    pagination: { limit: pageSize, offset: (page - 1) * pageSize },
+  });
 
   const columns: ColumnsType<Order> = [
     {
@@ -94,7 +98,16 @@ export const PurchaseOrders: React.FC = () => {
                 size="small"
                 columns={columns}
                 dataSource={orders?.rows}
-                pagination={{ pageSize: 10 }}
+                pagination={{
+                  current: page,
+                  pageSize,
+                  total: orders?.total,
+                  showTotal: (total) => `Total ${total} orders`,
+                  onChange: (nextPage, nextPageSize) => {
+                    setPage(nextPage);
+                    setPageSize(nextPageSize);
+                  },
+                }}
                 rowKey="$id"
                 scroll={{ x: "max-content" }}
               />
