@@ -119,6 +119,7 @@ export const PurchaseOrders: React.FC = () => {
       title: "Actions",
       key: "actions",
       width: 100,
+      fixed: "right",
       render: () => {
         return (
           <Flex align="center" gap={4}>
