@@ -65,10 +65,16 @@ export const PurchaseOrders: React.FC = () => {
       title: "Details",
       key: "details",
       render: (_, record: Order) => {
+        const sortedItems = [...(record.orderItems ?? [])].sort((a, b) => {
+          const aIsLeatherSeats = a.productType === LEATHER_SEATS_PRODUCT_TYPE_NAME;
+          const bIsLeatherSeats = b.productType === LEATHER_SEATS_PRODUCT_TYPE_NAME;
+          return Number(bIsLeatherSeats) - Number(aIsLeatherSeats);
+        });
+
         return (
           <Typography.Text>
             <ul style={{ margin: 0 }}>
-              {record.orderItems?.map((item) => (
+              {sortedItems.map((item) => (
                 <li key={item.$id}>{renderOrderItemDetails(item)}</li>
               ))}
             </ul>
