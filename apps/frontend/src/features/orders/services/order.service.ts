@@ -3,7 +3,6 @@ import {
   CreateOrderPayload,
   GetOrderMetaResponse,
   InstallationStatus,
-  InvoiceOrgEntity,
   InvoiceStatus,
   Order,
   SgProductionStatus,
@@ -19,11 +18,7 @@ import { productTypeRepository } from "@/features/configurations/services/produc
 import { nextNumberSequenceService } from "@/features/configurations/services/next-number-sequence.service";
 import { tablesDB } from "@/shared/appwrite/appwrite-client";
 import { TAX_RATE } from "./constants";
-
-function formatInvoiceNumber(entity: InvoiceOrgEntity, nextValue: number): string {
-  const prefix = entity === InvoiceOrgEntity.LEATHER_AND_STITCH ? "LS-" : "FS-";
-  return prefix + String(nextValue);
-}
+import { formatInvoiceNumber } from "./utils";
 
 export const orderService = {
   async createOrder(payload: CreateOrderPayload): Promise<string> {
