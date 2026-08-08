@@ -1,9 +1,12 @@
 import {
+  BatamProductionStatus,
   CreateOrderPayload,
   GetOrderMetaResponse,
+  InstallationStatus,
   InvoiceOrgEntity,
   InvoiceStatus,
   Order,
+  SgProductionStatus,
 } from "shared-types";
 import { ID, Models } from "appwrite";
 import { orderRepository } from "./order.repository";
@@ -29,6 +32,9 @@ export const orderService = {
     try {
       const poNumber = await nextNumberSequenceService.consumeNextPoNumber(transactionId);
 
+      const hasBatamProduction = payload.items.some((item) => item.isBtProduction);
+      const hasSgProduction = payload.items.some((item) => item.isSgProduction);
+
       const orderId = ID.unique();
       await orderRepository.createWithRelationships(
         {
@@ -40,6 +46,9 @@ export const orderService = {
           carModel: payload.carModel,
           carPlate: payload.carPlate,
           handoverDate: payload.handoverDate,
+          batam_production_status: hasBatamProduction ? BatamProductionStatus.WAITING : null,
+          sg_production_status: hasSgProduction ? SgProductionStatus.WAITING : null,
+          installation_status: InstallationStatus.WAITING,
         },
         { rowId: orderId, transactionId }
       );
