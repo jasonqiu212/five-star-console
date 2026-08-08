@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card, Flex, Table, Tabs, Typography } from "antd";
+import { Button, Card, Flex, Table, Tabs, Tooltip, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import {
   BatamProductionStatus,
@@ -14,7 +14,7 @@ import { useListOrders } from "@/features/orders/hooks/order.hooks";
 import { BatamProductionStatusTag } from "@/components/tags/BatamProductionStatusTag";
 import { SgProductionStatusTag } from "@/components/tags/SgProductionStatusTag";
 import { InstallationStatusTag } from "@/components/tags/InstallationStatusTag";
-import { EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeOutlined, InfoCircleOutlined } from "@ant-design/icons";
 
 const renderOrderItemDetails = (item: OrderItem): string => {
   if (item.productType === LEATHER_SEATS_PRODUCT_TYPE_NAME) {
@@ -48,7 +48,16 @@ export const PurchaseOrders: React.FC = () => {
     {
       title: "Client",
       key: "client",
-      render: (record) => record.client,
+      render: (record) => (
+        <Flex align="center" gap={4}>
+          {record.client}
+          {record.clientDetails && (
+            <Tooltip title={record.clientDetails}>
+              <InfoCircleOutlined />
+            </Tooltip>
+          )}
+        </Flex>
+      ),
     },
     {
       title: "Car Model",
@@ -112,7 +121,7 @@ export const PurchaseOrders: React.FC = () => {
       width: 100,
       render: () => {
         return (
-          <Flex align="center" gap="small">
+          <Flex align="center" gap={4}>
             <Button type="text" icon={<EyeOutlined />} />
             <Button type="text" icon={<EditOutlined />} />
           </Flex>
