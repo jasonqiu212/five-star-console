@@ -86,7 +86,7 @@ export const InvoicesTable: React.FC<InvoicesTableProps> = ({ entity }) => {
       render: (value: InvoiceStatus) => <InvoiceStatusTag status={value} />,
     },
     {
-      title: "Total (Incl. Tax)",
+      title: entity === InvoiceEntity.FIVE_STAR_AUTO_LEATHER ? "Total (Incl. Tax)" : "Total",
       dataIndex: "totalInclTax",
       key: "totalInclTax",
       width: 140,
