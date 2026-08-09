@@ -94,6 +94,7 @@ export const orderService = {
         const invoiceId = ID.unique();
         await invoiceRepository.createWithRelationships(
           {
+            invoiceEntity: params.invoiceEntity,
             invoiceNumber: formatInvoiceNumber(params.invoiceEntity, invoiceNumber),
             taxRate: TAX_RATE,
             subtotalExclTax,
