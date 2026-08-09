@@ -1,4 +1,4 @@
-import { account } from "@/api";
+import { account } from "@/shared/appwrite";
 import { Models } from "appwrite";
 
 export const login = async (

@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import { AuthState, LoginCredentials } from "../types";
 import * as appwriteAuth from "../services/appwriteAuth";
-import { account } from "@/api";
+import { account } from "@/shared/appwrite";
 
 interface AuthContextValue extends AuthState {
   loginAction: (credentials: LoginCredentials) => Promise<void>;
