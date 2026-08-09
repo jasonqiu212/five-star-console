@@ -1,4 +1,4 @@
-import { InvoiceOrgEntity, UpdateNextNumberSequencePayload } from "shared-types";
+import { InvoiceOrgEntity, UpdateNextNumberSequenceRequest } from "shared-types";
 import { nextNumberSequenceRepository } from "./next-number-sequence.repository";
 
 async function consumeNextValue(key: string, transactionId?: string): Promise<number> {
@@ -33,8 +33,9 @@ export const nextNumberSequenceService = {
     return sequences.rows.find((seq) => seq.key === "po");
   },
 
-  async updateNextNumberSequence(id: string, payload: Partial<UpdateNextNumberSequencePayload>) {
-    return nextNumberSequenceRepository.update(id, payload);
+  async updateNextNumberSequence(params: UpdateNextNumberSequenceRequest) {
+    const { id, nextValue } = params;
+    return nextNumberSequenceRepository.update(id, { nextValue });
   },
 
   /** Returns the next PO number and stages the sequence's increment. */

@@ -14,7 +14,7 @@ export function useInvoiceNumberSequenceForm() {
     if (data?.fiveStarAutoLeather == undefined) return;
     updateSequence.mutate({
       id: data.fiveStarAutoLeather.$id,
-      payload: { nextValue: newValue },
+      nextValue: newValue,
     });
   };
 
@@ -22,7 +22,7 @@ export function useInvoiceNumberSequenceForm() {
     if (data?.leatherAndStitch == undefined) return;
     updateSequence.mutate({
       id: data.leatherAndStitch.$id,
-      payload: { nextValue: newValue },
+      nextValue: newValue,
     });
   };
 

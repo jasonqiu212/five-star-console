@@ -1,4 +1,4 @@
-import type { CreateCarBrandPayload, UpdateCarBrandPayload } from "shared-types";
+import type { CreateCarBrandRequest, UpdateCarBrandRequest } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 import { carBrandService } from "../services/car-brand.service";
@@ -8,7 +8,7 @@ const QUERY_KEY = "car-brand";
 export function useCreateCarBrand() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: CreateCarBrandPayload) => carBrandService.createCarBrand(payload),
+    mutationFn: (payload: CreateCarBrandRequest) => carBrandService.createCarBrand(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       message.success("Car brand created");
@@ -26,8 +26,7 @@ export function useListCarBrands() {
 export function useUpdateCarBrand() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, payload }: { id: string; payload: UpdateCarBrandPayload }) =>
-      carBrandService.updateCarBrand(id, payload),
+    mutationFn: (payload: UpdateCarBrandRequest) => carBrandService.updateCarBrand(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       message.success("Car brand updated");

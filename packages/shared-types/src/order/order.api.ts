@@ -8,7 +8,7 @@ import {
   SgProductionStatus,
 } from "./order.enum";
 
-export type CreateOrderPayload = Omit<ServerOrder, "$id">;
+export type CreateOrderRequest = Omit<ServerOrder, "$id">;
 
 export type GetOrderMetaResponse = {
   clients: Client[];

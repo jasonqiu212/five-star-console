@@ -1,7 +1,5 @@
-export type UpdateNextNumberSequencePayload = {
-  nextValue: number;
-};
+import { NextNumberSequence } from "../appwrite/appwrite";
 
-export type UpdatePoNumberSequencePayload = {
-  nextValue: number;
+export type UpdateNextNumberSequenceRequest = Pick<NextNumberSequence, "nextValue"> & {
+  id: string;
 };

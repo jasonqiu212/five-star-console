@@ -1,17 +1,18 @@
-import { CreateClientPayload } from "shared-types";
+import { CreateClientRequest, UpdateClientRequest } from "shared-types";
 import { clientRepository } from "./client.repository";
 
 export const clientService = {
-  async createClient(payload: CreateClientPayload) {
-    return clientRepository.create(payload);
+  async createClient(params: CreateClientRequest) {
+    return clientRepository.create(params);
   },
 
   async listClients() {
     return clientRepository.list();
   },
 
-  async updateClient(id: string, payload: Partial<CreateClientPayload>) {
-    return clientRepository.update(id, payload);
+  async updateClient(params: UpdateClientRequest) {
+    const { id, name } = params;
+    return clientRepository.update(id, { name });
   },
 
   async deleteClient(id: string) {

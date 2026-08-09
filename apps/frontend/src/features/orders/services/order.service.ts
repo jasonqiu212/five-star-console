@@ -1,6 +1,6 @@
 import {
   BatamProductionStatus,
-  CreateOrderPayload,
+  CreateOrderRequest,
   GetOrderMetaResponse,
   InstallationStatus,
   InvoiceStatus,
@@ -23,7 +23,7 @@ import { TAX_RATE } from "./constants";
 import { formatInvoiceNumber } from "./utils";
 
 export const orderService = {
-  async createOrder(params: CreateOrderPayload): Promise<string> {
+  async createOrder(params: CreateOrderRequest): Promise<string> {
     if (params.items.length === 0) {
       throw new Error("At least 1 order item is required");
     }

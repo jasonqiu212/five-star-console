@@ -1,4 +1,4 @@
-import type { CreateProductTypePayload, UpdateProductTypePayload } from "shared-types";
+import type { CreateProductTypeRequest, UpdateProductTypeRequest } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 import { productTypeService } from "../services/product-type.service";
@@ -8,7 +8,7 @@ const QUERY_KEY = "product-type";
 export function useCreateProductType() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: CreateProductTypePayload) =>
+    mutationFn: (payload: CreateProductTypeRequest) =>
       productTypeService.createProductType(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
@@ -27,8 +27,8 @@ export function useListProductTypes() {
 export function useUpdateProductType() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, payload }: { id: string; payload: UpdateProductTypePayload }) =>
-      productTypeService.updateProductType(id, payload),
+    mutationFn: (payload: UpdateProductTypeRequest) =>
+      productTypeService.updateProductType(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       message.success("Product type updated");

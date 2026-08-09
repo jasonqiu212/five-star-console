@@ -9,7 +9,7 @@ export function usePoNumberSequenceForm() {
     if (data == undefined) return;
     updateSequence.mutate({
       id: data.$id,
-      payload: { nextValue: newValue },
+      nextValue: newValue,
     });
   };
 

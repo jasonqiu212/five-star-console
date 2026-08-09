@@ -44,7 +44,7 @@ export const ProductTypesTable: React.FC = () => {
               record={record}
               modalTitle="Edit Product Type"
               inputPlaceholder="Product type name"
-              onSubmit={(values) => updateMutation.mutateAsync({ id: record.$id, payload: values })}
+              onSubmit={(values) => updateMutation.mutateAsync({ id: record.$id, ...values })}
               isPending={updateMutation.isPending}
             />
             <DeleteDropdownOptionButton

@@ -39,9 +39,7 @@ export const CarBrandsTable: React.FC = () => {
             record={record}
             modalTitle="Edit car brand"
             inputPlaceholder="Car brand name"
-            onSubmit={(values) =>
-              updateCarBrandMutation.mutateAsync({ id: record.$id, payload: values })
-            }
+            onSubmit={(values) => updateCarBrandMutation.mutateAsync({ id: record.$id, ...values })}
             isPending={updateCarBrandMutation.isPending}
           />
           <DeleteDropdownOptionButton

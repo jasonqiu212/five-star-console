@@ -1,4 +1,4 @@
-import type { UpdatePoNumberSequencePayload } from "shared-types";
+import type { UpdateNextNumberSequenceRequest } from "shared-types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 import { nextNumberSequenceService } from "../services/next-number-sequence.service";
@@ -22,8 +22,8 @@ export function useGetNextPoNumber() {
 export function useUpdateNextNumberSequence() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, payload }: { id: string; payload: UpdatePoNumberSequencePayload }) =>
-      nextNumberSequenceService.updateNextNumberSequence(id, payload),
+    mutationFn: (payload: UpdateNextNumberSequenceRequest) =>
+      nextNumberSequenceService.updateNextNumberSequence(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       message.success("PO number sequence updated");

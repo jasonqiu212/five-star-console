@@ -39,7 +39,7 @@ export const ClientsTable: React.FC = () => {
             record={record}
             modalTitle="Edit Client"
             inputPlaceholder="Client name"
-            onSubmit={(values) => updateMutation.mutateAsync({ id: record.$id, payload: values })}
+            onSubmit={(values) => updateMutation.mutateAsync({ id: record.$id, ...values })}
             isPending={updateMutation.isPending}
           />
           <DeleteDropdownOptionButton

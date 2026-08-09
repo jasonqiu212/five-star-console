@@ -1,5 +1,5 @@
-export type CreateCarBrandPayload = {
-  name: string;
-};
+import { CarBrand } from "../appwrite/appwrite";
 
-export type UpdateCarBrandPayload = Partial<CreateCarBrandPayload>;
+export type CreateCarBrandRequest = Pick<CarBrand, "name">;
+
+export type UpdateCarBrandRequest = Partial<CreateCarBrandRequest> & { id: string };

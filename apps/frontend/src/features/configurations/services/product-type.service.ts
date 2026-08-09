@@ -1,10 +1,10 @@
-import { CreateProductTypePayload } from "shared-types";
+import { CreateProductTypeRequest, UpdateProductTypeRequest } from "shared-types";
 import { productTypeRepository } from "./product-type.repository";
 
 export const productTypeService = {
-  async createProductType(payload: CreateProductTypePayload) {
+  async createProductType(params: CreateProductTypeRequest) {
     return productTypeRepository.create({
-      name: payload.name,
+      name: params.name,
       isSystem: false,
     });
   },
@@ -13,8 +13,9 @@ export const productTypeService = {
     return productTypeRepository.list();
   },
 
-  async updateProductType(id: string, payload: Partial<CreateProductTypePayload>) {
-    return productTypeRepository.update(id, payload);
+  async updateProductType(params: UpdateProductTypeRequest) {
+    const { id, name } = params;
+    return productTypeRepository.update(id, { name });
   },
 
   async deleteProductType(id: string) {

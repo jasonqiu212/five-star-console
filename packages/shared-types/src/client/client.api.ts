@@ -1,5 +1,5 @@
-export type CreateClientPayload = {
-  name: string;
-};
+import { Client } from "../appwrite/appwrite";
 
-export type UpdateClientPayload = Partial<CreateClientPayload>;
+export type CreateClientRequest = Pick<Client, "name">;
+
+export type UpdateClientRequest = Partial<CreateClientRequest> & { id: string };

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { orderService } from "../services/order.service";
-import { CreateOrderPayload, ListOrdersRequest } from "shared-types";
+import { CreateOrderRequest, ListOrdersRequest } from "shared-types";
 import { message } from "antd";
 
 const QUERY_KEY = "order";
@@ -8,7 +8,7 @@ const QUERY_KEY = "order";
 export function useCreateOrder() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: CreateOrderPayload) => orderService.createOrder(payload),
+    mutationFn: (payload: CreateOrderRequest) => orderService.createOrder(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
       message.success("Order created");
