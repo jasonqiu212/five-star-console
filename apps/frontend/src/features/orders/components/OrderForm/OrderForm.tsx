@@ -3,7 +3,7 @@ import React, { useEffect, useMemo } from "react";
 import { InvoiceOrgEntity } from "shared-types";
 
 import type { OrderFormValues } from "../../types";
-import { toServerOrder } from "../../order.adapters";
+import { toCreateOrderRequest } from "../../order.adapters";
 import { BasicInformationSection } from "./BasicInformationSection";
 import { InvoiceSection } from "./InvoiceSection";
 import { OrderItemsSection } from "./OrderItemsSection";
@@ -38,9 +38,9 @@ export const OrderForm: React.FC = () => {
   }, [orderMeta?.nextPoNumber, form]);
 
   const onFinish = (values: OrderFormValues) => {
-    const serverOrder = toServerOrder(values);
+    const createOrderRequest = toCreateOrderRequest(values);
 
-    createMutation.mutate(serverOrder, {
+    createMutation.mutate(createOrderRequest, {
       onSuccess: () => {
         form.resetFields();
       },

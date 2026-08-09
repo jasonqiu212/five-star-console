@@ -26,7 +26,7 @@ export interface OrderFormValues {
 }
 
 export interface OrderItem {
-  productType?: string;
+  productType: string;
   netPrice: number;
 
   /**  Specific to leather seats */

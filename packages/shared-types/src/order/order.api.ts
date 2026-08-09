@@ -1,6 +1,13 @@
 import { Models } from "appwrite";
-import { CarBrand, Client, Order, ProductType } from "../appwrite/appwrite";
-import { ServerOrder } from "./order.types";
+import {
+  CarBrand,
+  Client,
+  Order,
+  OrderItemLeatherType,
+  OrderItemSeatReplacementScope,
+  ProductType,
+} from "../appwrite/appwrite";
+import { InvoiceOrgEntity } from "../number-sequence/number-sequence.enum";
 import {
   BatamProductionStatus,
   InstallationStatus,
@@ -8,7 +15,41 @@ import {
   SgProductionStatus,
 } from "./order.enum";
 
-export type CreateOrderRequest = Omit<ServerOrder, "$id">;
+export type CreateOrderItemRequest = {
+  productType: string;
+  netPrice: number;
+
+  /** Specific to leather seats */
+  leatherType?: OrderItemLeatherType;
+  seatReplacementScope?: OrderItemSeatReplacementScope;
+  partialSetDetails?: string;
+  color?: string;
+  thread?: string;
+
+  /** Specific to other products */
+  details?: string;
+
+  /** Production details for leather seats */
+  doorPanelDetails?: string;
+  designDetails?: string;
+  isBtProduction: boolean;
+  btProductionScope?: string;
+  isSgProduction: boolean;
+  sgProductionScope?: string;
+  isSgReadyStock: boolean;
+  sgReadyStockScope?: string;
+  replaceStock?: boolean;
+};
+
+export type CreateOrderRequest = Pick<
+  Order,
+  "orderDate" | "client" | "clientDetails" | "carBrand" | "carModel" | "carPlate" | "handoverDate"
+> & {
+  createInvoice: boolean;
+  invoiceEntity?: InvoiceOrgEntity;
+  billingComments?: string;
+  items: CreateOrderItemRequest[];
+};
 
 export type GetOrderMetaResponse = {
   clients: Client[];
