@@ -1,6 +1,6 @@
 import { Card, Form, FormInstance, Input, Select, Typography } from "antd";
 import React, { useEffect } from "react";
-import { InvoiceOrgEntity, InvoiceOrgEntityMeta } from "shared-types";
+import { InvoiceEntityMeta, InvoiceEntity } from "shared-types";
 
 import type { OrderFormValues } from "../../types";
 
@@ -15,9 +15,9 @@ export const InvoiceSection: React.FC<InvoiceSectionProps> = ({ form, nextInvoic
 
   useEffect(() => {
     if (!nextInvoiceNumbers) return;
-    const entity = invoiceEntity ?? InvoiceOrgEntity.FIVE_STAR_AUTO_LEATHER;
+    const entity = invoiceEntity ?? InvoiceEntity.FIVE_STAR_AUTO_LEATHER;
     const invoiceNumber =
-      entity === InvoiceOrgEntity.FIVE_STAR_AUTO_LEATHER
+      entity === InvoiceEntity.FIVE_STAR_AUTO_LEATHER
         ? "FS-" + String(nextInvoiceNumbers.fiveStarAutoLeather ?? 0)
         : "LS-" + String(nextInvoiceNumbers.leatherAndStitch ?? 0);
     form.setFieldValue("invoiceNumber", invoiceNumber);
@@ -39,7 +39,7 @@ export const InvoiceSection: React.FC<InvoiceSectionProps> = ({ form, nextInvoic
               name="invoiceEntity"
               rules={[{ required: createInvoice, message: "Please select an entity" }]}
             >
-              <Select options={InvoiceOrgEntityMeta.options} />
+              <Select options={InvoiceEntityMeta.options} />
             </Form.Item>
 
             <Form.Item

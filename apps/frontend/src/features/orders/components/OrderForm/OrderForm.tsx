@@ -1,6 +1,6 @@
 import { Button, Form, Space, Spin } from "antd";
 import React, { useEffect, useMemo } from "react";
-import { InvoiceOrgEntity } from "shared-types";
+import { InvoiceEntity } from "shared-types";
 
 import type { OrderFormValues } from "../../types";
 import { toCreateOrderRequest } from "../../order.adapters";
@@ -18,7 +18,7 @@ export const OrderForm: React.FC = () => {
     return {
       orderDate: dayjs(),
       createInvoice: true,
-      invoiceEntity: InvoiceOrgEntity.FIVE_STAR_AUTO_LEATHER,
+      invoiceEntity: InvoiceEntity.FIVE_STAR_AUTO_LEATHER,
     };
   }, []);
 

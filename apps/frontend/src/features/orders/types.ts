@@ -1,6 +1,6 @@
 import type { Dayjs } from "dayjs";
 import type {
-  InvoiceOrgEntity,
+  InvoiceEntity,
   OrderItemLeatherType,
   OrderItemSeatReplacementScope,
 } from "shared-types";
@@ -18,7 +18,7 @@ export interface OrderFormValues {
 
   /** Invoice */
   createInvoice: boolean;
-  invoiceEntity?: InvoiceOrgEntity;
+  invoiceEntity?: InvoiceEntity;
   invoiceNumber?: string;
   billingComments?: string;
 

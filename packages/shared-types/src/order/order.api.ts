@@ -2,12 +2,12 @@ import { Models } from "appwrite";
 import {
   CarBrand,
   Client,
+  InvoiceEntity,
   Order,
   OrderItemLeatherType,
   OrderItemSeatReplacementScope,
   ProductType,
 } from "../appwrite/appwrite";
-import { InvoiceOrgEntity } from "../number-sequence/number-sequence.enum";
 import {
   BatamProductionStatus,
   InstallationStatus,
@@ -46,7 +46,7 @@ export type CreateOrderRequest = Pick<
   "orderDate" | "client" | "clientDetails" | "carBrand" | "carModel" | "carPlate" | "handoverDate"
 > & {
   createInvoice: boolean;
-  invoiceEntity?: InvoiceOrgEntity;
+  invoiceEntity?: InvoiceEntity;
   billingComments?: string;
   items: CreateOrderItemRequest[];
 };

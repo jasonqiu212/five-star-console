@@ -1,5 +1,11 @@
-import { InvoiceOrgEntity, UpdateNextNumberSequenceRequest } from "shared-types";
+import { InvoiceEntity, UpdateNextNumberSequenceRequest } from "shared-types";
 import { nextNumberSequenceRepository } from "./next-number-sequence.repository";
+
+/** Matches the sequence keys already stored in the next_number_sequence table. */
+const INVOICE_SEQUENCE_KEY: Record<InvoiceEntity, string> = {
+  [InvoiceEntity.FIVE_STAR_AUTO_LEATHER]: "invoice-five-star-auto-leather",
+  [InvoiceEntity.LEATHER_AND_STITCH]: "invoice-leather-and-stitch",
+};
 
 async function consumeNextValue(key: string, transactionId?: string): Promise<number> {
   const sequences = await nextNumberSequenceRepository.list();
@@ -20,10 +26,10 @@ export const nextNumberSequenceService = {
     const sequences = await nextNumberSequenceRepository.list();
     return {
       fiveStarAutoLeather: sequences.rows.find(
-        (seq) => seq.key === `invoice-${InvoiceOrgEntity.FIVE_STAR_AUTO_LEATHER}`
+        (seq) => seq.key === INVOICE_SEQUENCE_KEY[InvoiceEntity.FIVE_STAR_AUTO_LEATHER]
       ),
       leatherAndStitch: sequences.rows.find(
-        (seq) => seq.key === `invoice-${InvoiceOrgEntity.LEATHER_AND_STITCH}`
+        (seq) => seq.key === INVOICE_SEQUENCE_KEY[InvoiceEntity.LEATHER_AND_STITCH]
       ),
     };
   },
@@ -45,9 +51,9 @@ export const nextNumberSequenceService = {
 
   /** Returns the next invoice number for the given entity and stages the sequence's increment. */
   async consumeNextInvoiceNumber(
-    entity: InvoiceOrgEntity,
+    entity: InvoiceEntity,
     transactionId?: string
   ): Promise<number> {
-    return consumeNextValue(`invoice-${entity}`, transactionId);
+    return consumeNextValue(INVOICE_SEQUENCE_KEY[entity], transactionId);
   },
 };
