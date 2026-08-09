@@ -154,12 +154,30 @@ export const orderService = {
   },
 
   async listOrders(params: ListOrdersRequest): Promise<ListOrdersResponse> {
-    const { pagination } = params;
-    return orderRepository.list([
+    const { pagination, sorter, filters } = params;
+    const queries = [
       Query.limit(pagination.limit),
       Query.offset(pagination.offset),
       Query.select(["*", "orderItems.*"]),
-    ]);
+    ];
+
+    if (sorter) {
+      queries.push(
+        sorter.order === "asc" ? Query.orderAsc(sorter.field) : Query.orderDesc(sorter.field)
+      );
+    }
+
+    if (filters?.batamProductionStatus?.length) {
+      queries.push(Query.equal("batamProductionStatus", filters.batamProductionStatus));
+    }
+    if (filters?.sgProductionStatus?.length) {
+      queries.push(Query.equal("sgProductionStatus", filters.sgProductionStatus));
+    }
+    if (filters?.installationStatus?.length) {
+      queries.push(Query.equal("installationStatus", filters.installationStatus));
+    }
+
+    return orderRepository.list(queries);
   },
 
   async getOrderById(orderId: string): Promise<Order> {

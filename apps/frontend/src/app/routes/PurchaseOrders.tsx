@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { Button, Card, Flex, Table, Tabs, Tooltip, Typography } from "antd";
-import type { ColumnsType } from "antd/es/table";
+import type { ColumnsType, TableProps } from "antd/es/table";
 import {
   BatamProductionStatus,
+  BatamProductionStatusMeta,
   InstallationStatus,
+  InstallationStatusMeta,
   LEATHER_SEATS_PRODUCT_TYPE_NAME,
+  ListOrdersRequest,
   Order,
   OrderItem,
+  OrderStatus,
+  OrderStatusMeta,
   SgProductionStatus,
+  SgProductionStatusMeta,
 } from "shared-types";
 import { formatDate } from "@/shared/utils";
 import { useListOrders } from "@/features/orders/hooks/order.hooks";
@@ -26,9 +32,40 @@ const renderOrderItemDetails = (item: OrderItem): string => {
 export const PurchaseOrders: React.FC = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
+  const [sorter, setSorter] = useState<ListOrdersRequest["sorter"]>();
+  const [filters, setFilters] = useState<ListOrdersRequest["filters"]>({
+    orderStatus: OrderStatus.ONGOING,
+  });
   const { data: orders } = useListOrders({
     pagination: { limit: pageSize, offset: (page - 1) * pageSize },
+    sorter,
+    filters,
   });
+
+  const handleTableChange: TableProps<Order>["onChange"] = (
+    paginationConfig,
+    tableFilters,
+    sorter,
+    extra
+  ) => {
+    const sorterResult = Array.isArray(sorter) ? sorter[0] : sorter;
+    const sorterField = sorterResult?.field as "orderDate" | "carPlate" | undefined;
+
+    setSorter(
+      sorterField && sorterResult?.order
+        ? { field: sorterField, order: sorterResult.order === "ascend" ? "asc" : "desc" }
+        : undefined
+    );
+    setFilters((prev) => ({
+      orderStatus: prev?.orderStatus,
+      batamProductionStatus:
+        (tableFilters.batamProductionStatus as BatamProductionStatus[]) ?? undefined,
+      sgProductionStatus: (tableFilters.sgProductionStatus as SgProductionStatus[]) ?? undefined,
+      installationStatus: (tableFilters.installationStatus as InstallationStatus[]) ?? undefined,
+    }));
+    setPage(extra.action === "paginate" ? (paginationConfig.current ?? 1) : 1);
+    setPageSize(paginationConfig.pageSize ?? pageSize);
+  };
 
   const columns: ColumnsType<Order> = [
     {
@@ -42,7 +79,7 @@ export const PurchaseOrders: React.FC = () => {
       dataIndex: "orderDate",
       key: "orderDate",
       width: 120,
-      sorter: (a, b) => a.orderDate.localeCompare(b.orderDate),
+      sorter: true,
       render: (value) => formatDate(value),
     },
     {
@@ -68,7 +105,7 @@ export const PurchaseOrders: React.FC = () => {
       title: "Car Plate",
       dataIndex: "carPlate",
       key: "carPlate",
-      sorter: (a, b) => a.carPlate.localeCompare(b.carPlate),
+      sorter: true,
     },
     {
       title: "Details",
@@ -96,6 +133,10 @@ export const PurchaseOrders: React.FC = () => {
       dataIndex: "batamProductionStatus",
       key: "batamProductionStatus",
       width: 150,
+      filters: BatamProductionStatusMeta.options.map(({ value, label }) => ({
+        text: label,
+        value,
+      })),
       render: (value: BatamProductionStatus | null) =>
         value ? <BatamProductionStatusTag status={value} /> : "-",
     },
@@ -104,6 +145,7 @@ export const PurchaseOrders: React.FC = () => {
       dataIndex: "sgProductionStatus",
       key: "sgProductionStatus",
       width: 120,
+      filters: SgProductionStatusMeta.options.map(({ value, label }) => ({ text: label, value })),
       render: (value: SgProductionStatus | null) =>
         value ? <SgProductionStatusTag status={value} /> : "-",
     },
@@ -112,6 +154,7 @@ export const PurchaseOrders: React.FC = () => {
       dataIndex: "installationStatus",
       key: "installationStatus",
       width: 100,
+      filters: InstallationStatusMeta.options.map(({ value, label }) => ({ text: label, value })),
       render: (value: InstallationStatus | null) =>
         value ? <InstallationStatusTag status={value} /> : "-",
     },
@@ -134,36 +177,29 @@ export const PurchaseOrders: React.FC = () => {
   return (
     <Card size="small" variant="borderless">
       <Tabs
-        items={[
-          {
-            key: "ongoing",
-            label: "Ongoing",
-            children: (
-              <Table
-                size="small"
-                columns={columns}
-                dataSource={orders?.rows}
-                pagination={{
-                  current: page,
-                  pageSize,
-                  total: orders?.total,
-                  showTotal: (total) => `Total ${total} orders`,
-                  onChange: (nextPage, nextPageSize) => {
-                    setPage(nextPage);
-                    setPageSize(nextPageSize);
-                  },
-                }}
-                rowKey="$id"
-                scroll={{ x: "max-content" }}
-              />
-            ),
-          },
-          {
-            key: "completed",
-            label: "Completed",
-            children: null,
-          },
-        ]}
+        activeKey={filters?.orderStatus}
+        onChange={(key) => {
+          setFilters((prev) => ({ ...prev, orderStatus: key as OrderStatus }));
+          setPage(1);
+        }}
+        items={OrderStatusMeta.options.map((s) => ({
+          key: s.value,
+          label: s.label,
+        }))}
+      />
+      <Table
+        size="small"
+        columns={columns}
+        dataSource={orders?.rows}
+        pagination={{
+          current: page,
+          pageSize,
+          total: orders?.total,
+          showTotal: (total) => `Total ${total} orders`,
+        }}
+        onChange={handleTableChange}
+        rowKey="$id"
+        scroll={{ x: "max-content" }}
       />
     </Card>
   );

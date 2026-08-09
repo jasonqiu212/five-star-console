@@ -65,3 +65,13 @@ export const InstallationStatusMeta = createEnumMeta<InstallationStatus>({
   [InstallationStatus.REINSTALLATION]: "Reinstallation",
   [InstallationStatus.DONE]: "Done",
 });
+
+export enum OrderStatus {
+  ONGOING = "Ongoing",
+  COMPLETED = "Completed",
+}
+
+export const OrderStatusMeta = createEnumMeta<OrderStatus>({
+  [OrderStatus.ONGOING]: "Ongoing",
+  [OrderStatus.COMPLETED]: "Completed",
+});
