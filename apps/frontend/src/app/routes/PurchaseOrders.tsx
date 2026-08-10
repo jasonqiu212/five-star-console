@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card, Flex, Table, Tabs, Tooltip, Typography } from "antd";
+import { Button, Card, Flex, Space, Table, Tabs, Tooltip, Typography } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import {
   BatamProductionStatus,
@@ -166,10 +166,10 @@ export const PurchaseOrders: React.FC = () => {
       fixed: "right",
       render: (_, record: Order) => {
         return (
-          <Flex align="center" gap={4}>
+          <Space size={4}>
             <Button type="text" icon={<EditOutlined />} />
             <UpdateOrderStatusButton record={record} />
-          </Flex>
+          </Space>
         );
       },
     },
