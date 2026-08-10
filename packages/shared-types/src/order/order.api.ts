@@ -80,3 +80,8 @@ export type ListOrdersRequest = {
 };
 
 export type ListOrdersResponse = Models.RowList<Order>;
+
+export type UpdateOrderStatusRequest = Pick<
+  Order,
+  "batamProductionStatus" | "sgProductionStatus" | "installationStatus"
+> & { id: string };

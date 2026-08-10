@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { orderService } from "../services/order.service";
-import { CreateOrderRequest, ListOrdersRequest } from "shared-types";
+import { CreateOrderRequest, ListOrdersRequest, UpdateOrderStatusRequest } from "shared-types";
 import { message } from "antd";
 
 const QUERY_KEY = "order";
@@ -36,5 +36,16 @@ export function useGetOrderById(orderId: string) {
   return useQuery({
     queryKey: [QUERY_KEY, orderId],
     queryFn: () => orderService.getOrderById(orderId),
+  });
+}
+
+export function useUpdateOrderStatus() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: UpdateOrderStatusRequest) => orderService.updateOrderStatus(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
+      message.success("Order status updated");
+    },
   });
 }

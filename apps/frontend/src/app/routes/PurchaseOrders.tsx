@@ -20,7 +20,8 @@ import { useListOrders } from "@/features/orders/hooks/order.hooks";
 import { BatamProductionStatusTag } from "@/components/tags/BatamProductionStatusTag";
 import { SgProductionStatusTag } from "@/components/tags/SgProductionStatusTag";
 import { InstallationStatusTag } from "@/components/tags/InstallationStatusTag";
-import { EditOutlined, EyeOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { UpdateOrderStatusButton } from "@/features/orders/components/UpdateOrderStatusButton";
+import { EditOutlined, InfoCircleOutlined } from "@ant-design/icons";
 
 const renderOrderItemDetails = (item: OrderItem): string => {
   if (item.productType === LEATHER_SEATS_PRODUCT_TYPE_NAME) {
@@ -163,11 +164,11 @@ export const PurchaseOrders: React.FC = () => {
       key: "actions",
       width: 100,
       fixed: "right",
-      render: () => {
+      render: (_, record: Order) => {
         return (
           <Flex align="center" gap={4}>
-            <Button type="text" icon={<EyeOutlined />} />
             <Button type="text" icon={<EditOutlined />} />
+            <UpdateOrderStatusButton record={record} />
           </Flex>
         );
       },

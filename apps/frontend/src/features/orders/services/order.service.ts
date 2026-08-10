@@ -8,6 +8,7 @@ import {
   ListOrdersResponse,
   Order,
   SgProductionStatus,
+  UpdateOrderStatusRequest,
 } from "shared-types";
 import { ID, Query } from "appwrite";
 import { orderRepository } from "./order.repository";
@@ -183,5 +184,10 @@ export const orderService = {
 
   async getOrderById(orderId: string): Promise<Order> {
     return orderRepository.getById(orderId);
+  },
+
+  async updateOrderStatus(params: UpdateOrderStatusRequest) {
+    const { id, ...data } = params;
+    return orderRepository.update(id, data);
   },
 };
