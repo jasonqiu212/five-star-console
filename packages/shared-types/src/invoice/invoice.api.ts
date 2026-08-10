@@ -11,7 +11,7 @@ export type ListInvoicesRequest = {
     order: "asc" | "desc";
   };
   filters: {
-    invoiceEntity: InvoiceEntity;
+    entity: InvoiceEntity;
     status?: InvoiceStatus[];
   };
 };

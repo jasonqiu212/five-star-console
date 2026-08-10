@@ -9,7 +9,7 @@ export const invoiceService = {
       Query.limit(pagination.limit),
       Query.offset(pagination.offset),
       Query.select(["*", "invoiceItems.*"]),
-      Query.equal("invoiceEntity", filters.invoiceEntity),
+      Query.equal("entity", filters.entity),
     ];
 
     if (sorter) {

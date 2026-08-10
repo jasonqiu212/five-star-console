@@ -20,7 +20,7 @@ export const InvoicesTable: React.FC<InvoicesTableProps> = ({ entity }) => {
   const { data: invoices } = useListInvoices({
     pagination: { limit: pageSize, offset: (page - 1) * pageSize },
     sorter,
-    filters: { invoiceEntity: entity, status },
+    filters: { entity: entity, status },
   });
 
   const handleTableChange: TableProps<Invoice>["onChange"] = (
