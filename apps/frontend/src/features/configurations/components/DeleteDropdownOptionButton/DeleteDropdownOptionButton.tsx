@@ -27,13 +27,6 @@ export const DeleteDropdownOptionButton: React.FC<DeleteDropdownOptionButtonProp
     okButtonProps={{ danger: true }}
     cancelText="Cancel"
   >
-    <Button
-      type="link"
-      size="small"
-      danger
-      icon={<DeleteOutlined />}
-      aria-label="Delete"
-      disabled={isPending}
-    />
+    <Button type="text" danger icon={<DeleteOutlined />} aria-label="Delete" disabled={isPending} />
   </Popconfirm>
 );

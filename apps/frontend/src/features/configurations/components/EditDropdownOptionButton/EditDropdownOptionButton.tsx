@@ -48,14 +48,7 @@ export const EditDropdownOptionButton: React.FC<EditDropdownOptionButtonProps> =
 
   return (
     <>
-      <Button
-        color="default"
-        size="small"
-        type="link"
-        icon={<EditOutlined />}
-        onClick={handleOpen}
-        aria-label="Edit"
-      />
+      <Button type="text" icon={<EditOutlined />} onClick={handleOpen} aria-label="Edit" />
       <Modal
         title={modalTitle}
         open={open}
