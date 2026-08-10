@@ -6,6 +6,7 @@ import { formatCurrency, formatDate } from "@/shared/utils";
 import { useListInvoices } from "@/features/invoices/hooks/invoice.hooks";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { InvoiceStatusTag } from "@/components/tags/InvoiceStatusTag";
+import { UpdateInvoiceStatusButton } from "@/features/invoices/components/UpdateInvoiceStatusButton";
 
 interface InvoicesTableProps {
   entity: InvoiceEntity;
@@ -98,6 +99,13 @@ export const InvoicesTable: React.FC<InvoicesTableProps> = ({ entity }) => {
       key: "paidDate",
       width: 120,
       render: (value) => formatDate(value),
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      width: 80,
+      fixed: "right",
+      render: (_, record: Invoice) => <UpdateInvoiceStatusButton record={record} />,
     },
   ];
 

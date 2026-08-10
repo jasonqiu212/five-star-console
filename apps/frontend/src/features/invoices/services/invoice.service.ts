@@ -1,5 +1,5 @@
 import { Query } from "appwrite";
-import { ListInvoicesRequest, ListInvoicesResponse } from "shared-types";
+import { ListInvoicesRequest, ListInvoicesResponse, UpdateInvoiceStatusRequest } from "shared-types";
 import { invoiceRepository } from "./invoice.repository";
 
 export const invoiceService = {
@@ -23,5 +23,10 @@ export const invoiceService = {
     }
 
     return invoiceRepository.list(queries);
+  },
+
+  async updateInvoiceStatus(params: UpdateInvoiceStatusRequest) {
+    const { id, ...data } = params;
+    return invoiceRepository.update(id, data);
   },
 };

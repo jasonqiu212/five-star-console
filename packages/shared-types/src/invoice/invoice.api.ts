@@ -17,3 +17,8 @@ export type ListInvoicesRequest = {
 };
 
 export type ListInvoicesResponse = Models.RowList<Invoice>;
+
+export type UpdateInvoiceStatusRequest = Pick<
+  Invoice,
+  "status" | "paidDate" | "cancelledDate"
+> & { id: string };
