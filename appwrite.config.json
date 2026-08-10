@@ -699,6 +699,18 @@
                     "twoWayKey": "invoices",
                     "onDelete": "cascade",
                     "side": "child"
+                },
+                {
+                    "key": "entity",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "FiveStarAutoLeather",
+                        "LeatherAndStitch"
+                    ]
                 }
             ],
             "indexes": []
