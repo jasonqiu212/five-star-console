@@ -7,6 +7,7 @@ import {
   ListOrdersRequest,
   ListOrdersResponse,
   Order,
+  OrderStatus,
   SgProductionStatus,
   UpdateOrderStatusRequest,
 } from "shared-types";
@@ -177,6 +178,9 @@ export const orderService = {
     }
     if (filters?.installationStatus?.length) {
       queries.push(Query.equal("installationStatus", filters.installationStatus));
+    }
+    if (filters?.orderStatus === OrderStatus.COMPLETED) {
+      queries.push(Query.equal("installationStatus", InstallationStatus.DONE));
     }
 
     return orderRepository.list(queries);
