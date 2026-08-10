@@ -182,6 +182,9 @@ export const orderService = {
     if (filters?.orderStatus === OrderStatus.COMPLETED) {
       queries.push(Query.equal("installationStatus", InstallationStatus.DONE));
     }
+    if (filters?.orderStatus === OrderStatus.ONGOING) {
+      queries.push(Query.notEqual("installationStatus", InstallationStatus.DONE));
+    }
 
     return orderRepository.list(queries);
   },
